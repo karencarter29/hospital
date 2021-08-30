@@ -18,4 +18,3 @@ public class GatewayApiInitializer extends AbstractAnnotationConfigDispatcherSer
         return new String[] {"/"};
     }
 }
-//fdkosogkds
