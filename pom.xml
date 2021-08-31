@@ -13,6 +13,8 @@
     <modules>
         <module>gateway-api</module>
         <module>eureka-server</module>
+        <module>clinic-service</module>
+        <module>patient-service</module>
     </modules>
 
     <properties>
