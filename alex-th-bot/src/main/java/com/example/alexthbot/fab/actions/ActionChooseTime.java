@@ -3,7 +3,6 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
-import com.example.alexthbot.fab.database.repository.BotAppointmentRepository;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,8 +21,7 @@ import java.util.List;
 public class ActionChooseTime extends Action {
     @Autowired
     BotAppointment botAppointment;
-    @Autowired
-    BotAppointmentRepository botAppointmentRepository;
+
     @Autowired
     ConfigurationAppointment configurationAppointment;
     @Override
@@ -32,8 +30,7 @@ public class ActionChooseTime extends Action {
         String text = update.getMessage().getText();
 
         botAppointment.setDate(text);
-        botAppointmentRepository.save(botAppointment);
-        //configurationAppointment.appointmentList.add(botAppointment);
+
 
 
 

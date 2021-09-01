@@ -3,7 +3,6 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
-import com.example.alexthbot.fab.database.repository.BotAppointmentRepository;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,8 +22,7 @@ import java.util.List;
 public class ActionBooked extends Action {
     @Autowired
     BotAppointment botAppointment;
-    @Autowired
-    BotAppointmentRepository botAppointmentRepository;
+
     @Autowired
     ConfigurationAppointment configurationAppointment;
 
@@ -39,7 +37,6 @@ public class ActionBooked extends Action {
         botUserService.setCommand(id, ActionEnum.SHOW_APPOINTMENTS);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        botAppointmentRepository.save(botAppointment);
         BotAppointment botAppointment2 = new BotAppointment();
         botAppointment2.setTimeBook(botAppointment.getTimeBook());
         botAppointment2.setDoctor(botAppointment.getDoctor());
