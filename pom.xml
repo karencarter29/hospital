@@ -13,6 +13,10 @@
     <modules>
         <module>gateway-api</module>
         <module>eureka-server</module>
+        <module>Clinic</module>
+        <module>Patient</module>
+        <module>alex-th-bot</module>
+
     </modules>
 
     <properties>
