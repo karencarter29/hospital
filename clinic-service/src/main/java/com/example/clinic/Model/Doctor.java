@@ -18,9 +18,9 @@ public class Doctor{
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
     private Speciality speciality;
-    @OneToOne(//mappedBy = "doctor", cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY)
-    private Room room;
+//    @OneToOne(//mappedBy = "doctor", cascade = CascadeType.ALL,
+//            fetch = FetchType.LAZY)
+//    private Room room;
 
     public int getId() {
         return id;
@@ -54,11 +54,11 @@ public class Doctor{
         this.speciality = speciality;
     }
 
-    public Room getRoom() {
-        return room;
-    }
-
-    public void setRoom(Room room) {
-        this.room = room;
-    }
+//    public Room getRoom() {
+//        return room;
+//    }
+//
+//    public void setRoom(Room room) {
+//        this.room = room;
+//    }
 }

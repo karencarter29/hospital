@@ -11,8 +11,8 @@
     <groupId>com.example</groupId>
     <artifactId>patient-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>patient-service</name>
-    <description>patient-service</description>
+    <name>Patient</name>
+    <description>Patient</description>
     <properties>
         <java.version>11</java.version>
     </properties>
@@ -109,7 +109,7 @@
                 <artifactId>liquibase-maven-plugin</artifactId>
                 <version>3.6.3</version>
                 <configuration>
-                    <propertyFile>C:/Users/Acer/IdeaProjects/Microservices/Patient/src/main/resources/liquibase.properties</propertyFile>
+                    <propertyFile>${project.basedir}/src/main/resources/liquibase.properties</propertyFile>
                 </configuration>
             </plugin>
         </plugins>
