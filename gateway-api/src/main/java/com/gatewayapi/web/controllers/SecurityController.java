@@ -20,12 +20,12 @@ public class SecurityController {
     }
 
     @GetMapping("/auth")
-    public ResponseEntity<String> auth(@RequestBody Map<String, Object> userInfo) {
+    public ResponseEntity<?> auth(@RequestBody Map<String, Object> userInfo) {
         return securityService.auth(userInfo);
     }
 
     @GetMapping("/register")
-    public ResponseEntity<String> register(@RequestBody Map<String, Object> userInfo) {
+    public ResponseEntity<?> register(@RequestBody Map<String, Object> userInfo) {
         return securityService.register(userInfo);
     }
 }
