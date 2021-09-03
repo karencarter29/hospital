@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/user")
 public class SecurityController {
 
     SecurityService securityService;
@@ -19,13 +19,13 @@ public class SecurityController {
         this.securityService = securityService;
     }
 
-    @GetMapping("/auth")
-    public ResponseEntity<String> auth(@RequestBody Map<String, Object> userInfo) {
+    @GetMapping("/get")
+    public ResponseEntity<Object> auth(@RequestBody Map<String, Object> userInfo) {
         return securityService.auth(userInfo);
     }
 
-    @GetMapping("/register")
-    public ResponseEntity<String> register(@RequestBody Map<String, Object> userInfo) {
+    @GetMapping("/")
+    public ResponseEntity<Object> register(@RequestBody Map<String, Object> userInfo) {
         return securityService.register(userInfo);
     }
 }
