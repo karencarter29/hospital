@@ -52,6 +52,7 @@ public enum ActionEnum {
         if (MIDDLE_BOOKED.command.equals(value)) return MIDDLE_BOOKED;
         if (SHOW_APPOINTMENTS.command.equals(value)) return SHOW_APPOINTMENTS;
 
+        
         return ANY;
     }
 

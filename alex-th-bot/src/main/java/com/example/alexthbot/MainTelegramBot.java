@@ -64,8 +64,8 @@ public class MainTelegramBot extends TelegramLongPollingBot {
                 router.get(action).action(update,this);
             }
         }
-        if (update.hasCallbackQuery()){
-        }
+//        if (update.hasCallbackQuery()){
+//        }
     }
 
 }
