@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gatewayapi.model.Appointment;
 import com.gatewayapi.model.Condition;
+import com.gatewayapi.model.Doctor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,14 @@ import java.util.UUID;
 public class DoctorService {
 
     RestTemplate restTemplate = new RestTemplate();
+
+    public ResponseEntity<Object> getDoctors() {
+        String url = "url to get all doctors";
+        return ResponseEntity.status(HttpStatus.OK).body(new Doctor[] {
+                new Doctor(UUID.randomUUID(), "David"),
+                new Doctor(UUID.randomUUID(), "Garry")
+        });
+    }
 
     public ResponseEntity<String> createShift(Map<String, Object> payload) {
         String url = "url to create shift";
