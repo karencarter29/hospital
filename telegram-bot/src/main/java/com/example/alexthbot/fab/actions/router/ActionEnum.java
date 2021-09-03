@@ -36,7 +36,6 @@ public enum ActionEnum {
 
         value = value.trim();
 
-        //Change to switch/case
         if (START.command.equals(value)) return START;
         if (REGISTRATION.command.equals(value)) return REGISTRATION;
         if (CHOSE_ROLE.command.equals(value)) return CHOSE_ROLE;
@@ -53,6 +52,7 @@ public enum ActionEnum {
         if (MIDDLE_BOOKED.command.equals(value)) return MIDDLE_BOOKED;
         if (SHOW_APPOINTMENTS.command.equals(value)) return SHOW_APPOINTMENTS;
 
+        
         return ANY;
     }
 

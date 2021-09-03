@@ -6,6 +6,7 @@ import java.util.Locale;
 
 public enum Role {
 
+
     PATIENT("пациент"),
     DOCTOR("доктор"),
     ADMIN("админ");

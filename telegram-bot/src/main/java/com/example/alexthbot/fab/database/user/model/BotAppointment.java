@@ -12,10 +12,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity
 public class BotAppointment {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private String doctor;
     private String procedure;
