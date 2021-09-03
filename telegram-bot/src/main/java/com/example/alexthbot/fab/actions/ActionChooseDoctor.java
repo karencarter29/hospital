@@ -30,13 +30,11 @@ public class ActionChooseDoctor extends Action {
         botAppointment.setDoctor(text);
         botAppointment.setNumberRoom("Кабинет 302");
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
         if (text.equals("Зубной техник")) {
-            botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
-
             sendMessage.setReplyMarkup(keyboard());
         }
         else if (text.equals("Врач нарколог")){
-            botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
             sendMessage.setReplyMarkup(keyboardDrag());
         }
 

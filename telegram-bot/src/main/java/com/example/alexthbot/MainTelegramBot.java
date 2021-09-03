@@ -16,6 +16,8 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class MainTelegramBot extends TelegramLongPollingBot {
 
+
+
     @Value("${telegram.bot.name}")
     private String name;
 
@@ -57,13 +59,13 @@ public class MainTelegramBot extends TelegramLongPollingBot {
                     command = message.getText();
                 }
 
+
                 final ActionEnum action = ActionEnum.interpret(command);
                 router.get(action).action(update,this);
             }
         }
-        if (update.hasCallbackQuery()){
-
-        }
+//        if (update.hasCallbackQuery()){
+//        }
     }
 
 }

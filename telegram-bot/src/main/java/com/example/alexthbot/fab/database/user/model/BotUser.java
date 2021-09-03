@@ -10,22 +10,13 @@ import javax.persistence.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
 public class BotUser {
-    @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
-    @Column
     private String firstName;
-    @Column
     private String secondName;
-    @Column
     private Role role;
-    @Column
     private String login;
-    @Column
     private String password;
-    @Column
     private String command;
 
     public BotUser(String firstName, String secondName, Role role, String login, String password, String command) {

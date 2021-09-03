@@ -2,10 +2,9 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
-//import com.example.alexthbot.fab.database.repository.BotUserRepository;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
+import com.example.alexthbot.fab.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -21,12 +20,11 @@ import java.util.List;
 @Component
 public class ActionLastName extends Action {
     @Autowired
-    @Qualifier("doctors")
-    private List<String> doctors;
+    private DoctorService doctorService;
+
     @Autowired
-    BotUserService botUserService;
-//    @Autowired
-//    private BotUserRepository botUserRepository;
+    private BotUserService botUserService;
+
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
@@ -34,10 +32,9 @@ public class ActionLastName extends Action {
 
         botUserService.setSecondName(id, name);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-//        botUserRepository.save(botUserService.user(id));
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        sendMessage.setText("Вы зарегистрированы как: Имя - " + botUserService.getFirstName(id) +", Фамилия - " + botUserService.getSecondName(id) + "\n Теперь выберите нужного доктора: ");
+        sendMessage.setText("Вы зарегистрированы как: Имя - " + botUserService.getFirstName(id) + ", Фамилия - " + botUserService.getSecondName(id) + "\n Теперь выберите нужного доктора: ");
         sendMessage.setReplyMarkup(keyboard());
         try {
             absSender.execute(sendMessage);
@@ -45,12 +42,12 @@ public class ActionLastName extends Action {
                 TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
+
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        doctors.forEach(keyboardRow::add);
+        doctorService.get().forEach(doctor -> keyboardRow.add(doctor.getName()));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
@@ -60,11 +57,11 @@ public class ActionLastName extends Action {
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
     }
+
     @Override
     public ActionEnum getKey() {
         return ActionEnum.CHOOSE_LAST_NAME;
     }
-
 
 
 }
