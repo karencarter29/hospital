@@ -10,10 +10,12 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "false")
 public class DoctorServiceMock implements DoctorService{
     @Override
-    public List<Doctor> get() {
+    public List<Doctor> getAllDoctors() {
         return Arrays.asList(
                 new Doctor(1L,"Зубной техник"),
                 new Doctor(2L,"Нарколог")
         );
     }
+
+
 }

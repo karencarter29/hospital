@@ -16,17 +16,17 @@ public class DoctorServiceApi implements DoctorService {
     @Value("${gateway.api.get-all-doctors}")
     private String url;
 
+//    @Value("http://192.168.2.101:8762/doctors")
+//    private String url;
     @Override
-    public List<Doctor> get() {
-
-        Doctor doctor = new Doctor();
+    public List<Doctor> getAllDoctors() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
 
         ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(url, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (doctorsEntity.getStatusCode() == HttpStatus.OK) {
             return doctorsEntity.getBody();
         } else {
-            throw new RuntimeException();//создадим свой кастомный
+            throw new RuntimeException();//создать свой кастомный
         }
     }
 }

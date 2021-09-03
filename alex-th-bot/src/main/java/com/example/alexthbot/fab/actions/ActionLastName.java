@@ -47,7 +47,7 @@ public class ActionLastName extends Action {
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        doctorService.get().forEach(doctor -> keyboardRow.add(doctor.getName()));
+        doctorService.getAllDoctors().forEach(doctor -> keyboardRow.add(doctor.getName()));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

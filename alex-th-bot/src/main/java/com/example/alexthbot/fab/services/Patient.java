@@ -7,10 +7,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Doctor {
+public class Patient {
     private Long id;
-    private String name;
-
-
-
+    private String username;
+    private String firstName;
+    private String secondName;
+    private Long hospitalId;
+    private Long roleId;
 }
