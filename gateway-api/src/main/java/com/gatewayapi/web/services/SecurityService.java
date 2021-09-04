@@ -11,17 +11,13 @@ import java.util.Map;
 @Service
 public class SecurityService {
 
-    private final RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
     public ResponseEntity<Object> register(Map<String, Object> userInformation) {
-        String url = "url to register";
-//        restTemplate.postForEntity(url, userInformation, String.class)
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     public ResponseEntity<Object> auth(Map<String, Object> userInformation) {
-        String url = "url to auth";
-//        restTemplate.postForEntity(url, userInformation, String.class);
         return ResponseEntity.status(HttpStatus.OK).body(new User("John", "Evans"));
     }
 }

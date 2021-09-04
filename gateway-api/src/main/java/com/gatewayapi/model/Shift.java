@@ -7,16 +7,16 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.UUID;
+import java.util.Random;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
 public class Shift {
-    final UUID id = UUID.randomUUID();
-    UUID doctorId;
-    UUID procedureId;
+    final Long id = new Random().nextLong();
+    Long doctorId;
+    Long procedureId;
     LocalDateTime startTime;
     LocalDateTime endTime;
     LocalDate date;
