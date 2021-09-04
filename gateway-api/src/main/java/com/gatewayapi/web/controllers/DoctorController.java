@@ -26,17 +26,17 @@ public class DoctorController {
     }
 
     @PostMapping(value = "/shift", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<String> createShift(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<Object> createShift(@RequestBody Map<String, Object> payload) {
         return doctorService.createShift(payload);
     }
 
     @GetMapping("/shifts")
-    public ResponseEntity<?> getMyShifts() {
+    public ResponseEntity<Object> getMyShifts() {
         return doctorService.getShifts();
     }
 
     @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getPatientsAppointments() {
+    public ResponseEntity<Object> getPatientsAppointments() {
         return doctorService.getAppointments();
     }
 }

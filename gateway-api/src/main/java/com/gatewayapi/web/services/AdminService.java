@@ -23,21 +23,21 @@ public class AdminService {
     private PatientService patientService = new PatientService();
 
 
-    public ResponseEntity<?> createAppointment(Map<String, Object> appointmentInfo) {
+    public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
         return patientService.createAppointment(appointmentInfo);
     }
 
-    public ResponseEntity<?> createShift(Map<String, Object> shiftInfo) {
+    public ResponseEntity<Object> createShift(Map<String, Object> shiftInfo) {
         return doctorService.createShift(shiftInfo);
     }
 
-    public ResponseEntity<?> getAllShifts() {
+    public ResponseEntity<Object> getAllShifts() {
         String url = "url to get all shifts";
         //restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().body(getShifts());
     }
 
-    public ResponseEntity<?> getAllAppointments() {
+    public ResponseEntity<Object> getAllAppointments() {
         String url = "url to get all appointments";
         //restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().body(getAppointments());

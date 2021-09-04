@@ -26,17 +26,17 @@ public class DoctorService {
         });
     }
 
-    public ResponseEntity<String> createShift(Map<String, Object> payload) {
+    public ResponseEntity<Object> createShift(Map<String, Object> payload) {
         String url = "url to create shift";
         //restTemplate.postForEntity(url, payload, String.class);
         return ResponseEntity.status(HttpStatus.CREATED).body("");
     }
 
-    public ResponseEntity<?> getShifts() {
+    public ResponseEntity<Object> getShifts() {
         return null;
     }
 
-    public ResponseEntity<?> getAppointments() {
+    public ResponseEntity<Object> getAppointments() {
         String url = "url to get appointments";
         //restTemplate.getForObject(url, Object.class);
         return ResponseEntity.ok().body(new Appointment[] {
