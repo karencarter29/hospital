@@ -3,7 +3,6 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
-import com.example.alexthbot.fab.database.repository.BotAppointmentRepository;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,10 +22,10 @@ import java.util.List;
 public class ActionBooked extends Action {
     @Autowired
     BotAppointment botAppointment;
-//    @Autowired
-//    BotAppointmentRepository botAppointmentRepository;
+
     @Autowired
     ConfigurationAppointment configurationAppointment;
+
 
     @Override
     public void action(Update update, AbsSender absSender) {
@@ -38,7 +37,6 @@ public class ActionBooked extends Action {
         botUserService.setCommand(id, ActionEnum.SHOW_APPOINTMENTS);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-//        botAppointmentRepository.save(botAppointment);
         BotAppointment botAppointment2 = new BotAppointment();
         botAppointment2.setTimeBook(botAppointment.getTimeBook());
         botAppointment2.setDoctor(botAppointment.getDoctor());
@@ -48,6 +46,7 @@ public class ActionBooked extends Action {
         botAppointment2.setTime(botAppointment.getTime());
         botAppointment2.setDuration(botAppointment.getDuration());
         configurationAppointment.appointmentList.add(botAppointment2);
+
 
         sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"
                 + "Доктор: " + botAppointment.getDoctor() + "\n"
@@ -78,6 +77,7 @@ public class ActionBooked extends Action {
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
     }
+
 
     @Override
     public ActionEnum getKey() {
