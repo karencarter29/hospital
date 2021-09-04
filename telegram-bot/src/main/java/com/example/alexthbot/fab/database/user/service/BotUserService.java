@@ -1,6 +1,7 @@
 package com.example.alexthbot.fab.database.user.service;
 
 import com.example.alexthbot.fab.actions.router.ActionEnum;
+import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.model.BotUser;
 import com.google.common.cache.Cache;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
 public class BotUserService {
 
     @Autowired
-    protected Cache<String, com.example.alexthbot.fab.database.user.model.BotUser> cache;
+    protected Cache<String, BotUser> cache;
 
     public void setCommand(String chatId, ActionEnum actionEnum){
         changeUser(chatId,botUser -> botUser.setCommand(actionEnum.getCommand()));
@@ -28,6 +29,13 @@ public class BotUserService {
         changeUser(chatId,botUser -> botUser.setSecondName(secondName));
     }
 
+    public void setIdAndRole(Long chatId, Role role){
+        changeUser(chatId.toString(),botUser -> botUser.setId(chatId));
+        changeUser(chatId.toString(),botUser -> botUser.setRole(role));
+    }
+
+
+
     public void setLogin(String chatId, String login){
         changeUser(chatId,botUser -> botUser.setLogin(login));
     }
@@ -36,7 +44,7 @@ public class BotUserService {
         changeUser(chatId,botUser -> botUser.setPassword(password));
     }
 
-    public com.example.alexthbot.fab.database.user.model.BotUser user(String chatId){
+    public BotUser user(String chatId){
         return cache.getIfPresent(chatId);
     }
 
@@ -57,4 +65,8 @@ public class BotUserService {
     public String getSecondName(String chatId){
         return Objects.requireNonNull(cache.getIfPresent(chatId)).getSecondName();
     }
+    public String getLogin(String chatId){
+        return (cache.getIfPresent(chatId)).getLogin();
+    }
+
 }

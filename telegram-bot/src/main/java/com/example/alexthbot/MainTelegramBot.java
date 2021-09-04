@@ -58,6 +58,7 @@ public class MainTelegramBot extends TelegramLongPollingBot {
                 if (command == null){
                     command = message.getText();
                 }
+                log.info(command);
 
 
                 final ActionEnum action = ActionEnum.interpret(command);

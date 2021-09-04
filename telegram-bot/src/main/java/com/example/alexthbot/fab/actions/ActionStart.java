@@ -12,7 +12,6 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
-
 @Component
 public class ActionStart extends Action {
 
@@ -22,10 +21,15 @@ public class ActionStart extends Action {
 
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
-        sendMessage.setText("Выберите свою роль: ");
+        sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
         sendMessage.setReplyMarkup(getKeyboard());
+        if (update.getMessage().equals("Логин")) {
+          //  botUserService.setCommand(chatId,ActionEnum.LOGIN);
+        }
+        else if (update.getMessage().equals("Регистрация")){
+            botUserService.setCommand(chatId,ActionEnum.REGISTRATION_WAITING_PASSWORD);
+        }
 
-        botUserService.setCommand(chatId,ActionEnum.CHOSE_ROLE);
 
         try {
             absSender.execute(sendMessage);
@@ -36,9 +40,8 @@ public class ActionStart extends Action {
 
     public ReplyKeyboardMarkup getKeyboard(){
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Пациент");
-        keyboardRow.add("Доктор");
-        keyboardRow.add("Админ");
+        keyboardRow.add("Логин");
+        keyboardRow.add("Регистрация");
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
