@@ -15,9 +15,9 @@ import java.util.List;
 public class RoomController {
     private RoomService roomService;
 
-    @PostMapping
-    public Room saveRoom(@RequestBody RoomDTO room) throws ParseException {
-        return roomService.saveRoom(room);
+    @PostMapping("/{hospitalId}/{doctorId}")
+    public Room saveRoom(@PathVariable int hospitalId, @PathVariable int doctorId) {
+        return roomService.saveRoom(hospitalId, doctorId);
     }
 
     @GetMapping
@@ -25,9 +25,9 @@ public class RoomController {
         return roomService.getRooms();
     }
 
-    @PutMapping
-    public Room updateRoom(@RequestBody Room room) {
-        return roomService.updateRoom(room);
+    @PutMapping("/{hospitalId}/{doctorId}")
+    public Room updateRoom(@PathVariable int hospitalId, @PathVariable int doctorId) {
+        return roomService.updateRoom(hospitalId, doctorId);
     }
 
     @DeleteMapping("/delete/id/id1")

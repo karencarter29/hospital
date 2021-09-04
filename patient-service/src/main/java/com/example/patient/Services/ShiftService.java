@@ -16,12 +16,14 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class ShiftService {
     private ModelMapper modelMapper;
-    private AppointmentRepository appointmentRepository;
     private ShiftRepository shiftRepository;
 
     public Shift addShift(Shift shift) //@RequestBody shift
     {
-        //shift.setDoctorId(idDoctor);
+//        List<Shift> shiftList = (List<Shift>)shiftRepository.findAll();
+//        for(Shift sh: shiftList) {
+//            if(shift.getStartTime().isAfter())
+//        }
         return shiftRepository.save(shift);
     }
 
@@ -33,6 +35,8 @@ public class ShiftService {
     //
     public Shift updateShift(Shift newShift) //@RequestBody shift
     {
+//        newShift.setSpecialityName(specialityName);
+//        newShift.setProcedureName(procedureName);
         return shiftRepository.save(newShift);
     }
 

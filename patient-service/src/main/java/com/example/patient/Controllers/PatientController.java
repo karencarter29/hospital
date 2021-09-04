@@ -27,8 +27,8 @@ public class PatientController {
         return patientService.getPatient();
     }
     @PutMapping
-    public Patient updatePatient(@RequestBody Patient patient, @RequestBody Appointment appointment) {
-        return patientService.updatePatient(patient, appointment);
+    public Patient updatePatient(@RequestBody Patient patient) {
+        return patientService.updatePatient(patient);
     }
     @DeleteMapping
     public void deleletePatient(int patientId) {

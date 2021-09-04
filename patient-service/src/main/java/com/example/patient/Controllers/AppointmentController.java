@@ -2,16 +2,12 @@ package com.example.patient.Controllers;
 
 import com.example.patient.DTO.AppointmentDTO;
 import com.example.patient.Model.Appointment;
-import com.example.patient.Model.Patient;
-import com.example.patient.Model.Shift;
 import com.example.patient.Services.AppointmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @AllArgsConstructor
@@ -24,14 +20,14 @@ public class AppointmentController {
         return appointmentService.appointments();
     }
 
-    @PostMapping
-    public Appointment saveAppointment(@RequestBody AppointmentDTO appointment) throws ParseException {
-        return appointmentService.saveAppointment(appointment);
+    @PostMapping("/{shiftId}/{patientId}")
+    public Appointment saveAppointment(@PathVariable int shiftId, @PathVariable  int patientId){
+        return appointmentService.saveAppointment(shiftId, patientId);
     }
 
-    @PutMapping
-    public Appointment updateAppointment(@RequestBody AppointmentDTO newApp) throws ParseException {
-        return appointmentService.updateAppointment(newApp);
+    @PutMapping("/{shiftId}/{patientId}")
+    public Appointment updateAppointment(@PathVariable int shiftId, @PathVariable int patientId) {
+        return appointmentService.updateAppointment(shiftId, patientId);
     }
 
     @DeleteMapping("delete/{shiftId}/{patientId}")

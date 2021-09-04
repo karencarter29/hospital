@@ -26,15 +26,7 @@ public class Room implements Serializable {
     @JsonIgnore
     private Doctor doctor;
 
-    private Long room_number;
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    private Long roomNumber;
 
 
     public Hospital getHospital() {
@@ -53,11 +45,11 @@ public class Room implements Serializable {
         this.doctor = doctor;
     }
 
-    public Long getRoom_number() {
-        return room_number;
+    public Long getRoomNumber() {
+        return roomNumber;
     }
 
-    public void setRoom_number(Long room_number) {
-        this.room_number = room_number;
+    public void setRoomNumber(Long roomNumber) {
+        this.roomNumber = roomNumber;
     }
 }

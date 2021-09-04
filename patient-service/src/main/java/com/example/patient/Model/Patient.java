@@ -78,12 +78,5 @@ public class Patient {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Appointment> getAppointment() {
-        return appointments;
-    }
-
-    public void setAppointment(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
 }
 

@@ -12,9 +12,9 @@ import java.time.LocalTime;
 @AllArgsConstructor
 public class ShiftDTO {
     private int id;
-    private int doctorId;
+    private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
-    private int procedureId;
+    private String procedureName;
 }

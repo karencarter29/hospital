@@ -15,7 +15,7 @@ import java.util.List;
 public class SpecialityDTO {
     private int id;
     private String specialityName;
-    private List<Doctor> doctors = new ArrayList<Doctor>();
-    private List<Procedure> procedures = new ArrayList<Procedure>();
+    private List<Doctor> doctors = new ArrayList<>();
+    private List<Procedure> procedures = new ArrayList<>();
 
 }

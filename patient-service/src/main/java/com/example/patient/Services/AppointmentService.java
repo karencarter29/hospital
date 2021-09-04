@@ -1,6 +1,4 @@
 package com.example.patient.Services;
-
-
 import com.example.patient.DTO.AppointmentDTO;
 import com.example.patient.Model.Appointment;
 import com.example.patient.Model.Patient;
@@ -12,7 +10,7 @@ import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
-import java.text.ParseException;
+
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -24,10 +22,10 @@ public class AppointmentService {
     private ShiftRepository shiftRepository;
     private ModelMapper modelMapper;
 
-    public Appointment saveAppointment(AppointmentDTO appointment) throws ParseException {//@RequestBody for app
-        Appointment app = convertToEntity(appointment);
-        appointmentRepository.saveApp(app.getShift().getId(), app.getPatient().getId());
-        return app;
+    public Appointment saveAppointment(int shiftId, int patientId) {
+        //TODO: to get patientId from SecurityContext
+        appointmentRepository.saveApp(shiftId, patientId);
+        return null;
     }
 
     public List<AppointmentDTO> appointments() {
@@ -35,12 +33,13 @@ public class AppointmentService {
         return appointmentList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Appointment updateAppointment(AppointmentDTO newApp) throws ParseException {//@RequestBody app
-        return saveAppointment(newApp);
+    public Appointment updateAppointment(int shiftId, int patientId){
+        return saveAppointment(shiftId, patientId);
     }
 
     public void deleteAppointment(int shiftId, int patientId) {//@PathVariable id
-        appointmentRepository.deleteApp(shiftId, patientId);
+        //TODO: to get patientId from SecurityContext
+        appointmentRepository.deleteApp(shiftId,patientId);
     }
 
 
@@ -48,12 +47,13 @@ public class AppointmentService {
         return modelMapper.map(appointment, AppointmentDTO.class);
     }
 
-    private Appointment convertToEntity(AppointmentDTO appointmentDTO) throws ParseException {
+    private Appointment convertToEntity(AppointmentDTO appointmentDTO) {
         Appointment appointment = modelMapper.map(appointmentDTO, Appointment.class);
 
         if (appointmentDTO.getShift().getId() != 0 && appointmentDTO.getPatient().getId() != 0) {
-            Shift shift = shiftRepository.findById(appointmentDTO.getShift().getId()).get();
-            Patient patient = patientRepository.findById(appointmentDTO.getPatient().getId()).get();
+            Shift shift = shiftRepository.findById(appointmentDTO.getShift().getId()).orElse(null);
+            Patient patient = patientRepository.findById(appointmentDTO.getPatient().getId()).orElse(null);
+            appointment.setShift(shift);
             appointment.setPatient(patient);
         }
         return appointment;

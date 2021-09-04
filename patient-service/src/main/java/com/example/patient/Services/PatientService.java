@@ -21,16 +21,18 @@ public class PatientService {
     private AppointmentRepository appointmentRepository;
 
     public Patient addPatient(Patient patient) {
-        //patient.addAppointment(appointment);
+        //TODO: to get userId from Security
+        //patient.setUserId(userId);
         return patientRepository.save(patient);
     }
 
     public List<PatientDTO> getPatient() {
         List<Patient> patientList = (List<Patient>)patientRepository.findAll();
-        return patientList.stream().map(p->convertToDto(p)).collect(Collectors.toList());
+        return patientList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
-    public Patient updatePatient(Patient patient, Appointment appointment) {
-        patient.addAppointment(appointment);
+    public Patient updatePatient(Patient patient) {
+        //TODO: to get userId from Security
+       // patient.setUserId(userId);
         return patientRepository.save(patient);
     }
 
@@ -38,7 +40,6 @@ public class PatientService {
         patientRepository.deleteById(id);
     }
     private PatientDTO convertToDto(Patient patient) {
-        PatientDTO patientDTO = modelMapper.map(patient, PatientDTO.class);
-        return patientDTO;
+        return modelMapper.map(patient, PatientDTO.class);
     }
 }

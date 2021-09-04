@@ -13,7 +13,7 @@ public class PersonDTO {
     private String password;
     private String firstName;
     private String secondName;
-    private int role_id;
+    private int roleId;
 
 
 }

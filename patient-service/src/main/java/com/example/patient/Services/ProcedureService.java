@@ -7,7 +7,6 @@ import java.util.List;
 
 @FeignClient(name="feignProcedureService", url="http://localhost:8083/procedure/procedures")
 public interface ProcedureService {
-    @GetMapping("/procedures")
+    @GetMapping
     public List<String> getProcedures();
-
 }

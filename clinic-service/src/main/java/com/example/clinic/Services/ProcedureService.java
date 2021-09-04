@@ -10,6 +10,7 @@ import com.example.clinic.Repositories.SpecialityRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,27 +23,37 @@ public class ProcedureService {
     private SpecialityRepository specialityRepository;
     private ModelMapper modelMapper;
 
-    public Procedure addProcedure(Procedure procedure) {
+    @Transactional
+    public Procedure addProcedure(Procedure procedure, Speciality speciality) {
+        //TODO: to get specialityId
+        procedure.setSpeciality(speciality);
         return procedureRepository.save(procedure);
     }
 
+    @Transactional(readOnly = true)
     public List<ProcedureDTO> getProcedures() {
-        List<Procedure> procedures = (List<Procedure>) procedureRepository.findAll();
+        List<Procedure> procedures = procedureRepository.findAll();
         return procedures.stream().map(this::convertToDto).collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
     public List<String> getProcedureNames() {
-        List<Procedure> procedures = (List<Procedure>) procedureRepository.findAll();
+        List<Procedure> procedures = procedureRepository.findAll();
         List<String> names = new LinkedList<>();
         for(Procedure p: procedures) {
-          names.add(p.getProcedureName());
+            names.add(p.getProcedureName());
         }
         return names;
     }
 
-    public Procedure updateProcedure(Procedure newProcedure) {
+    @Transactional
+    public Procedure updateProcedure(Procedure newProcedure, Speciality speciality) {
+        //TODO: to get specialityId
+        newProcedure.setSpeciality(speciality);
         return procedureRepository.save(newProcedure);
     }
 
+    @Transactional
     public void deleteProcedure(int procedureId) {
         procedureRepository.deleteById(procedureId);
     }

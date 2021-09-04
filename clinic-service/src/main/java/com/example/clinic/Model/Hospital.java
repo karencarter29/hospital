@@ -12,15 +12,14 @@ import java.util.List;
 @AllArgsConstructor
 public class Hospital {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String name;
     private String address;
     @OneToMany(mappedBy = "hospital", fetch = FetchType.LAZY)
-    private List<Room> rooms = new ArrayList<Room>();
+    private List<Room> rooms = new ArrayList<>();
 
-    public void addRoom(Room room)
-    {
+    public void addRoom(Room room) {
         room.setHospital(this);
         rooms.add(room);
     }
