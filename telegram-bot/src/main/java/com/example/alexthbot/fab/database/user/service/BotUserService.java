@@ -16,6 +16,8 @@ public class BotUserService {
 
     @Autowired
     protected Cache<String, BotUser> cache;
+    @Autowired
+    BotUser botUser;
 
     public void setCommand(String chatId, ActionEnum actionEnum){
         changeUser(chatId,botUser -> botUser.setCommand(actionEnum.getCommand()));
@@ -33,7 +35,9 @@ public class BotUserService {
         changeUser(chatId.toString(),botUser -> botUser.setId(chatId));
         changeUser(chatId.toString(),botUser -> botUser.setRole(role));
     }
-
+    public Long getId(){
+        return botUser.getId();
+    }
 
 
     public void setLogin(String chatId, String login){

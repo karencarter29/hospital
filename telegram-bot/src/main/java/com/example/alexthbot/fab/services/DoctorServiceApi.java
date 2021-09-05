@@ -17,10 +17,11 @@ public class DoctorServiceApi implements DoctorService {
 
     @Value("${gateway.api.get-all-doctors}")
     private String url;
+    @Value("${gateway.api.get-all-doctors}")
+    private String url2;
 
     @Override
     public List<Doctor> get() {
-
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(url, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (doctorsEntity.getStatusCode() == HttpStatus.OK) {
@@ -29,5 +30,8 @@ public class DoctorServiceApi implements DoctorService {
         } else {
             throw new RuntimeException();//создадим свой кастомный
         }
+
+
+        }
     }
-}
+

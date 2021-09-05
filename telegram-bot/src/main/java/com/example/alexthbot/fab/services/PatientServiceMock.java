@@ -1,5 +1,7 @@
 package com.example.alexthbot.fab.services;
 
+import com.example.alexthbot.fab.actions.router.Role;
+
 public class PatientServiceMock implements PatientService{
     @Override
     public Patient postNewUser() {
@@ -8,6 +10,11 @@ public class PatientServiceMock implements PatientService{
 
     @Override
     public String getUserByLogin() {
-        return null;
+        return "Geek";
+    }
+
+    @Override
+    public Patient userGet() {
+        return new Patient(4L,"Geek","Григорий","Афанасий", Role.PATIENT);
     }
 }

@@ -1,6 +1,5 @@
 package com.example.alexthbot.fab.services;
 
-import com.example.alexthbot.fab.actions.router.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,10 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Patient {
+public class Procedure {
     private Long id;
-    private String username;
-    private String firstName;
-    private String secondName;
-    private Role role;
+    private String procedure;
 }
