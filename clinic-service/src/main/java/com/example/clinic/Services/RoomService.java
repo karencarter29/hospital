@@ -12,8 +12,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -25,13 +25,10 @@ public class RoomService {
     private ModelMapper modelMapper;
 
     @Transactional
-    public Room saveRoom(int hospitalId, int doctorId, String roomNumber) {
+    public Room saveRoom(UUID hospitalId, UUID doctorId, String roomNumber) {
         Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
         Doctor d = doctorRepository.findById(doctorId).orElse(null);
-        Room r = new Room();
-        r.setHospital(h);
-        r.setDoctor(d);
-        r.setRoomNumber(roomNumber);
+        Room r = new Room(h, d, roomNumber);
         roomRepository.saveRoom(hospitalId, doctorId, roomNumber);
         return r;
     }
@@ -43,18 +40,16 @@ public class RoomService {
     }
 
     @Transactional
-    public Room updateRoom(int hospitalId, int doctorId, String roomNumber) {
+    public Room updateRoom(UUID hospitalId, UUID doctorId, String roomNumber) {
         Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
         Doctor d = doctorRepository.findById(doctorId).orElse(null);
-        Room r = new Room();
-        r.setHospital(h);
-        r.setDoctor(d);
-        roomRepository.saveRoom(hospitalId, doctorId, roomNumber);
-        return r;
+        Room r = new Room(h, d, roomNumber);
+        roomRepository.updateRoom(hospitalId, doctorId, roomNumber);
+       return r;
     }
 
     @Transactional
-    public void deleteRoom(int hospitalId, int doctorId) {
+    public void deleteRoom(UUID hospitalId, UUID doctorId) {
         roomRepository.deleteRoom(hospitalId, doctorId);
     }
 

@@ -6,12 +6,13 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class ShiftDTO {
-    private int id;
+    private UUID id;
     private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;

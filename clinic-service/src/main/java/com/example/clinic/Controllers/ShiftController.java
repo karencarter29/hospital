@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/shift")
@@ -30,7 +31,7 @@ public class ShiftController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteShift(@PathVariable int id) {
+    public void deleteShift(@PathVariable UUID id) {
         shiftService.deleteShift(id);
     }
 }

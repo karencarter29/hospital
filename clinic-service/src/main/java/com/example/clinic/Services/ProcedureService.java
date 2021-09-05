@@ -1,10 +1,9 @@
 package com.example.clinic.Services;
 
 
-import com.example.clinic.DTO.HospitalDTO;
+
 import com.example.clinic.DTO.ProcedureDTO;
 
-import com.example.clinic.Model.Hospital;
 import com.example.clinic.Model.Procedure;
 import com.example.clinic.Model.Speciality;
 import com.example.clinic.Repositories.ProcedureRepository;
@@ -16,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -26,7 +26,7 @@ public class ProcedureService {
     private ModelMapper modelMapper;
 
     @Transactional
-    public Procedure addProcedure(ProcedureDTO procedure, int speciality) {
+    public Procedure addProcedure(ProcedureDTO procedure, UUID speciality) {
         Speciality s = specialityRepository.findById(speciality).orElse(null);
         procedure.setSpeciality(s);
         return procedureRepository.save(convertToEntity(procedure));
@@ -49,14 +49,12 @@ public class ProcedureService {
     }
 
     @Transactional
-    public Procedure updateProcedure(ProcedureDTO newProcedure, int speciality) {
-        Speciality s = specialityRepository.findById(speciality).orElse(null);
-        newProcedure.setSpeciality(s);
-        return procedureRepository.save(convertToEntity(newProcedure));
+    public Procedure updateProcedure(ProcedureDTO newProcedure, UUID speciality) {
+        return addProcedure(newProcedure, speciality);
     }
 
     @Transactional
-    public void deleteProcedure(int procedureId) {
+    public void deleteProcedure(UUID procedureId) {
         procedureRepository.deleteById(procedureId);
     }
 

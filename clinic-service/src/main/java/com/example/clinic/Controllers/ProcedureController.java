@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -16,7 +17,7 @@ public class ProcedureController {
     private ProcedureService procedureService;
 
     @PostMapping("{specialityId}")
-    public Procedure addProcedure(@RequestBody ProcedureDTO procedure, @PathVariable int specialityId) {
+    public Procedure addProcedure(@RequestBody ProcedureDTO procedure, @PathVariable UUID specialityId) {
         return procedureService.addProcedure(procedure, specialityId);
     }
 
@@ -27,7 +28,7 @@ public class ProcedureController {
 
 
     @PutMapping("/{specialityId}")
-    public Procedure updateProcedure(@RequestBody ProcedureDTO newProcedure, @PathVariable int specialityId) {
+    public Procedure updateProcedure(@RequestBody ProcedureDTO newProcedure, @PathVariable UUID specialityId) {
         return procedureService.updateProcedure(newProcedure, specialityId);
     }
 
@@ -37,7 +38,7 @@ public class ProcedureController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteProcedure(@PathVariable int id) {
+    public void deleteProcedure(@PathVariable UUID id) {
         procedureService.deleteProcedure(id);
     }
 }

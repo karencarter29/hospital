@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Entity
@@ -16,8 +17,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private UUID id;
     private int userId;
     private String gender;
     private String phoneNumber;
@@ -31,11 +32,12 @@ public class Patient {
         appointments.add(appointment);
     }
 
-    public int getId() {
+    public UUID getId() {
+
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

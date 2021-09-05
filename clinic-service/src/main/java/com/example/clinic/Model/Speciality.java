@@ -6,14 +6,15 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 public class Speciality {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private UUID id;
     private String specialityName;
     @OneToMany(mappedBy = "speciality", fetch = FetchType.LAZY)
     private List<Doctor> doctors = new ArrayList<>();
@@ -31,11 +32,11 @@ public class Speciality {
         procedures.add(procedure);
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

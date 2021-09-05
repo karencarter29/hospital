@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/patient")
@@ -31,7 +32,7 @@ public class PatientController {
         return patientService.updatePatient(patient);
     }
     @DeleteMapping("/{patientId}")
-    public void deleletePatient(@PathVariable int patientId) {
+    public void deleletePatient(@PathVariable UUID patientId) {
         patientService.deletePatient(patientId);
     }
 }

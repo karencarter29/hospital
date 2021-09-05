@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,11 +22,12 @@ public class DoctorService {
     private SpecialityRepository specialityRepository;
 
     @Transactional
-    public Doctor saveDoctor(DoctorDTO doctor, int specialityId) {
+    public Doctor saveDoctor(DoctorDTO doctor, UUID specialityId) {
         Speciality s = specialityRepository.findById(specialityId).orElse(null);
         doctor.setSpeciality(s);
         return doctorRepository.save(convertToEntity(doctor));
     }
+
 
     @Transactional(readOnly = true)
     public List<DoctorDTO> getDoctors() {
@@ -34,20 +36,19 @@ public class DoctorService {
     }
 
     @Transactional
-    public Doctor updateDoctor(DoctorDTO doctor, int specialityId) {
-        Speciality s = specialityRepository.findById(specialityId).orElse(null);
-        doctor.setSpeciality(s);
-        return doctorRepository.save(convertToEntity(doctor));
+    public Doctor updateDoctor(DoctorDTO doctor, UUID specialityId) {
+       return saveDoctor(doctor, specialityId);
     }
 
     @Transactional
-    public void deleteDoctor(int id) {
+    public void deleteDoctor(UUID id) {
         doctorRepository.deleteById(id);
     }
 
     private DoctorDTO convertToDto(Doctor doctor) {
         return modelMapper.map(doctor, DoctorDTO.class);
     }
+
 
     private Doctor convertToEntity(DoctorDTO doctorDTO) {
         return modelMapper.map(doctorDTO, Doctor.class);

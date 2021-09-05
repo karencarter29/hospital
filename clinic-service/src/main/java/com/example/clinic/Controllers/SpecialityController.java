@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -30,7 +31,7 @@ public class SpecialityController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteSpeciality(@PathVariable int id) {
+    public void deleteSpeciality(@PathVariable UUID id) {
         specialityService.deleteSpeciality(id);
     }
 

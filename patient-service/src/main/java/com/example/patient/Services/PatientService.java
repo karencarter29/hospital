@@ -3,7 +3,6 @@ package com.example.patient.Services;
 
 import com.example.patient.DTO.PatientDTO;
 import com.example.patient.Model.Patient;
-import com.example.patient.Repositories.AppointmentRepository;
 import com.example.patient.Repositories.PatientRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -35,7 +35,7 @@ public class PatientService {
     }
 
     @Transactional
-    public void deletePatient(int id) {
+    public void deletePatient(UUID id) {
         patientRepository.deleteById(id);
     }
     private PatientDTO convertToDto(Patient patient) {
