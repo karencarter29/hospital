@@ -10,8 +10,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Patient {
     private Long id;
-    private String username;
     private String firstName;
     private String secondName;
     private Role role;
+    private String login;
+    private String password;
+    private String command;
+
+
+    public Patient(long l, String str0, String str1, String str2, Role patient) {
+    }
 }

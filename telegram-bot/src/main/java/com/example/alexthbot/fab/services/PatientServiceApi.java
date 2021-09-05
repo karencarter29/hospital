@@ -1,6 +1,5 @@
 package com.example.alexthbot.fab.services;
 
-import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.model.BotUser;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,7 @@ public class PatientServiceApi implements PatientService{
     BotUserService botUserService;
 
     @Value("${gateway.api.create-user}")
-    private String urlCreate;
+    private String urlPostUser;
 
     @Value("${gateway.api.check-login}")
     private String urlChekLogin;
@@ -28,10 +27,9 @@ public class PatientServiceApi implements PatientService{
 
 
     @Override
-    public Patient postNewUser() {
-        BotUser botUser = botUserService.user(botUserService.getId().toString());
+    public Patient postNewUser(BotUser botUser) {
         RestTemplate restTemplate = new RestTemplate();
-        Patient response = restTemplate.postForEntity(urlCreate, botUser, Patient.class).getBody();
+        Patient response = restTemplate.postForEntity(urlPostUser, botUser, Patient.class).getBody();
         return response;
 
     }
@@ -39,10 +37,9 @@ public class PatientServiceApi implements PatientService{
     @Override
     public String getUserByLogin() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
-
         ResponseEntity<Patient> doctorsEntity = new RestTemplate().exchange(urlChekLogin, HttpMethod.GET, httpEntity, Patient.class);
         if (doctorsEntity.getStatusCode() == HttpStatus.OK ) {
-            return doctorsEntity.getBody().getUsername();
+            return doctorsEntity.getBody().getLogin();
         } else {
             throw new RuntimeException();
         }
@@ -53,8 +50,7 @@ public class PatientServiceApi implements PatientService{
     @Override
     public Patient userGet() {
         HttpEntity<Patient> httpEntity = new HttpEntity<>(new Patient());
-
-        ResponseEntity<Patient> patientEntity = new RestTemplate().exchange(urlCreate,HttpMethod.POST,httpEntity,Patient.class);
+        ResponseEntity<Patient> patientEntity = new RestTemplate().exchange(urlPostUser,HttpMethod.POST,httpEntity,Patient.class);
         if (patientEntity.getStatusCode() == HttpStatus.OK) {
             return patientEntity.getBody();
         } else {

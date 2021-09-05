@@ -3,6 +3,10 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.Doctor;
+import com.example.alexthbot.fab.services.Procedure;
+import com.example.alexthbot.fab.services.ProcedureService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,20 +19,21 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class ActionChooseDoctor extends Action {
     @Autowired
     BotAppointment botAppointment;
-
+    @Autowired
+    ProcedureService procedureService;
     @Override
     public void action(Update update, AbsSender absSender) {
         SendMessage sendMessage = new SendMessage();
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
         botAppointment.setDoctor(text);
-        botAppointment.setNumberRoom("Кабинет 302");
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
         if (text.equals("Зубной техник")) {
@@ -49,13 +54,23 @@ public class ActionChooseDoctor extends Action {
         }
     }
 
+//    public ReplyKeyboard keyboardTooth() {
+//        KeyboardRow keyboardRow = new KeyboardRow();
+//       procedureService.getProcedures().forEach(procedure -> keyboardRow.add(procedure.getProcedure()));
+//
+//        List<KeyboardRow> keyboardRows = new ArrayList<>();
+//        keyboardRows.add(keyboardRow);
+//
+//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+//        replyKeyboardMarkup.setKeyboard(keyboardRows);
+//        replyKeyboardMarkup.setResizeKeyboard(true);
+//        return replyKeyboardMarkup;
+//    }
     public ReplyKeyboard keyboardTooth() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Консультация (1час)");
-        keyboardRow.add("Вырвать зуб");
-        keyboardRow.add("Поставить пломбу");
-        keyboardRow.add("Отбелить зубы");
-
+        Gson gson = new Gson();
+        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProcedures()), Procedure[].class);
+        Arrays.stream(procedures).forEach(prod1 -> keyboardRow.add(prod1.getProcedure()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

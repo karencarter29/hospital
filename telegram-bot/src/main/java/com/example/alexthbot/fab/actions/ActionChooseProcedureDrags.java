@@ -19,9 +19,6 @@ public class ActionChooseProcedureDrags extends Action {
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
-        String text = update.getMessage().getText();
-
-
 
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
 
