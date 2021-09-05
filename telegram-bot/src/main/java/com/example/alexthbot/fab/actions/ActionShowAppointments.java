@@ -34,7 +34,6 @@ public class ActionShowAppointments extends Action {
             s+=
                     "Ваша запись от "+configurationAppointment.appointmentList.get(i).getTimeBook()+ " числа"+ "\n"
                             + "Доктор: " + configurationAppointment.appointmentList.get(i).getDoctor() + "\n"
-                            + "Кабинет: " + configurationAppointment.appointmentList.get(i).getNumberRoom() + "\n"
                             + "Процедура: " + configurationAppointment.appointmentList.get(i).getProcedure() + "\n"
                             + "День: " + configurationAppointment.appointmentList.get(i).getDate() + "\n"
                             + "Время: " + configurationAppointment.appointmentList.get(i).getTime() + "\n"

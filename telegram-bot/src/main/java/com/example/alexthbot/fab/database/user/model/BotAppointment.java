@@ -19,18 +19,14 @@ public class BotAppointment {
     private String date;
     private String time;
     private String duration;
-    private String numberRoom;
     private String timeBook;
 
-    public BotAppointment(String doctor, String procedure, String date, String time, String duration, String numberRoom, String timeBook) {
+    public BotAppointment(String doctor, String procedure, String date, String time, String duration, String timeBook) {
         this.doctor = doctor;
         this.procedure = procedure;
         this.date = date;
         this.time = time;
         this.duration = duration;
-        this.numberRoom = numberRoom;
         this.timeBook = timeBook;
     }
-
-
 }
