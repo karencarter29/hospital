@@ -40,7 +40,6 @@ public class ActionBooked extends Action {
         BotAppointment botAppointment2 = new BotAppointment();
         botAppointment2.setTimeBook(botAppointment.getTimeBook());
         botAppointment2.setDoctor(botAppointment.getDoctor());
-        botAppointment2.setNumberRoom(botAppointment.getNumberRoom());
         botAppointment2.setProcedure(botAppointment.getProcedure());
         botAppointment2.setDate(botAppointment.getDate());
         botAppointment2.setTime(botAppointment.getTime());
@@ -50,7 +49,6 @@ public class ActionBooked extends Action {
 
         sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"
                 + "Доктор: " + botAppointment.getDoctor() + "\n"
-                + "Кабинет: " + botAppointment.getNumberRoom() + "\n"
                 + "Процедура: " + botAppointment.getProcedure() + "\n"
                 + "День: " + botAppointment.getDate() + "\n"
                 + "Время: " + botAppointment.getTime() + "\n"
