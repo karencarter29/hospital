@@ -12,10 +12,6 @@ import lombok.NoArgsConstructor;
 public class DoctorDTO {
     private int  id;
     private int userId;
-
     private String phoneNumber;
     private Speciality speciality;
-    private Room room;
-
-
 }

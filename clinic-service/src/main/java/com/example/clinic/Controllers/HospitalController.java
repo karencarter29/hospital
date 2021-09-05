@@ -15,7 +15,7 @@ public class HospitalController {
     private HospitalService hospitalService;
 
     @PostMapping
-    public Hospital saveHospital(@RequestBody Hospital hospital) {
+    public Hospital saveHospital(@RequestBody HospitalDTO hospital) {
         return hospitalService.addHospital(hospital);
     }
 
@@ -25,11 +25,11 @@ public class HospitalController {
     }
 
     @PutMapping
-    public Hospital updateHospital(Hospital hospital) {
+    public Hospital updateHospital(@RequestBody HospitalDTO hospital) {
         return hospitalService.updateHospital(hospital);
     }
 
-    @DeleteMapping("/delet/{id}")
+    @DeleteMapping("/{id}")
     public void deleteHospital(@PathVariable int id) {
         hospitalService.deleteHospital(id);
     }

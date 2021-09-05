@@ -18,7 +18,7 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
-    public Patient addPatient(@RequestBody Patient patient) {
+    public Patient addPatient(@RequestBody PatientDTO patient) {
         return patientService.addPatient(patient);
     }
 
@@ -27,11 +27,11 @@ public class PatientController {
         return patientService.getPatient();
     }
     @PutMapping
-    public Patient updatePatient(@RequestBody Patient patient) {
+    public Patient updatePatient(@RequestBody PatientDTO patient) {
         return patientService.updatePatient(patient);
     }
-    @DeleteMapping
-    public void deleletePatient(int patientId) {
+    @DeleteMapping("/{patientId}")
+    public void deleletePatient(@PathVariable int patientId) {
         patientService.deletePatient(patientId);
     }
 }

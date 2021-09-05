@@ -1,5 +1,6 @@
 package com.example.clinic.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -8,14 +9,14 @@ import javax.persistence.*;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="doctor")
-public class Doctor{
+public class Doctor {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int  id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
     private int userId;
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Speciality speciality;
 
     public int getId() {
@@ -38,8 +39,8 @@ public class Doctor{
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phone_number) {
-        this.phoneNumber = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Speciality getSpeciality() {

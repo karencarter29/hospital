@@ -1,8 +1,10 @@
 package com.example.clinic.Services;
 
 
+import com.example.clinic.DTO.HospitalDTO;
 import com.example.clinic.DTO.ProcedureDTO;
 
+import com.example.clinic.Model.Hospital;
 import com.example.clinic.Model.Procedure;
 import com.example.clinic.Model.Speciality;
 import com.example.clinic.Repositories.ProcedureRepository;
@@ -24,10 +26,10 @@ public class ProcedureService {
     private ModelMapper modelMapper;
 
     @Transactional
-    public Procedure addProcedure(Procedure procedure, Speciality speciality) {
-        //TODO: to get specialityId
-        procedure.setSpeciality(speciality);
-        return procedureRepository.save(procedure);
+    public Procedure addProcedure(ProcedureDTO procedure, int speciality) {
+        Speciality s = specialityRepository.findById(speciality).orElse(null);
+        procedure.setSpeciality(s);
+        return procedureRepository.save(convertToEntity(procedure));
     }
 
     @Transactional(readOnly = true)
@@ -47,10 +49,10 @@ public class ProcedureService {
     }
 
     @Transactional
-    public Procedure updateProcedure(Procedure newProcedure, Speciality speciality) {
-        //TODO: to get specialityId
-        newProcedure.setSpeciality(speciality);
-        return procedureRepository.save(newProcedure);
+    public Procedure updateProcedure(ProcedureDTO newProcedure, int speciality) {
+        Speciality s = specialityRepository.findById(speciality).orElse(null);
+        newProcedure.setSpeciality(s);
+        return procedureRepository.save(convertToEntity(newProcedure));
     }
 
     @Transactional
@@ -60,5 +62,8 @@ public class ProcedureService {
 
     private ProcedureDTO convertToDto(Procedure procedure) {
         return modelMapper.map(procedure, ProcedureDTO.class);
+    }
+    private Procedure convertToEntity(ProcedureDTO procedureDTO) {
+        return modelMapper.map(procedureDTO, Procedure.class);
     }
 }

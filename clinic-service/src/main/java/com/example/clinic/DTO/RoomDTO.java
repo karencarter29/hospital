@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class RoomDTO {
     private Hospital hospital;
     private Doctor doctor;
-    private int roomNumber;
+    private String roomNumber;
 
 
 }

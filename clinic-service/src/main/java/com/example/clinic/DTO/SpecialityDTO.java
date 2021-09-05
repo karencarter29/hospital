@@ -17,5 +17,4 @@ public class SpecialityDTO {
     private String specialityName;
     private List<Doctor> doctors = new ArrayList<>();
     private List<Procedure> procedures = new ArrayList<>();
-
 }

@@ -10,6 +10,7 @@ import com.example.clinic.Repositories.RoomRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.util.List;
@@ -23,32 +24,36 @@ public class RoomService {
     private DoctorRepository doctorRepository;
     private ModelMapper modelMapper;
 
-    public Room saveRoom(int hospitalId, int doctorId) {
-       // Room r = convertToEntity(room);
+    @Transactional
+    public Room saveRoom(int hospitalId, int doctorId, String roomNumber) {
         Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
         Doctor d = doctorRepository.findById(doctorId).orElse(null);
         Room r = new Room();
         r.setHospital(h);
         r.setDoctor(d);
-        roomRepository.saveRoom(hospitalId, doctorId);
+        r.setRoomNumber(roomNumber);
+        roomRepository.saveRoom(hospitalId, doctorId, roomNumber);
         return r;
     }
 
+    @Transactional(readOnly = true)
     public List<RoomDTO> getRooms() {
         List<Room> roomList = roomRepository.findAll();
         return roomList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Room updateRoom(int hospitalId, int doctorId) {
+    @Transactional
+    public Room updateRoom(int hospitalId, int doctorId, String roomNumber) {
         Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
         Doctor d = doctorRepository.findById(doctorId).orElse(null);
         Room r = new Room();
         r.setHospital(h);
         r.setDoctor(d);
-        roomRepository.saveRoom(hospitalId, doctorId);
-        return null;
+        roomRepository.saveRoom(hospitalId, doctorId, roomNumber);
+        return r;
     }
 
+    @Transactional
     public void deleteRoom(int hospitalId, int doctorId) {
         roomRepository.deleteRoom(hospitalId, doctorId);
     }
@@ -57,15 +62,4 @@ public class RoomService {
         return modelMapper.map(room, RoomDTO.class);
     }
 
-    private Room convertToEntity(RoomDTO roomDTO) {
-        Room room = modelMapper.map(roomDTO, Room.class);
-
-        if (roomDTO.getDoctor().getId() != 0 && roomDTO.getHospital().getId() != 0) {
-            Doctor doctor = doctorRepository.findById(roomDTO.getDoctor().getId()).orElse(null);
-            Hospital hospital = hospitalRepository.findById(roomDTO.getHospital().getId()).orElse(null);
-            room.setDoctor(doctor);
-            room.setHospital(hospital);
-        }
-        return room;
-    }
 }

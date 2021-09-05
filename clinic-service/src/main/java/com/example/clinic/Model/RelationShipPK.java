@@ -1,9 +1,12 @@
 package com.example.clinic.Model;
 
 
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 //@Embeddable
+@NoArgsConstructor
 public class RelationShipPK implements Serializable {
     private Hospital hospital;
     private Doctor doctor;

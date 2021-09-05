@@ -1,7 +1,9 @@
 package com.example.clinic.Services;
 
 
+import com.example.clinic.DTO.HospitalDTO;
 import com.example.clinic.DTO.SpecialityDTO;
+import com.example.clinic.Model.Hospital;
 import com.example.clinic.Model.Speciality;
 import com.example.clinic.Repositories.DoctorRepository;
 import com.example.clinic.Repositories.ProcedureRepository;
@@ -9,6 +11,7 @@ import com.example.clinic.Repositories.SpecialityRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,19 +24,23 @@ public class SpecialityService {
     private DoctorRepository doctorRepository;
     private ModelMapper modelMapper;
 
-    public Speciality saveSpeciality(Speciality speciality) {
-        return specialityRepository.save(speciality);
+    @Transactional
+    public Speciality saveSpeciality(SpecialityDTO speciality) {
+        return specialityRepository.save(convertToEntity(speciality));
     }
 
+    @Transactional(readOnly = true)
     public List<SpecialityDTO> getSpecialities() {
         List<Speciality> specialityList = specialityRepository.findAll();
         return specialityList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Speciality updateSpeciality(Speciality newSpeciality) {
-        return specialityRepository.save(newSpeciality);
+    @Transactional
+    public Speciality updateSpeciality(SpecialityDTO newSpeciality) {
+        return saveSpeciality(newSpeciality);
     }
 
+    @Transactional
     public void deleteSpeciality(int id) {
         specialityRepository.deleteById(id);
     }
@@ -41,5 +48,9 @@ public class SpecialityService {
 
     private SpecialityDTO convertToDto(Speciality speciality) {
         return modelMapper.map(speciality, SpecialityDTO.class);
+    }
+
+    private Speciality convertToEntity(SpecialityDTO specialityDTO) {
+        return modelMapper.map(specialityDTO, Speciality.class);
     }
 }
