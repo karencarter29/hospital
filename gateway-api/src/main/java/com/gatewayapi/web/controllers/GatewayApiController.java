@@ -13,8 +13,5 @@ import java.util.UUID;
 @RequestMapping("/gateway")
 public class GatewayApiController {
 
-    @GetMapping("/get")
-    public Appointment getAppointment() {
-        return new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS);
-    }
+
 }
