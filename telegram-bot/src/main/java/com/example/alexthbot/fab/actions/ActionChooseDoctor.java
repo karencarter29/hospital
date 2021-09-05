@@ -32,21 +32,15 @@ public class ActionChooseDoctor extends Action {
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
         if (text.equals("Зубной техник")) {
-            sendMessage.setReplyMarkup(keyboard());
+            sendMessage.setReplyMarkup(keyboardTooth());
         }
         else if (text.equals("Врач нарколог")){
             sendMessage.setReplyMarkup(keyboardDrag());
         }
-
-
-
-
-
-
-
         sendMessage.setChatId(id);
+        sendMessage.setReplyMarkup(keyboardTooth());
         sendMessage.setText("Выберите процедуру: \n(В первый раз советуем выбрать консультацию)");
-        //sendMessage.setReplyMarkup(keyboard());
+
         try {
             absSender.execute(sendMessage);
         } catch (
@@ -55,7 +49,7 @@ public class ActionChooseDoctor extends Action {
         }
     }
 
-    public ReplyKeyboard keyboard() {
+    public ReplyKeyboard keyboardTooth() {
         KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add("Консультация (1час)");
         keyboardRow.add("Вырвать зуб");

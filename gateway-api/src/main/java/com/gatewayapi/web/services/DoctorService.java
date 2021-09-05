@@ -21,8 +21,10 @@ public class DoctorService {
     public ResponseEntity<Object> getDoctors() {
         String url = "url to get all doctors";
         return ResponseEntity.status(HttpStatus.OK).body(new Doctor[] {
+
                 new Doctor(1L, "Зубной техник"),
                 new Doctor(2L, "Врач невролог")
+
         });
     }
 
