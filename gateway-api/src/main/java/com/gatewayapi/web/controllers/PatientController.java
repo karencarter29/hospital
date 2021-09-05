@@ -18,17 +18,17 @@ public class PatientController {
     }
 
     @PostMapping(value = "/appointment", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
+    public ResponseEntity<Object> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
         return patientService.createAppointment(appointmentInfo);
     }
 
     @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getMyAppointments() {
+    public ResponseEntity<Object> getMyAppointments() {
         return patientService.getAppointments();
     }
 
     @GetMapping(value = "/doctor/{id}/shifts", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getDoctorShifts(@PathVariable(name = "id") String id) {
+    public ResponseEntity<Object> getDoctorShifts(@PathVariable(name = "id") String id) {
         return patientService.getShiftsByDoctor(id);
     }
 }

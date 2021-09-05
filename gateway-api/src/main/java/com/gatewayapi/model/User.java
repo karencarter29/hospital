@@ -8,7 +8,9 @@ import java.util.UUID;
 @Getter
 @Setter
 public class User {
+
     Long id;
+
     String username;
     String firstName;
     String secondName;

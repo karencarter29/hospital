@@ -1,4 +1,4 @@
-package com.gatewayapi.security;
+package com.zuulservice.security;
 
 
 public class SecurityFilter {

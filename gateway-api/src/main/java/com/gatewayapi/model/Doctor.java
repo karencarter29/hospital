@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Doctor {
+
     Long userId;
     Long specialityId;
     String phoneNumber;
@@ -15,4 +16,5 @@ public class Doctor {
         this.name = name;
         userId = id;
     }
+
 }

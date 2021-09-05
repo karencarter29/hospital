@@ -2,8 +2,11 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
+import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
+import com.example.alexthbot.fab.services.Doctor;
 import com.example.alexthbot.fab.services.DoctorService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,6 +18,7 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
@@ -32,9 +36,13 @@ public class ActionLastName extends Action {
 
         botUserService.setSecondName(id, name);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
+        botUserService.setIdAndRole(update.getMessage().getChatId(), Role.PATIENT);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        sendMessage.setText("Вы зарегистрированы как: Имя - " + botUserService.getFirstName(id) + ", Фамилия - " + botUserService.getSecondName(id) + "\n Теперь выберите нужного доктора: ");
+        sendMessage.setText("Вы зарегистрированы как: \n Имя: " + botUserService.getFirstName(id) +
+                ", \nФамилия: " + botUserService.getSecondName(id) +
+                 "\nЛогин: "+ botUserService.getLogin(id)+
+                "\n Теперь выберите нужного доктора: ");
         sendMessage.setReplyMarkup(keyboard());
         try {
             absSender.execute(sendMessage);
@@ -47,7 +55,9 @@ public class ActionLastName extends Action {
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        doctorService.get().forEach(doctor -> keyboardRow.add(doctor.getName()));
+        Gson gson = new Gson();
+        Doctor [] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
