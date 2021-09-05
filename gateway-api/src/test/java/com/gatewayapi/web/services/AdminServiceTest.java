@@ -30,9 +30,9 @@ class AdminServiceTest {
     @Test
     public void getAppointmentsTest() {
         Appointment[] appointments = {
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.RESERVED),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.AVAILABLE)
+                new Appointment(1L, 1L, Condition.RESERVED),
+                new Appointment(2L, 2L, Condition.IN_PROGRESS),
+                new Appointment(3L, 3L, Condition.AVAILABLE)
         };
         ObjectMapper objectMapper = new ObjectMapper();
         String result = "";
