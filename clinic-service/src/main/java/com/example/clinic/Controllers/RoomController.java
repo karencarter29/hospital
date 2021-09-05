@@ -16,8 +16,8 @@ public class RoomController {
     private RoomService roomService;
 
     @PostMapping("/{hospitalId}/{doctorId}")
-    public Room saveRoom(@PathVariable int hospitalId, @PathVariable int doctorId) {
-        return roomService.saveRoom(hospitalId, doctorId);
+    public Room saveRoom(  @RequestBody String roomNumber, @PathVariable int hospitalId, @PathVariable int doctorId) {
+        return roomService.saveRoom( hospitalId, doctorId, roomNumber);
     }
 
     @GetMapping
@@ -26,11 +26,11 @@ public class RoomController {
     }
 
     @PutMapping("/{hospitalId}/{doctorId}")
-    public Room updateRoom(@PathVariable int hospitalId, @PathVariable int doctorId) {
-        return roomService.updateRoom(hospitalId, doctorId);
+    public Room updateRoom(@RequestBody String roomNumber, @PathVariable int hospitalId, @PathVariable int doctorId) {
+        return roomService.updateRoom(hospitalId, doctorId, roomNumber );
     }
 
-    @DeleteMapping("/delete/id/id1")
+    @DeleteMapping("/{id}/{id1}")
     public void deleteRoom(@PathVariable int id, @PathVariable int id1) {
         roomService.deleteRoom(id, id1);
     }

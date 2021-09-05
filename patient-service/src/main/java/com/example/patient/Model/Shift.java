@@ -14,20 +14,15 @@ import java.time.LocalTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Shift  {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-   // private int doctorId;
-    //TODO: speciality from doctor
     private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
-    //TODO: get procedure from speciality
     private String procedureName;
-   // private int procedureId;
 
     public int getId() {
         return id;

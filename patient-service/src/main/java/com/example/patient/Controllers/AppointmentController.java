@@ -30,7 +30,7 @@ public class AppointmentController {
         return appointmentService.updateAppointment(shiftId, patientId);
     }
 
-    @DeleteMapping("delete/{shiftId}/{patientId}")
+    @DeleteMapping("/{shiftId}/{patientId}")
     public void deleteAppointment(@PathVariable int shiftId, @PathVariable int patientId) {
         appointmentService.deleteAppointment(shiftId, patientId);
     }

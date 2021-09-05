@@ -11,8 +11,6 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AppointmentDTO {
-    @JsonIgnore
     private Shift shift;
-    @JsonIgnore
     private Patient patient;
 }

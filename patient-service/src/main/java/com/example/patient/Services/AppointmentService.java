@@ -17,15 +17,17 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @Service
 public class AppointmentService {
-    private PatientRepository patientRepository;
     private AppointmentRepository appointmentRepository;
-    private ShiftRepository shiftRepository;
     private ModelMapper modelMapper;
+    private ShiftRepository shiftRepository;
+    private PatientRepository patientRepository;
 
     public Appointment saveAppointment(int shiftId, int patientId) {
-        //TODO: to get patientId from SecurityContext
+        Shift sh = shiftRepository.findById(shiftId).orElse(null);
+        Patient p = patientRepository.findById(patientId).orElse(null);
+        Appointment a = new Appointment(sh, p);
         appointmentRepository.saveApp(shiftId, patientId);
-        return null;
+        return a;
     }
 
     public List<AppointmentDTO> appointments() {
@@ -38,24 +40,11 @@ public class AppointmentService {
     }
 
     public void deleteAppointment(int shiftId, int patientId) {//@PathVariable id
-        //TODO: to get patientId from SecurityContext
         appointmentRepository.deleteApp(shiftId,patientId);
     }
 
 
     private AppointmentDTO convertToDto(Appointment appointment) {
         return modelMapper.map(appointment, AppointmentDTO.class);
-    }
-
-    private Appointment convertToEntity(AppointmentDTO appointmentDTO) {
-        Appointment appointment = modelMapper.map(appointmentDTO, Appointment.class);
-
-        if (appointmentDTO.getShift().getId() != 0 && appointmentDTO.getPatient().getId() != 0) {
-            Shift shift = shiftRepository.findById(appointmentDTO.getShift().getId()).orElse(null);
-            Patient patient = patientRepository.findById(appointmentDTO.getPatient().getId()).orElse(null);
-            appointment.setShift(shift);
-            appointment.setPatient(patient);
-        }
-        return appointment;
     }
 }

@@ -26,7 +26,7 @@ public class Room implements Serializable {
     @JsonIgnore
     private Doctor doctor;
 
-    private Long roomNumber;
+    private String roomNumber;
 
 
     public Hospital getHospital() {
@@ -45,11 +45,11 @@ public class Room implements Serializable {
         this.doctor = doctor;
     }
 
-    public Long getRoomNumber() {
+    public String getRoomNumber() {
         return roomNumber;
     }
 
-    public void setRoomNumber(Long roomNumber) {
+    public void setRoomNumber(String roomNumber) {
         this.roomNumber = roomNumber;
     }
 }

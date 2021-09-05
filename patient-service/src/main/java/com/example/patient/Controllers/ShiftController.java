@@ -14,7 +14,7 @@ public class ShiftController {
     private ShiftService shiftService;
 
     @PostMapping
-    public Shift saveShift(@RequestBody Shift shift) {
+    public Shift saveShift(@RequestBody ShiftDTO shift) {
         return shiftService.addShift(shift);
     }
 
@@ -24,13 +24,12 @@ public class ShiftController {
     }
 
     @PutMapping
-    public Shift updateShift(@RequestBody Shift shift) {
+    public Shift updateShift(@RequestBody ShiftDTO shift) {
         return shiftService.updateShift(shift);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteShift(@PathVariable int id) {
         shiftService.deleteShift(id);
     }
-
 }

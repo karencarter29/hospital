@@ -15,9 +15,9 @@ import java.util.List;
 public class ProcedureController {
     private ProcedureService procedureService;
 
-    @PostMapping
-    public Procedure addProcedure(@RequestBody Procedure procedure, Speciality speciality) {
-        return procedureService.addProcedure(procedure, speciality);
+    @PostMapping("{specialityId}")
+    public Procedure addProcedure(@RequestBody ProcedureDTO procedure, @PathVariable int specialityId) {
+        return procedureService.addProcedure(procedure, specialityId);
     }
 
     @GetMapping
@@ -26,9 +26,9 @@ public class ProcedureController {
     }
 
 
-    @PutMapping
-    public Procedure updateProcedure(@RequestBody Procedure newProcedure, Speciality speciality) {
-        return procedureService.updateProcedure(newProcedure, speciality);
+    @PutMapping("/{specialityId}")
+    public Procedure updateProcedure(@RequestBody ProcedureDTO newProcedure, @PathVariable int specialityId) {
+        return procedureService.updateProcedure(newProcedure, specialityId);
     }
 
     @GetMapping("/procedures")
@@ -36,7 +36,7 @@ public class ProcedureController {
         return procedureService.getProcedureNames();
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteProcedure(@PathVariable int id) {
         procedureService.deleteProcedure(id);
     }

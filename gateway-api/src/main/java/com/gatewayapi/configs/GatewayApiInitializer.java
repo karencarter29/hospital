@@ -1,5 +1,6 @@
 package com.gatewayapi.configs;
 
+import org.springframework.lang.NonNull;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class GatewayApiInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -14,6 +15,7 @@ public class GatewayApiInitializer extends AbstractAnnotationConfigDispatcherSer
     }
 
     @Override
+    @NonNull
     protected String[] getServletMappings() {
         return new String[] {"/"};
     }

@@ -15,7 +15,7 @@ public class SpecialityController {
     private SpecialityService specialityService;
 
     @PostMapping
-    public Speciality saveSpeciality(@RequestBody Speciality speciality) {
+    public Speciality saveSpeciality(@RequestBody SpecialityDTO speciality) {
         return specialityService.saveSpeciality(speciality);
     }
 
@@ -25,11 +25,11 @@ public class SpecialityController {
     }
 
     @PutMapping
-    public Speciality updateSpeciality(@RequestBody Speciality speciality) {
+    public Speciality updateSpeciality(@RequestBody SpecialityDTO speciality) {
         return specialityService.updateSpeciality(speciality);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteSpeciality(@PathVariable int id) {
         specialityService.deleteSpeciality(id);
     }

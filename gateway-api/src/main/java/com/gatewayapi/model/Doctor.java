@@ -7,14 +7,14 @@ import lombok.Setter;
 @Setter
 public class Doctor {
 
+    public Doctor(Long id, String name) {
+        this.userId = id;
+        this.name = name;
+    }
+
     Long userId;
     Long specialityId;
     String phoneNumber;
 
     String name;
-    public Doctor(Long id, String name) {
-        this.name = name;
-        userId = id;
-    }
-
 }

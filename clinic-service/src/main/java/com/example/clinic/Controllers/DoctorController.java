@@ -1,6 +1,4 @@
 package com.example.clinic.Controllers;
-
-
 import com.example.clinic.DTO.DoctorDTO;
 import com.example.clinic.Model.Doctor;
 import com.example.clinic.Model.Speciality;
@@ -10,16 +8,16 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("/api")
+@RequestMapping("/doctor")
 @RestController
 @AllArgsConstructor
 public class DoctorController {
 
     private DoctorService doctorService;
 
-    @PostMapping
-    public Doctor saveDoctor(@RequestBody Doctor doctor, Speciality speciality) {
-        return doctorService.saveDoctor(doctor, speciality);
+    @PostMapping("/{specialityId}")
+    public Doctor saveDoctor(@RequestBody DoctorDTO doctor, @PathVariable int specialityId) {
+        return doctorService.saveDoctor(doctor, specialityId);
     }
 
     @GetMapping
@@ -27,14 +25,13 @@ public class DoctorController {
         return doctorService.getDoctors();
     }
 
-    @PutMapping
-    public Doctor updateDoctor(@RequestBody  Doctor doctor, Speciality speciality) {
-        return doctorService.updateDoctor(doctor, speciality);
+    @PutMapping("/{specialityId}")
+    public Doctor updateDoctor(@RequestBody  DoctorDTO doctor, @PathVariable int specialityId) {
+        return doctorService.updateDoctor(doctor, specialityId);
     }
 
     @DeleteMapping("/{id}")
     public void deleteDoctor(@PathVariable int id) {
         doctorService.deleteDoctor(id);
     }
-
 }

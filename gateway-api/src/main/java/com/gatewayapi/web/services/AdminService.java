@@ -12,32 +12,39 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class AdminService {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    //todo: configure bean
+    private RestTemplate restTemplate;
 
-    private DoctorService doctorService = new DoctorService();
-    private PatientService patientService = new PatientService();
+    private DoctorService doctorService;
+    private PatientService patientService;
+
+    public AdminService() {}
+
+    public AdminService(DoctorService doctorService, PatientService patientService) {
+        this.doctorService = doctorService;
+        this.patientService = patientService;
+    }
 
 
-    public ResponseEntity<?> createAppointment(Map<String, Object> appointmentInfo) {
+    public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
         return patientService.createAppointment(appointmentInfo);
     }
 
-    public ResponseEntity<?> createShift(Map<String, Object> shiftInfo) {
+    public ResponseEntity<Object> createShift(Map<String, Object> shiftInfo) {
         return doctorService.createShift(shiftInfo);
     }
 
-    public ResponseEntity<?> getAllShifts() {
+    public ResponseEntity<Object> getAllShifts() {
         String url = "url to get all shifts";
         //restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().body(getShifts());
     }
 
-    public ResponseEntity<?> getAllAppointments() {
+    public ResponseEntity<Object> getAllAppointments() {
         String url = "url to get all appointments";
         //restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().body(getAppointments());

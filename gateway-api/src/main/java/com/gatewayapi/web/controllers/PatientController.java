@@ -28,7 +28,7 @@ public class PatientController {
     }
 
     @GetMapping(value = "/doctor/{id}/shifts", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getDoctorShifts(@PathVariable(name = "id") String id) {
+    public ResponseEntity<Object> getDoctorShifts(@PathVariable(name = "id") Long id) {
         return patientService.getShiftsByDoctor(id);
     }
 }

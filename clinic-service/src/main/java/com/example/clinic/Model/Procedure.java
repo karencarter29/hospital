@@ -1,5 +1,6 @@
 package com.example.clinic.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -14,6 +15,7 @@ public class Procedure {
     private int id;
     private String procedureName;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Speciality speciality;
 
     public int getId() {

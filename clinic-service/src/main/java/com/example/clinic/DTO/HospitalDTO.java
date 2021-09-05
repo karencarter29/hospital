@@ -16,6 +16,4 @@ public class HospitalDTO {
     private String name;
     private String address;
     private List<Room> rooms = new ArrayList<>();
-
-
 }

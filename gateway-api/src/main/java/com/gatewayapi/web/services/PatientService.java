@@ -16,31 +16,19 @@ import java.util.UUID;
 @Service
 public class PatientService {
 
-    private static final String ADDRESS = "";
-
     RestTemplate restTemplate;
 
-//    PatientService(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-
-    public ResponseEntity<Object> getShiftsByDoctor(String id) {
-        String url = ADDRESS + "url to get shifts by doctor";
-        //restTemplate.getForObject(url, ResponseEntity.class)
+    public ResponseEntity<Object> getShiftsByDoctor(Long id) {
         return ResponseEntity.ok().body(new Shift[]{
-                new Shift(Long.getLong(id), 1L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-                new Shift(Long.getLong(id), 2L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
+                new Shift(id, 1L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+                new Shift(id, 2L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
     }
 
     public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
-        String url = ADDRESS + "url to create appointment";
-        //restTemplate.postForEntity(url, appointmentInfo, String.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body("");
+        return ResponseEntity.status(HttpStatus.CREATED).body(appointmentInfo);
     }
 
     public ResponseEntity<Object> getAppointments() {
-        String url = ADDRESS + "url to get appointments by patient";
-        //restTemplate.getForObject(url, ResponseEntity.class)
         return ResponseEntity.ok().body(new Appointment[]{
                 new Appointment(1L, 1L, Condition.IN_PROGRESS)});
     }
