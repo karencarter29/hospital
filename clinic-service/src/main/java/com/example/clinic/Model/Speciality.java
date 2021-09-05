@@ -16,9 +16,9 @@ public class Speciality {
     private int id;
     private String specialityName;
     @OneToMany(mappedBy = "speciality", fetch = FetchType.LAZY)
-    private List<Doctor> doctors = new ArrayList<Doctor>();
+    private List<Doctor> doctors = new ArrayList<>();
     @OneToMany(mappedBy = "speciality", fetch = FetchType.LAZY)
-    private List<Procedure> procedures = new ArrayList<Procedure>();
+    private List<Procedure> procedures = new ArrayList<>();
 
     public void addDoctor(Doctor doctor)
     {

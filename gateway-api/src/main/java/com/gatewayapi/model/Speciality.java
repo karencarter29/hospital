@@ -8,6 +8,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Speciality {
-    UUID id;
+    Long id;
     String specialityName;
 }

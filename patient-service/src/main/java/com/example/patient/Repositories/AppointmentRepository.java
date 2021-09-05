@@ -1,9 +1,7 @@
 package com.example.patient.Repositories;
 
 import com.example.patient.Model.Appointment;
-import com.example.patient.Model.Patient;
 import com.example.patient.Model.RelationShipPK;
-import com.example.patient.Model.Shift;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;

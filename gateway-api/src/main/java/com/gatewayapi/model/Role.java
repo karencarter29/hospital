@@ -8,6 +8,6 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Role {
-    UUID id;
+    Long id;
     String roleName;
 }

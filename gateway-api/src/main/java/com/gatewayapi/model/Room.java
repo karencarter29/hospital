@@ -8,8 +8,8 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Room {
-    UUID id;
-    UUID hospitalId;
-    UUID doctorId;
+    Long id;
+    Long hospitalId;
+    Long doctorId;
     Long roomNumber;
 }

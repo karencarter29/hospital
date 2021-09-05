@@ -10,5 +10,4 @@ import lombok.NoArgsConstructor;
 public class Procedure {
     private int id;
     private String procedureName;
-    // private Speciality speciality;
 }

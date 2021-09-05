@@ -3,7 +3,6 @@ package com.example.clinic.Services;
 import com.example.clinic.DTO.RoomDTO;
 import com.example.clinic.Model.Doctor;
 import com.example.clinic.Model.Hospital;
-import com.example.clinic.Model.RelationShipPK;
 import com.example.clinic.Model.Room;
 import com.example.clinic.Repositories.DoctorRepository;
 import com.example.clinic.Repositories.HospitalRepository;
@@ -24,19 +23,30 @@ public class RoomService {
     private DoctorRepository doctorRepository;
     private ModelMapper modelMapper;
 
-    public Room saveRoom(RoomDTO room) throws ParseException {
-        Room r = convertToEntity(room);
-        roomRepository.saveRoom(r.getHospital().getId(), r.getDoctor().getId());
+    public Room saveRoom(int hospitalId, int doctorId) {
+       // Room r = convertToEntity(room);
+        Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
+        Doctor d = doctorRepository.findById(doctorId).orElse(null);
+        Room r = new Room();
+        r.setHospital(h);
+        r.setDoctor(d);
+        roomRepository.saveRoom(hospitalId, doctorId);
         return r;
     }
 
     public List<RoomDTO> getRooms() {
-        List<Room> roomList = (List<Room>) roomRepository.findAll();
+        List<Room> roomList = roomRepository.findAll();
         return roomList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Room updateRoom(Room room) {
-        return roomRepository.save(room);
+    public Room updateRoom(int hospitalId, int doctorId) {
+        Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
+        Doctor d = doctorRepository.findById(doctorId).orElse(null);
+        Room r = new Room();
+        r.setHospital(h);
+        r.setDoctor(d);
+        roomRepository.saveRoom(hospitalId, doctorId);
+        return null;
     }
 
     public void deleteRoom(int hospitalId, int doctorId) {
@@ -44,16 +54,15 @@ public class RoomService {
     }
 
     private RoomDTO convertToDto(Room room) {
-        RoomDTO roomDTO = modelMapper.map(room, RoomDTO.class);
-        return roomDTO;
+        return modelMapper.map(room, RoomDTO.class);
     }
 
-    private Room convertToEntity(RoomDTO roomDTO) throws ParseException {
+    private Room convertToEntity(RoomDTO roomDTO) {
         Room room = modelMapper.map(roomDTO, Room.class);
 
         if (roomDTO.getDoctor().getId() != 0 && roomDTO.getHospital().getId() != 0) {
-            Doctor doctor = doctorRepository.findById(roomDTO.getDoctor().getId()).get();
-            Hospital hospital = hospitalRepository.findById(roomDTO.getHospital().getId()).get();
+            Doctor doctor = doctorRepository.findById(roomDTO.getDoctor().getId()).orElse(null);
+            Hospital hospital = hospitalRepository.findById(roomDTO.getHospital().getId()).orElse(null);
             room.setDoctor(doctor);
             room.setHospital(hospital);
         }

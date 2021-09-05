@@ -21,8 +21,10 @@ public class DoctorService {
     public ResponseEntity<Object> getDoctors() {
         String url = "url to get all doctors";
         return ResponseEntity.status(HttpStatus.OK).body(new Doctor[] {
-                new Doctor(UUID.randomUUID(), "David"),
-                new Doctor(UUID.randomUUID(), "Garry")
+
+                new Doctor(1L, "Зубной техник"),
+                new Doctor(2L, "Врач невролог")
+
         });
     }
 
@@ -40,9 +42,9 @@ public class DoctorService {
         String url = "url to get appointments";
         //restTemplate.getForObject(url, Object.class);
         return ResponseEntity.ok().body(new Appointment[] {
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.RESERVED),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.AVAILABLE)
+                new Appointment(1L, 1L, Condition.RESERVED),
+                new Appointment(2L, 2L, Condition.IN_PROGRESS),
+                new Appointment(3L, 3L, Condition.AVAILABLE)
         });
     }
 

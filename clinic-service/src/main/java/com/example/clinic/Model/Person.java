@@ -21,9 +21,15 @@ public class Person {
     private String password;
     private String firstName;
     private String secondName;
-    private int role_id;
+    private int roleId;
 
+    public int getRoleId() {
+        return roleId;
+    }
 
+    public void setRoleId(int roleId) {
+        this.roleId = roleId;
+    }
 
     public String getUserName() {
         return userName;
@@ -65,11 +71,5 @@ public class Person {
         this.id = id;
     }
 
-    public int getRole_id() {
-        return role_id;
-    }
 
-    public void setRole_id(int role_id) {
-        this.role_id = role_id;
-    }
 }

@@ -15,16 +15,19 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-//@JsonIgnoreProperties(ignoreUnknown = true)
 public class Shift  {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private int id;
-    private int doctorId;
+   // private int doctorId;
+    //TODO: speciality from doctor
+    private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
-    private int procedureId;
+    //TODO: get procedure from speciality
+    private String procedureName;
+   // private int procedureId;
 
     public int getId() {
         return id;
@@ -34,12 +37,20 @@ public class Shift  {
         this.id = id;
     }
 
-    public int getDoctorId() {
-        return doctorId;
+    public String getSpecialityName() {
+        return specialityName;
     }
 
-    public void setDoctorId(int doctorId) {
-        this.doctorId = doctorId;
+    public void setSpecialityName(String specialityName) {
+        this.specialityName = specialityName;
+    }
+
+    public String getProcedureName() {
+        return procedureName;
+    }
+
+    public void setProcedureName(String procedureName) {
+        this.procedureName = procedureName;
     }
 
     public LocalTime getStartTime() {
@@ -66,11 +77,4 @@ public class Shift  {
         this.date = date;
     }
 
-    public int getProcedureId() {
-        return procedureId;
-    }
-
-    public void setProcedureId(int procedureId) {
-        this.procedureId = procedureId;
-    }
 }

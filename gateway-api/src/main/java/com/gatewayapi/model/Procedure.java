@@ -8,7 +8,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Procedure {
-    UUID id;
-    UUID specialityId;
+    Long id;
+    Long specialityId;
     String procedureName;
 }

@@ -45,18 +45,18 @@ public class AdminService {
 
     private String getAppointments() {
         Appointment[] appointments = {
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.RESERVED),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.AVAILABLE)
+                new Appointment(1L, 1L, Condition.RESERVED),
+                new Appointment(2L, 2L, Condition.IN_PROGRESS),
+                new Appointment(3L, 3L, Condition.AVAILABLE)
         };
         return convertObjectToJson(appointments);
     }
 
     private String getShifts() {
         Shift[] shifts = {
-              new Shift(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())
+              new Shift(1L, 1L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+              new Shift(2L, 2L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+              new Shift(3L, 3L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())
         };
         return convertObjectToJson(shifts);
     }

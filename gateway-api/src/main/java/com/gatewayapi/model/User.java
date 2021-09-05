@@ -9,16 +9,11 @@ import java.util.UUID;
 @Setter
 public class User {
 
-    public User(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.secondName = lastName;
-    }
+    Long id;
 
-    UUID id;
     String username;
     String firstName;
     String secondName;
-    UUID hospitalId;
-    UUID roleId;
-
+    Long hospitalId;
+    Long roleId;
 }

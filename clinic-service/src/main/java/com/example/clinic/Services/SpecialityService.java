@@ -26,8 +26,8 @@ public class SpecialityService {
     }
 
     public List<SpecialityDTO> getSpecialities() {
-        List<Speciality> specialityList = (List<Speciality>) specialityRepository.findAll();
-        return specialityList.stream().map(s -> convertToDto(s)).collect(Collectors.toList());
+        List<Speciality> specialityList = specialityRepository.findAll();
+        return specialityList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     public Speciality updateSpeciality(Speciality newSpeciality) {
@@ -40,7 +40,6 @@ public class SpecialityService {
 
 
     private SpecialityDTO convertToDto(Speciality speciality) {
-        SpecialityDTO specialityDTO = modelMapper.map(speciality, SpecialityDTO.class);
-        return specialityDTO;
+        return modelMapper.map(speciality, SpecialityDTO.class);
     }
 }

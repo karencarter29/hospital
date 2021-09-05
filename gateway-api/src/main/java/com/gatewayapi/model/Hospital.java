@@ -8,7 +8,7 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Hospital {
-    UUID id;
+    Long id;
     String name;
     String address;
 }

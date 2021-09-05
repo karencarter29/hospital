@@ -21,7 +21,7 @@ public class HospitalService {
     }
 
     public List<HospitalDTO> getHospitals() {
-        List<Hospital> hospitalList = (List<Hospital>) hospitalRepository.findAll();
+        List<Hospital> hospitalList = hospitalRepository.findAll();
         return hospitalList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 

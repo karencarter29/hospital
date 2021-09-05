@@ -28,8 +28,8 @@ public class PatientService {
         String url = ADDRESS + "url to get shifts by doctor";
         //restTemplate.getForObject(url, ResponseEntity.class)
         return ResponseEntity.ok().body(new Shift[]{
-                new Shift(UUID.fromString(id), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-                new Shift(UUID.fromString(id), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
+                new Shift(Long.getLong(id), 1L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+                new Shift(Long.getLong(id), 2L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
     }
 
     public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
@@ -42,6 +42,6 @@ public class PatientService {
         String url = ADDRESS + "url to get appointments by patient";
         //restTemplate.getForObject(url, ResponseEntity.class)
         return ResponseEntity.ok().body(new Appointment[]{
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS)});
+                new Appointment(1L, 1L, Condition.IN_PROGRESS)});
     }
 }

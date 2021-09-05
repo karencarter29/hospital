@@ -1,7 +1,6 @@
 package com.example.patient.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -12,9 +11,8 @@ import java.io.Serializable;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @IdClass(RelationShipPK.class)
-public class Appointment implements Serializable{
+public class Appointment implements Serializable {
     @Id
     @OneToOne(targetEntity = Shift.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "shiftId")
@@ -24,7 +22,7 @@ public class Appointment implements Serializable{
     @Id
     @ManyToOne(targetEntity = Patient.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId")
-     @JsonIgnore
+    @JsonIgnore
     private Patient patient;
 
 
