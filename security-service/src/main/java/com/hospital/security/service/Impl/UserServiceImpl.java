@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void register(UserDto userDto) {
-        Role userRole = roleRepository.findByName(userDto.getRole());
+        Role userRole = roleRepository.findByName("ROLE_PATIENT");
         if (userRepository.findByUsername(userDto.getUsername()) != null) {
             throw new BadCredentialsException("Username already exist");
         }
