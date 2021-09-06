@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gatewayapi.model.Appointment;
 import com.gatewayapi.model.Condition;
+import com.gatewayapi.model.Doctor;
 import com.gatewayapi.model.Shift;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -16,7 +18,6 @@ import java.util.Map;
 @Service
 public class AdminService {
 
-    //todo: configure bean
     private RestTemplate restTemplate;
 
     private DoctorService doctorService;
@@ -24,9 +25,11 @@ public class AdminService {
 
     public AdminService() {}
 
-    public AdminService(DoctorService doctorService, PatientService patientService) {
-        this.doctorService = doctorService;
+    @Autowired
+    public AdminService(RestTemplate restTemplate, DoctorService doctorService, PatientService patientService) {
+        this.restTemplate = restTemplate;
         this.patientService = patientService;
+        this.doctorService = doctorService;
     }
 
 
@@ -40,7 +43,7 @@ public class AdminService {
 
     public ResponseEntity<Object> getAllShifts() {
         String url = "url to get all shifts";
-        //restTemplate.getForObject(url, ResponseEntity.class);
+//        restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().body(getShifts());
     }
 
