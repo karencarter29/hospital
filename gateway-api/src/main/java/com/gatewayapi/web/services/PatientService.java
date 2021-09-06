@@ -3,6 +3,7 @@ package com.gatewayapi.web.services;
 import com.gatewayapi.model.Appointment;
 import com.gatewayapi.model.Condition;
 import com.gatewayapi.model.Shift;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -11,12 +12,18 @@ import org.springframework.web.client.RestTemplate;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class PatientService {
 
+    private final String ADDRESS = "http://localhost:8082";
+
     RestTemplate restTemplate;
+
+    @Autowired
+    public PatientService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
+    }
 
     public ResponseEntity<Object> getShiftsByDoctor(Long id) {
         return ResponseEntity.ok().body(new Shift[]{
@@ -25,6 +32,7 @@ public class PatientService {
     }
 
     public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
+        String url = ADDRESS + "/appointment/{shift_id}/{patient_id}";
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentInfo);
     }
 
