@@ -10,25 +10,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class Shift  {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private UUID id;
     private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
     private String procedureName;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

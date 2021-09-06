@@ -3,5 +3,8 @@ package com.example.clinic.Repositories;
 import com.example.clinic.Model.Procedure;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ProcedureRepository extends JpaRepository<Procedure, Integer> {
+import java.util.UUID;
+
+public interface ProcedureRepository extends JpaRepository<Procedure, UUID> {
+
 }

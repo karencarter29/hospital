@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.UUID;
 
 
 @Entity
@@ -14,9 +15,8 @@ import javax.persistence.Id;
 @AllArgsConstructor
 public class Person {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    // @Column(name = "user_id")
-    private int id;
+    @GeneratedValue
+    private UUID id;
     private String userName;
     private String password;
     private String firstName;
@@ -63,13 +63,11 @@ public class Person {
         this.secondName = secondName;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
-
-
 }

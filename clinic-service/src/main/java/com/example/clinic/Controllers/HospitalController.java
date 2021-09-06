@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/hospital")
@@ -30,7 +31,7 @@ public class HospitalController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteHospital(@PathVariable int id) {
+    public void deleteHospital(@PathVariable UUID id) {
         hospitalService.deleteHospital(id);
     }
 }

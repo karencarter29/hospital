@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -21,17 +22,17 @@ public class AppointmentController {
     }
 
     @PostMapping("/{shiftId}/{patientId}")
-    public Appointment saveAppointment(@PathVariable int shiftId, @PathVariable  int patientId){
+    public Appointment saveAppointment(@PathVariable UUID shiftId, @PathVariable  UUID patientId){
         return appointmentService.saveAppointment(shiftId, patientId);
     }
 
     @PutMapping("/{shiftId}/{patientId}")
-    public Appointment updateAppointment(@PathVariable int shiftId, @PathVariable int patientId) {
+    public Appointment updateAppointment(@PathVariable UUID shiftId, @PathVariable UUID patientId) {
         return appointmentService.updateAppointment(shiftId, patientId);
     }
 
     @DeleteMapping("/{shiftId}/{patientId}")
-    public void deleteAppointment(@PathVariable int shiftId, @PathVariable int patientId) {
+    public void deleteAppointment(@PathVariable UUID shiftId, @PathVariable UUID patientId) {
         appointmentService.deleteAppointment(shiftId, patientId);
     }
 }

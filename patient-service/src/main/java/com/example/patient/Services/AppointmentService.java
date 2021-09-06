@@ -22,7 +22,7 @@ public class AppointmentService {
     private ShiftRepository shiftRepository;
     private PatientRepository patientRepository;
 
-    public Appointment saveAppointment(int shiftId, int patientId) {
+    public Appointment saveAppointment(UUID shiftId, UUID patientId) {
         Shift sh = shiftRepository.findById(shiftId).orElse(null);
         Patient p = patientRepository.findById(patientId).orElse(null);
         Appointment a = new Appointment(sh, p);
@@ -35,11 +35,15 @@ public class AppointmentService {
         return appointmentList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Appointment updateAppointment(int shiftId, int patientId){
-        return saveAppointment(shiftId, patientId);
+    public Appointment updateAppointment(UUID shiftId, UUID patientId){
+        Shift sh = shiftRepository.findById(shiftId).orElse(null);
+        Patient p = patientRepository.findById(patientId).orElse(null);
+        Appointment a = new Appointment(sh, p);
+        appointmentRepository.updateApp(shiftId, patientId);
+        return a;
     }
 
-    public void deleteAppointment(int shiftId, int patientId) {//@PathVariable id
+    public void deleteAppointment(UUID shiftId, UUID patientId) {//@PathVariable id
         appointmentRepository.deleteApp(shiftId,patientId);
     }
 
