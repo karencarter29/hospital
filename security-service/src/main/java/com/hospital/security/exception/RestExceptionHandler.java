@@ -1,4 +1,4 @@
-package exception;
+package com.hospital.security.exception;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
