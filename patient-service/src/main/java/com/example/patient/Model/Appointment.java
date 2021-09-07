@@ -16,7 +16,6 @@ import java.util.UUID;
         @Index(name="appointment_shiftId_idx", columnList = "shiftId"),
         @Index(name="appointment_patientId_idx", columnList = "patientId")
 })
-//
 public class Appointment implements Serializable {
 
     @Id

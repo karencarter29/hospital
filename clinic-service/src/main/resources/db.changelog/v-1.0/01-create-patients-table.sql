@@ -1,7 +1,10 @@
+
+
 CREATE TABLE doctor (
                         id BYTES(255) NOT NULL,
+                        first_name STRING(255),
+                        last_name STRING(255),
                         phone_number STRING(255),
-                        user_id INT64 NOT NULL,
                         speciality_id BYTES(255),
 ) PRIMARY KEY(id);
 
@@ -26,6 +29,7 @@ CREATE TABLE procedure (
                            speciality_id BYTES(255),
 ) PRIMARY KEY(id);
 
+
 CREATE TABLE room (
                       room_number STRING(255),
                       hospital_id BYTES(255) NOT NULL,
@@ -34,7 +38,6 @@ CREATE TABLE room (
                       CONSTRAINT FKsc1y77urc7knjy3bf7ssr46bk FOREIGN KEY(hospital_id) REFERENCES hospital(id),
 ) PRIMARY KEY(doctor_id, hospital_id);
 
-CREATE UNIQUE INDEX UK_g7q5b45jwv4q15js8msilmii1 ON room(doctor_id);
 
 CREATE TABLE speciality (
                             id BYTES(255) NOT NULL,
@@ -43,4 +46,15 @@ CREATE TABLE speciality (
 
 ALTER TABLE procedure ADD CONSTRAINT FK56rucj7tofhe97iqjt1khyr1u FOREIGN KEY(speciality_id) REFERENCES speciality(id);
 
-ALTER TABLE doctor ADD CONSTRAINT FKdht1k3ou6ody790hip20bl9dx FOREIGN KEY(speciality_id) REFERENCES speciality(id)
+ALTER TABLE doctor ADD CONSTRAINT FKdht1k3ou6ody790hip20bl9dx FOREIGN KEY(speciality_id) REFERENCES speciality(id);
+
+
+
+CREATE UNIQUE INDEX UK_g7q5b45jwv4q15js8msilmii1 ON room(doctor_id);
+
+CREATE INDEX procedure_id_idx ON procedure(id);
+
+
+CREATE INDEX room_doctorId_idx ON room(doctor_id);
+
+CREATE INDEX room_hospitalId_idx ON room(hospital_id);
