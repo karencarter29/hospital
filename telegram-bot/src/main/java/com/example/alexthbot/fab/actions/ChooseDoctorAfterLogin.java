@@ -2,62 +2,46 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
-import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
-import com.example.alexthbot.fab.services.BotAppointmentService;
+import com.example.alexthbot.fab.services.Doctor;
+import com.example.alexthbot.fab.services.DoctorService;
+import com.example.alexthbot.fab.services.ProcedureService;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class ActionBooked extends Action {
+public class ChooseDoctorAfterLogin extends Action {
+    @Autowired
+    DoctorService doctorService;
+
     @Autowired
     BotAppointment botAppointment;
     @Autowired
-    BotAppointmentService botAppointmentService;
-    @Autowired
-    ConfigurationAppointment configurationAppointment;
-
-
+    ProcedureService procedureService;
     @Override
     public void action(Update update, AbsSender absSender) {
+        SendMessage sendMessage = new SendMessage();
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
-        botAppointment.setTime(text);
-        String s = LocalDateTime.now().toString();
-        botAppointment.setTimeBook(s.split("T")[0]);
-        botUserService.setCommand(id, ActionEnum.SHOW_APPOINTMENTS);
-        SendMessage sendMessage = new SendMessage();
+        botAppointment.setDoctor(text);
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
         sendMessage.setChatId(id);
-        BotAppointment botAppointment2 = new BotAppointment();
-        botAppointment2.setTimeBook(botAppointment.getTimeBook());
-        botAppointment2.setDoctor(botAppointment.getDoctor());
-        botAppointment2.setProcedure(botAppointment.getProcedure());
-        botAppointment2.setDate(botAppointment.getDate());
-        botAppointment2.setTime(botAppointment.getTime());
-        botAppointment2.setDuration(botAppointment.getDuration());
-        //configurationAppointment.appointmentList.add(botAppointment2);
-        botAppointmentService.PostAppointment(botAppointment2);
-
-
-        sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"
-                + "Доктор: " + botAppointment.getDoctor() + "\n"
-                + "Процедура: " + botAppointment.getProcedure() + "\n"
-                + "День: " + botAppointment.getDate() + "\n"
-                + "Время: " + botAppointment.getTime() + "\n"
-                + "Длительность процедуры: " + botAppointment.getDuration() + "\n"
-        );
         sendMessage.setReplyMarkup(keyboard());
+        sendMessage.setText("Выберите процедуру: \n(В первый раз советуем выбрать консультацию)");
+
         try {
             absSender.execute(sendMessage);
         } catch (
@@ -66,9 +50,12 @@ public class ActionBooked extends Action {
         }
     }
 
+    @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Мои записи");
+        Gson gson = new Gson();
+        Doctor[] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
@@ -79,9 +66,8 @@ public class ActionBooked extends Action {
         return replyKeyboardMarkup;
     }
 
-
     @Override
     public ActionEnum getKey() {
-        return ActionEnum.MIDDLE_BOOKED;
+        return ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN;
     }
 }

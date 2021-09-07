@@ -1,20 +1,14 @@
 package com.gatewayapi.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
 public class Doctor {
-
-    public Doctor(Long id, String name) {
-        this.userId = id;
-        this.name = name;
-    }
-
     Long userId;
-    Long specialityId;
+    Speciality specialityId;
     String phoneNumber;
-
-    String name;
 }

@@ -28,7 +28,7 @@ public class BotAppointmentServiceApi implements BotAppointmentService{
     }
 
     @Override
-    public List<String> GetAppointment() {
+    public List<String> GetAppointments() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<List<String>> appResponse = new RestTemplate().exchange(urlGetApps,HttpMethod.GET,httpEntity,CollectionParams.get());
         if (appResponse.getStatusCode() == HttpStatus.OK) {

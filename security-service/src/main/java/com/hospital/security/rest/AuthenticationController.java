@@ -6,6 +6,7 @@ import com.hospital.security.model.User;
 import com.hospital.security.security.jwt.JwtTokenProvider;
 import com.hospital.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -48,14 +49,17 @@ public class AuthenticationController {
             if (user == null) {
                 throw new UsernameNotFoundException("User with username: " + username + " not found");
             }
+            UserDto userDto = new UserDto();
+            userDto.setFirstName(user.getFirstName());
+            userDto.setSecondName(user.getSecondName());
+            userDto.setId(user.getId());
+            userDto.setUsername(username);
+            String token = jwtTokenProvider.createToken(userDto, user.getRoles());
 
-            String token = jwtTokenProvider.createToken(username, user.getRoles());
+            HttpHeaders responseHeaders = new HttpHeaders();
+            responseHeaders.set("Authorization", token);
 
-            Map<Object, Object> response = new HashMap<>();
-            response.put("username", username);
-            response.put("token", token);
-
-            return ResponseEntity.ok(response);
+            return ResponseEntity.ok().headers(responseHeaders).build();
         } catch (AuthenticationException e) {
             throw new BadCredentialsException("Invalid username or password");
         }

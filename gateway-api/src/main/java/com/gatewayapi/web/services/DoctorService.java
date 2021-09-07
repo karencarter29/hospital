@@ -3,6 +3,7 @@ package com.gatewayapi.web.services;
 import com.gatewayapi.model.Appointment;
 import com.gatewayapi.model.Condition;
 import com.gatewayapi.model.Doctor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -15,11 +16,9 @@ public class DoctorService {
 
     RestTemplate restTemplate;
 
-    public ResponseEntity<Object> getDoctors() {
-        return ResponseEntity.status(HttpStatus.OK).body(new Doctor[] {
-                new Doctor(1L, "David"),
-                new Doctor(2L, "Garry")
-        });
+    @Autowired
+    public DoctorService(RestTemplate restTemplate) {
+        this.restTemplate = restTemplate;
     }
 
     public ResponseEntity<Object> createShift(Map<String, Object> payload) {

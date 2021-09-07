@@ -8,13 +8,9 @@ import java.util.List;
 
 @Service
 @ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "false")
-public class ProcedureServiceMock implements ProcedureService{
-
+public class TimeServiceMock implements TimeForBook{
     @Override
-    public List<Procedure> getProcedures() {
-        return Arrays.asList(
-                new Procedure(1L,"Вырвать зуб"),
-                new Procedure(2L,"Отбелить зубы")
-        );
+    public List<String> getTime() {
+        return Arrays.asList ("10.00","12.00","14.00");
     }
 }

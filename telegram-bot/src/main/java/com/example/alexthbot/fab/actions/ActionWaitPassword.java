@@ -5,6 +5,8 @@ import com.example.alexthbot.fab.actions.router.ActionEnum;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
@@ -21,6 +23,7 @@ public class ActionWaitPassword extends Action {
         botUserService.setCommand(id,ActionEnum.CHOOSE_FIRST_NAME);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
+
         sendMessage.setText("Напишите свое имя:");
         try {
             absSender.execute(sendMessage);

@@ -13,8 +13,8 @@ public class DoctorServiceMock implements DoctorService{
     @Override
     public List<Doctor> get() {
         return Arrays.asList(
-                new Doctor(UUID.randomUUID(),"Зубной техник"),
-                new Doctor(UUID.randomUUID(),"Нарколог")
+                new Doctor(1l,"25","Зубной техник"),
+                new Doctor(2L,"26","Нарколог")
         );
     }
 }

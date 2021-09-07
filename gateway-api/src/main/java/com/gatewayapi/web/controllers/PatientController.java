@@ -17,7 +17,12 @@ public class PatientController {
         this.patientService = patientService;
     }
 
-    @PostMapping(value = "/appointment", consumes = MediaType.APPLICATION_JSON)
+    @GetMapping(value = "/doctors", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<Object> getDoctors() {
+        return patientService.getDoctors();
+    }
+
+    @PostMapping(value = "/appointment/", consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<Object> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
         return patientService.createAppointment(appointmentInfo);
     }

@@ -1,5 +1,6 @@
 package com.hospital.security.security.jwt;
 
+import com.hospital.security.dto.UserDto;
 import com.hospital.security.model.Role;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +37,13 @@ public class JwtTokenProvider {
         return bCryptPasswordEncoder;
     }
 
-    public String createToken(String userName, List<Role> roles) {
+    public String createToken(UserDto userDto, List<Role> roles) {
         Claims claims = Jwts.claims();
-        claims.setSubject(userName);
+        claims.setSubject(userDto.getUsername());
         claims.put("roles", getRoleNames(roles));
+        claims.put("id", userDto.getId());
+        claims.put("firstName", userDto.getFirstName());
+        claims.put("secondName", userDto.getSecondName());
         Date now = new Date();
         Date exp = Date.from(LocalDateTime.now().plusMinutes(30)
                 .atZone(ZoneId.systemDefault()).toInstant());

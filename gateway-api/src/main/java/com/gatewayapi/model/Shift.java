@@ -16,7 +16,7 @@ import java.util.Random;
 public class Shift {
     final Long id = new Random().nextLong();
     Long doctorId;
-    Long procedureId;
+    Procedure procedure;
     LocalDateTime startTime;
     LocalDateTime endTime;
     LocalDate date;

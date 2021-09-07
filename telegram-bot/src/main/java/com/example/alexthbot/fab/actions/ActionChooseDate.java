@@ -3,6 +3,10 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.DoctorServiceApi;
+import com.example.alexthbot.fab.services.Procedure;
+import com.example.alexthbot.fab.services.Shift;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,12 +18,15 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class ActionChooseDate extends Action {
     @Autowired
     BotAppointment botAppointment;
+    @Autowired
+    DoctorServiceApi doctorServiceApi;
 
     @Override
     public void action(Update update, AbsSender absSender) {
@@ -50,10 +57,9 @@ public class ActionChooseDate extends Action {
 
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("27 августа");
-        keyboardRow.add("28 августа");
-        keyboardRow.add("29 августа");
-        keyboardRow.add("30 августа");
+        Gson gson = new Gson();
+        Shift[] shifts = gson.fromJson(String.valueOf(doctorServiceApi.get()), Shift[].class);
+        Arrays.stream(shifts).forEach(shift1 -> keyboardRow.add(shift1.getDate().toString()));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
