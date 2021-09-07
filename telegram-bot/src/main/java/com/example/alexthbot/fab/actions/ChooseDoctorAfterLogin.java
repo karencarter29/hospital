@@ -4,7 +4,7 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.services.Doctor;
-import com.example.alexthbot.fab.services.Procedure;
+import com.example.alexthbot.fab.services.DoctorService;
 import com.example.alexthbot.fab.services.ProcedureService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,10 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class ActionChooseDoctor extends Action {
+public class ChooseDoctorAfterLogin extends Action {
+    @Autowired
+    DoctorService doctorService;
+
     @Autowired
     BotAppointment botAppointment;
     @Autowired
@@ -34,11 +37,9 @@ public class ActionChooseDoctor extends Action {
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
         botAppointment.setDoctor(text);
-        sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
-
         sendMessage.setChatId(id);
-        sendMessage.setReplyMarkup(keyboardTooth());
+        sendMessage.setReplyMarkup(keyboard());
         sendMessage.setText("Выберите процедуру: \n(В первый раз советуем выбрать консультацию)");
 
         try {
@@ -49,38 +50,12 @@ public class ActionChooseDoctor extends Action {
         }
     }
 
-//    public ReplyKeyboard keyboardTooth() {
-//        KeyboardRow keyboardRow = new KeyboardRow();
-//       procedureService.getProcedures().forEach(procedure -> keyboardRow.add(procedure.getProcedure()));
-//
-//        List<KeyboardRow> keyboardRows = new ArrayList<>();
-//        keyboardRows.add(keyboardRow);
-//
-//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//        replyKeyboardMarkup.setKeyboard(keyboardRows);
-//        replyKeyboardMarkup.setResizeKeyboard(true);
-//        return replyKeyboardMarkup;
-//    }
-    public ReplyKeyboard keyboardTooth() {
+    @Override
+    public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProcedures()), Procedure[].class);
-        Arrays.stream(procedures).forEach(prod1 -> keyboardRow.add(prod1.getProcedure()));
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        keyboardRows.add(keyboardRow);
-
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        return replyKeyboardMarkup;
-    }
-
-    public ReplyKeyboard keyboardDrag() {
-        KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Консультация (1час)");
-        keyboardRow.add("Бросить курить");
-        keyboardRow.add("Бросить пить");
-        keyboardRow.add("Лечение игромании");
+        Doctor[] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
@@ -93,6 +68,6 @@ public class ActionChooseDoctor extends Action {
 
     @Override
     public ActionEnum getKey() {
-        return ActionEnum.CHOOSE_DOCTOR;
+        return ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN;
     }
 }

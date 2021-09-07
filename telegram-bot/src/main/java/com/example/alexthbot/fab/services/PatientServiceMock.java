@@ -22,6 +22,6 @@ public class PatientServiceMock implements PatientService{
 
     @Override
     public Patient userGet() {
-        return new Patient(4L,"Geek","Григорий","Афанасий", Role.PATIENT);
+        return new Patient(4L,"Григорий","Афанасий", Role.PATIENT,"Geek","qwerty");
     }
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -27,6 +28,7 @@ public class ActionRegistration extends Action {
 
 
         botUserService.setCommand(id,ActionEnum.REGISTRATION_WAITING_LOGIN);
+
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {
