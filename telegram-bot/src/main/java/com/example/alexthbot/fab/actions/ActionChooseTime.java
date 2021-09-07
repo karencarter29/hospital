@@ -4,6 +4,9 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.Shift;
+import com.example.alexthbot.fab.services.TimeForBook;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -15,13 +18,15 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class ActionChooseTime extends Action {
     @Autowired
     BotAppointment botAppointment;
-
+    @Autowired
+    TimeForBook timeForBook;
     @Autowired
     ConfigurationAppointment configurationAppointment;
     @Override
@@ -50,10 +55,9 @@ public class ActionChooseTime extends Action {
 
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("08:00");
-        keyboardRow.add("10:00");
-        keyboardRow.add("12:00");
-        keyboardRow.add("14:00");
+        Gson gson = new Gson();
+        String[] strings = gson.fromJson(String.valueOf(timeForBook.getTime()), String[].class);
+        Arrays.stream(strings).forEach(str1 -> keyboardRow.add(str1));
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

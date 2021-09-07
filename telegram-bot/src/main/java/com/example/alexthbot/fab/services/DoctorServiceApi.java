@@ -18,7 +18,6 @@ public class DoctorServiceApi implements DoctorService {
     @Value("http://192.168.0.118:8762/doctor/all")
     private String url;
 
-
     @Override
     public List<Doctor> get() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
@@ -30,5 +29,6 @@ public class DoctorServiceApi implements DoctorService {
             throw new RuntimeException();//создадим свой кастомный
         }
         }
-    }
+
+}
 

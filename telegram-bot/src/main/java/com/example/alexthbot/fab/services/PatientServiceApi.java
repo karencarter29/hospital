@@ -27,10 +27,9 @@ public class PatientServiceApi implements PatientService{
 
 
     @Override
-    public Patient postNewUser(BotUser botUser) {
+    public BotUser postNewUser(BotUser botUser) {
         RestTemplate restTemplate = new RestTemplate();
-        Patient response = restTemplate.postForEntity(urlPostUser, botUser, Patient.class).getBody();
-        System.out.println();
+        BotUser response = restTemplate.postForEntity(urlPostUser, botUser, BotUser.class).getBody();
         return response;
 
     }
@@ -38,9 +37,9 @@ public class PatientServiceApi implements PatientService{
     @Override
     public String getUserByLogin() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<Patient> doctorsEntity = new RestTemplate().exchange(urlChekLogin, HttpMethod.GET, httpEntity, Patient.class);
-        if (doctorsEntity.getStatusCode() == HttpStatus.OK ) {
-            return doctorsEntity.getBody().getLogin();
+        ResponseEntity<BotUser> BotUserEntity = new RestTemplate().exchange(urlChekLogin, HttpMethod.GET, httpEntity, BotUser.class);
+        if (BotUserEntity.getStatusCode() == HttpStatus.OK ) {
+            return BotUserEntity.getBody().getLogin();
         } else {
             throw new RuntimeException();
         }
@@ -49,9 +48,9 @@ public class PatientServiceApi implements PatientService{
 
 
     @Override
-    public Patient userGet() {
-        HttpEntity<Patient> httpEntity = new HttpEntity<>(new Patient());
-        ResponseEntity<Patient> patientEntity = new RestTemplate().exchange(urlGet,HttpMethod.POST,httpEntity,Patient.class);
+    public BotUser userGet() {
+        HttpEntity<BotUser> httpEntity = new HttpEntity<>(new BotUser());
+        ResponseEntity<BotUser> patientEntity = new RestTemplate().exchange(urlGet,HttpMethod.POST,httpEntity,BotUser.class);
         if (patientEntity.getStatusCode() == HttpStatus.OK) {
             return patientEntity.getBody();
         } else {
