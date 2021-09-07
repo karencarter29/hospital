@@ -5,5 +5,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ProcedureService {
-    public List<Procedure> getProcedures();
+    public List<Procedure> getProceduresOfTooth();
+    public List<Procedure> getProceduresOfDrags();
 }

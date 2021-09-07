@@ -3,7 +3,6 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
-import com.example.alexthbot.fab.services.Doctor;
 import com.example.alexthbot.fab.services.Procedure;
 import com.example.alexthbot.fab.services.ProcedureService;
 import com.google.gson.Gson;
@@ -49,22 +48,25 @@ public class ActionChooseDoctor extends Action {
         }
     }
 
-//    public ReplyKeyboard keyboardTooth() {
-//        KeyboardRow keyboardRow = new KeyboardRow();
-//       procedureService.getProcedures().forEach(procedure -> keyboardRow.add(procedure.getProcedure()));
-//
-//        List<KeyboardRow> keyboardRows = new ArrayList<>();
-//        keyboardRows.add(keyboardRow);
-//
-//        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//        replyKeyboardMarkup.setKeyboard(keyboardRows);
-//        replyKeyboardMarkup.setResizeKeyboard(true);
-//        return replyKeyboardMarkup;
-//    }
+
     public ReplyKeyboard keyboardTooth() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProcedures()), Procedure[].class);
+        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProceduresOfTooth()), Procedure[].class);
+        Arrays.stream(procedures).forEach(prod1 -> keyboardRow.add(prod1.getProcedure()));
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        keyboardRows.add(keyboardRow);
+
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
+
+    public ReplyKeyboard keyboardDrags() {
+        KeyboardRow keyboardRow = new KeyboardRow();
+        Gson gson = new Gson();
+        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProceduresOfDrags()), Procedure[].class);
         Arrays.stream(procedures).forEach(prod1 -> keyboardRow.add(prod1.getProcedure()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
