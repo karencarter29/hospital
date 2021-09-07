@@ -39,7 +39,7 @@ public class ActionLastName extends Action {
 
         botUserService.setSecondName(id, name);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-        botUserService.setIdAndRole(update.getMessage().getChatId(), Role.PATIENT);
+        botUserService.setIdAndRole(update.getMessage().getChatId(), Role.ROLE_PATIENT);
         //patientService.postNewUser(botUserService.user(id));
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);

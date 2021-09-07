@@ -4,6 +4,7 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.BotAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -22,7 +23,8 @@ import java.util.List;
 public class ActionBooked extends Action {
     @Autowired
     BotAppointment botAppointment;
-
+    @Autowired
+    BotAppointmentService botAppointmentService;
     @Autowired
     ConfigurationAppointment configurationAppointment;
 
@@ -44,7 +46,8 @@ public class ActionBooked extends Action {
         botAppointment2.setDate(botAppointment.getDate());
         botAppointment2.setTime(botAppointment.getTime());
         botAppointment2.setDuration(botAppointment.getDuration());
-        configurationAppointment.appointmentList.add(botAppointment2);
+        //configurationAppointment.appointmentList.add(botAppointment2);
+        botAppointmentService.PostAppointment(botAppointment2);
 
 
         sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"

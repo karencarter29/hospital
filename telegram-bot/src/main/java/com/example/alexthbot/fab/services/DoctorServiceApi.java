@@ -18,7 +18,6 @@ public class DoctorServiceApi implements DoctorService {
     @Value("${gateway.api.get-all-doctors}")
     private String url;
 
-
     @Override
     public List<Doctor> get() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
@@ -30,5 +29,6 @@ public class DoctorServiceApi implements DoctorService {
             throw new RuntimeException();//создадим свой кастомный
         }
         }
-    }
+
+}
 

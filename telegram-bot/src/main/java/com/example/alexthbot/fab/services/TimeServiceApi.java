@@ -12,7 +12,6 @@ import java.util.List;
 
 @Slf4j
 @Service
-@ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "true")
 public class TimeServiceApi implements TimeForBook{
     @Value("${gateway.api.get-all-doctors}")
     private String urlTime;
