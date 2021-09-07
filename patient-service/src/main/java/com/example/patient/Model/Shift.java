@@ -2,12 +2,7 @@ package com.example.patient.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.UUID;
@@ -15,15 +10,38 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Shift  {
+@Table(indexes = {
+        @Index(name="shift_doctorId_idx", columnList = "doctorId")
+})
+public class Shift {
     @Id
     @GeneratedValue
     private UUID id;
+    private UUID doctorId;
     private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
     private String procedureName;
+    @OneToOne(mappedBy = "shift", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Appointment appointment;
+
+    public Appointment getAppointment() {
+        return appointment;
+    }
+
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
+    }
+
+    public UUID getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(UUID doctorId) {
+        this.doctorId = doctorId;
+    }
 
     public UUID getId() {
         return id;
@@ -73,4 +91,15 @@ public class Shift  {
         this.date = date;
     }
 
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "id=" + id +
+                ", specialityName='" + specialityName + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", date=" + date +
+                ", procedureName='" + procedureName + '\'' +
+                '}';
+    }
 }

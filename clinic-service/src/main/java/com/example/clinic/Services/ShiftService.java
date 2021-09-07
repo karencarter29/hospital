@@ -13,8 +13,11 @@ public interface ShiftService {
     @PostMapping
     public Shift saveShift(@RequestBody ShiftDTO shift);
 
+    @GetMapping("/{doctorId}")
+    public List<ShiftDTO> getShifts(@PathVariable UUID doctorId);
+
     @GetMapping
-    public List<ShiftDTO> getShifts();
+    public List<ShiftDTO> getAllShifts();
 
     @PutMapping
     public Shift updateShift(@RequestBody ShiftDTO shift);

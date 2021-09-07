@@ -2,15 +2,17 @@ package com.example.patient.Repositories;
 
 import com.example.patient.Model.Appointment;
 import com.example.patient.Model.RelationShipPK;
+import com.example.patient.Model.Shift;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
-public interface AppointmentRepository extends CrudRepository<Appointment, RelationShipPK> {
+public interface AppointmentRepository extends CrudRepository<Appointment, Shift> {
 
 
     @Query(value="INSERT INTO Appointment(shift_id, patient_id) values(:shift.id, :patient.id)", nativeQuery = true)
@@ -27,4 +29,10 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Relat
     @Transactional
     @Modifying
     void updateApp(@Param("shift.id") UUID shift_id, @Param("patient.id") UUID patient_id);
+
+
+    @Query(value = "SELECT * FROM Appointment WHERE patient_id=:patient.id", nativeQuery = true)
+    @Transactional
+    @Modifying
+    List<Appointment> getAppointments(@Param("patient.id") UUID patient_id);
 }

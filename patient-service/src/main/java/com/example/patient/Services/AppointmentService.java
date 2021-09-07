@@ -30,8 +30,8 @@ public class AppointmentService {
         return a;
     }
 
-    public List<AppointmentDTO> appointments() {
-        List<Appointment> appointmentList = (List<Appointment>) appointmentRepository.findAll();
+    public List<AppointmentDTO> appointments(UUID patient_id) {
+        List<Appointment> appointmentList = appointmentRepository.getAppointments(patient_id);
         return appointmentList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
