@@ -23,12 +23,7 @@ public class ActionStart extends Action {
         sendMessage.setChatId(chatId);
         sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
         sendMessage.setReplyMarkup(getKeyboard());
-        if (update.getMessage().equals("Логин")) {
-          //  botUserService.setCommand(chatId,ActionEnum.LOGIN);
-        }
-        else if (update.getMessage().equals("Регистрация")){
-            botUserService.setCommand(chatId,ActionEnum.REGISTRATION_WAITING_PASSWORD);
-        }
+
 
 
         try {
@@ -36,6 +31,7 @@ public class ActionStart extends Action {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+
     }
 
     public ReplyKeyboardMarkup getKeyboard(){

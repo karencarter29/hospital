@@ -22,7 +22,7 @@ public class PatientServiceApi implements PatientService{
     private String urlChekLogin;
 
     @Value("${gateway.host}/user/get")
-    private String urlGetGet;
+    private String urlGet;
 
 
 
@@ -30,6 +30,7 @@ public class PatientServiceApi implements PatientService{
     public Patient postNewUser(BotUser botUser) {
         RestTemplate restTemplate = new RestTemplate();
         Patient response = restTemplate.postForEntity(urlPostUser, botUser, Patient.class).getBody();
+        System.out.println();
         return response;
 
     }
@@ -50,7 +51,7 @@ public class PatientServiceApi implements PatientService{
     @Override
     public Patient userGet() {
         HttpEntity<Patient> httpEntity = new HttpEntity<>(new Patient());
-        ResponseEntity<Patient> patientEntity = new RestTemplate().exchange(urlPostUser,HttpMethod.POST,httpEntity,Patient.class);
+        ResponseEntity<Patient> patientEntity = new RestTemplate().exchange(urlGet,HttpMethod.POST,httpEntity,Patient.class);
         if (patientEntity.getStatusCode() == HttpStatus.OK) {
             return patientEntity.getBody();
         } else {

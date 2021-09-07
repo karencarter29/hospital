@@ -17,7 +17,12 @@ public class Patient {
     private String password;
     private String command;
 
-
-    public Patient(long l, String str0, String str1, String str2, Role patient) {
+    public Patient(Long id, String firstName, String secondName, Role role, String login, String password) {
+        this.id = id;
+        this.firstName = firstName;
+        this.secondName = secondName;
+        this.role = role;
+        this.login = login;
+        this.password = password;
     }
 }

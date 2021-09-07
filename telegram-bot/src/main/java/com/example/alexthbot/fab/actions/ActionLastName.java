@@ -40,7 +40,7 @@ public class ActionLastName extends Action {
         botUserService.setSecondName(id, name);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
         botUserService.setIdAndRole(update.getMessage().getChatId(), Role.PATIENT);
-        patientService.postNewUser(botUserService.user(id));
+        //patientService.postNewUser(botUserService.user(id));
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Вы зарегистрированы как: \n Имя: " + botUserService.getFirstName(id) +
