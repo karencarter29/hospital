@@ -15,7 +15,7 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "true")
 public class DoctorServiceApi implements DoctorService {
 
-    @Value("http://192.168.0.118:8762/doctor/all")
+    @Value("${gateway.api.get-all-doctors}")
     private String url;
 
 

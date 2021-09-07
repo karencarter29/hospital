@@ -14,9 +14,9 @@ import java.util.List;
 @Service
 public class ProcedureServiceApi implements ProcedureService {
 
-    @Value("http://192.168.0.118:8762/patient/doctor/1/shifts")
+    @Value("${gateway.api.get-list-procedures}")
     private String urlGetProcedureOfTooth;
-    @Value("http://192.168.0.118:8762/patient/doctor/2/shifts")
+    @Value("${gateway.api.get-list-procedures}")
     private String urlGetProcedureOfFrags;
 
     @Override

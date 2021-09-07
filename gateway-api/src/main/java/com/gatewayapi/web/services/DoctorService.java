@@ -21,13 +21,6 @@ public class DoctorService {
         this.restTemplate = restTemplate;
     }
 
-    public ResponseEntity<Object> getDoctors() {
-        return ResponseEntity.status(HttpStatus.OK).body(new Doctor[] {
-                new Doctor(1L, "David"),
-                new Doctor(2L, "Garry")
-        });
-    }
-
     public ResponseEntity<Object> createShift(Map<String, Object> payload) {
         return ResponseEntity.status(HttpStatus.CREATED).body(payload);
     }

@@ -19,11 +19,6 @@ public class DoctorController {
         this.doctorService = doctorService;
     }
 
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getDoctors() {
-        return doctorService.getDoctors();
-    }
-
     @PostMapping(value = "/shift", consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<Object> createShift(@RequestBody Map<String, Object> payload) {
         return doctorService.createShift(payload);

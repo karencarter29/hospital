@@ -2,10 +2,7 @@ package com.gatewayapi.web.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gatewayapi.model.Appointment;
-import com.gatewayapi.model.Condition;
-import com.gatewayapi.model.Doctor;
-import com.gatewayapi.model.Shift;
+import com.gatewayapi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -64,9 +61,9 @@ public class AdminService {
 
     private String getShifts() {
         Shift[] shifts = {
-              new Shift(1L, 1L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(2L, 2L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(3L, 3L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())
+              new Shift(1L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+              new Shift(2L, new Procedure(2L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+              new Shift(3L, new Procedure(3L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())
         };
         return convertObjectToJson(shifts);
     }

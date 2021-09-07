@@ -29,7 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .addFilterBefore(new SecurityFilter(tokenConfig), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
                 .antMatchers("**/admin/**").hasRole("ADMIN")
-                .antMatchers("**/patient/**").hasRole("PATIENT")
+                .antMatchers("/patient/**").permitAll() //todo: return to hasRole()
                 .antMatchers("**/doctor/**").hasRole("DOCTOR")
                 .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated();

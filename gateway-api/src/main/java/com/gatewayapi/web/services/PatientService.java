@@ -1,8 +1,6 @@
 package com.gatewayapi.web.services;
 
-import com.gatewayapi.model.Appointment;
-import com.gatewayapi.model.Condition;
-import com.gatewayapi.model.Shift;
+import com.gatewayapi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,10 +23,19 @@ public class PatientService {
         this.restTemplate = restTemplate;
     }
 
+    public ResponseEntity<Object> getDoctors() {
+        return ResponseEntity.status(HttpStatus.OK).body(new Doctor[] {
+                new Doctor(1L, new Speciality(1L, "Стоматолог"), "+380-97-246-325-45-65"),
+                new Doctor(2L, new Speciality(2L, "Нарколог"), "+380-68-542-762-58-61")
+        });
+    }
+
     public ResponseEntity<Object> getShiftsByDoctor(Long id) {
         return ResponseEntity.ok().body(new Shift[]{
-                new Shift(id, 1L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-                new Shift(id, 2L, LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
+                new Shift(id, new Procedure(1L, "Consultation"),
+                        LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
+                new Shift(id, new Procedure(2L, "Consultation"),
+                        LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
     }
 
     public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
@@ -38,6 +45,7 @@ public class PatientService {
 
     public ResponseEntity<Object> getAppointments() {
         return ResponseEntity.ok().body(new Appointment[]{
-                new Appointment(1L, 1L, Condition.IN_PROGRESS)});
+                new Appointment(new Shift(1L, new Procedure(1L, "Consultation"),
+                        LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.IN_PROGRESS)});
     }
 }
