@@ -26,11 +26,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .addFilterBefore(new SecurityFilter(tokenConfig), UsernamePasswordAuthenticationFilter.class)
+                .addFilterAfter(new SecurityFilter(tokenConfig), UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("**/admin/**").hasRole("ADMIN")
-                .antMatchers("/patient/**").permitAll() //todo: return to hasRole()
-                .antMatchers("**/doctor/**").hasRole("DOCTOR")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .antMatchers("/patient/**").hasRole("PATIENT")
+                .antMatchers("/doctor/**").hasRole("DOCTOR")
                 .antMatchers("/user/**").permitAll()
                 .anyRequest().authenticated();
     }

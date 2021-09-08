@@ -1,7 +1,9 @@
 package com.gatewayapi.web.services;
 
+import com.gatewayapi.web.exceptions.handlers.RestTemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -17,8 +19,8 @@ public class SecurityService {
     private RestTemplate restTemplate;
 
     @Autowired
-    public SecurityService(RestTemplate restTemplate) {
-        this.restTemplate = restTemplate;
+    public SecurityService(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplate = restTemplateBuilder.errorHandler(new RestTemplateExceptionHandler()).build();
     }
 
     public ResponseEntity<String> register(Map<String, Object> userInformation) {
