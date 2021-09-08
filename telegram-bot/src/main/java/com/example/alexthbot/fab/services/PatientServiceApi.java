@@ -10,15 +10,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-@ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "true")
 public class PatientServiceApi implements PatientService{
     @Autowired
     BotUserService botUserService;
 
-    @Value("${gateway.api.create-user}")
+    @Value("${gateway.host}/user/")
     private String urlPostUser;
 
-    @Value("${gateway.api.check-login}")
+    @Value("${gateway.host}/user/checkLogin")
     private String urlChekLogin;
 
     @Value("${gateway.host}/user/get")

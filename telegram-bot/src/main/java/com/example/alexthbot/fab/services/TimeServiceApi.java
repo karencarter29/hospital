@@ -13,7 +13,7 @@ import java.util.List;
 @Slf4j
 @Service
 public class TimeServiceApi implements TimeForBook{
-    @Value("${gateway.api.get-all-doctors}")
+    @Value("${gateway.host}/patient/doctors")
     private String urlTime;
 
     @Override
