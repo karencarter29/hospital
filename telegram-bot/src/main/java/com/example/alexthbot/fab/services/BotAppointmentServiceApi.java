@@ -23,11 +23,11 @@ public class BotAppointmentServiceApi implements BotAppointmentService {
     private String urlGetApps;
 
     @Override
-    public BotAppointment PostAppointment(BotAppointment botAppointment) {
+    public String PostAppointment(BotAppointment botAppointment) {
         RestTemplate restTemplate = new RestTemplate();
-        BotAppointment response = restTemplate.postForEntity(urlPostApp, botAppointment, BotAppointment.class).getBody();
+        String body = restTemplate.postForEntity(urlPostApp, botAppointment.getId(), String.class).getBody();
         log.info(botAppointment.toString());
-        return response;
+        return body;
     }
 
     @Override
