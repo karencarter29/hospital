@@ -12,4 +12,5 @@ import org.springframework.stereotype.Service;
 public class ServiceID {
     private Long doctorId;
     private String doctor;
+    private String idChat;
 }
