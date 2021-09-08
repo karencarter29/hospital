@@ -12,13 +12,10 @@ public class TokenConfig {
     @Value("${security.jwt.header:Authorization}")
     private String header;
 
-    @Value("${security.jwt.prefix:Bearer }")
+    @Value("${security.jwt.prefix:Bearer_}")
     private String prefix;
 
-    @Value("${security.jwt.expiration:#{24*60*60}}")
-    private int expiration;
-
-    @Value("${security.jwt.secret:hospitalsecrettt}")
+    @Value("${security.jwt.secret:hospitalsecrettt}") //hospitalsecrettt
     private String secret;
 
     public String getHeader() {
@@ -27,10 +24,6 @@ public class TokenConfig {
 
     public String getPrefix() {
         return prefix;
-    }
-
-    public int getExpiration() {
-        return expiration;
     }
 
     public String getSecret() {
