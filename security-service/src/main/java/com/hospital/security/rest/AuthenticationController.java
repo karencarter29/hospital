@@ -1,5 +1,6 @@
 package com.hospital.security.rest;
 
+import com.hospital.security.config.SecretConfig;
 import com.hospital.security.dto.AuthenticationRequestDto;
 import com.hospital.security.dto.UserDto;
 import com.hospital.security.model.User;
@@ -32,11 +33,15 @@ public class AuthenticationController {
 
     private final UserService userService;
 
+    private final SecretConfig secretConfig;
+
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
+    public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider,
+                                    UserService userService, SecretConfig secretConfig) {
         this.authenticationManager = authenticationManager;
         this.jwtTokenProvider = jwtTokenProvider;
         this.userService = userService;
+        this.secretConfig = secretConfig;
     }
 
     @PostMapping("/login")
@@ -54,10 +59,10 @@ public class AuthenticationController {
             userDto.setSecondName(user.getSecondName());
             userDto.setId(user.getId());
             userDto.setUsername(username);
-            String token = jwtTokenProvider.createToken(userDto, user.getRoles());
+            String token = secretConfig.getPrefix() + jwtTokenProvider.createToken(userDto, user.getRoles());
 
             HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("Authorization", token);
+            responseHeaders.set(secretConfig.getHeader(), token);
 
             return ResponseEntity.ok().headers(responseHeaders).build();
         } catch (AuthenticationException e) {

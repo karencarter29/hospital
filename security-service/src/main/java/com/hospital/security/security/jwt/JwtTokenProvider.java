@@ -28,9 +28,6 @@ public class JwtTokenProvider {
     @Value("${jwt.token.secret}")
     private String secret;
 
-    @Autowired
-    private UserDetailsService userDetailsService;
-
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
@@ -53,33 +50,6 @@ public class JwtTokenProvider {
                 setExpiration(exp).
                 signWith(SignatureAlgorithm.HS256, secret).
                 compact();
-    }
-
-    public Authentication getAuthentication(String token) {
-        UserDetails userDetails = this.userDetailsService.loadUserByUsername(getUserName(token));
-        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-    }
-
-    public String getUserName(String token) {
-        return Jwts.parser().setSigningKey(secret).parseClaimsJws(token).getBody().getSubject();
-    }
-
-    public String resolveToken(HttpServletRequest request){
-        String bearerToken = request.getHeader("Authorization");
-        if (bearerToken != null && bearerToken.startsWith("Bearer_")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }
-        return null;
-    }
-
-    public boolean validateToken(String token) {
-        try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secret).parseClaimsJws(token);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (JwtException | IllegalArgumentException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     private List<String> getRoleNames(List<Role> roles) {

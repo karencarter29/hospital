@@ -1,8 +1,5 @@
 package com.hospital.security.config;
 
-import com.hospital.security.security.jwt.JwtConfigurer;
-import com.hospital.security.security.jwt.JwtTokenProvider;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -13,16 +10,8 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    private final JwtTokenProvider jwtTokenProvider;
-
-    private static final String ADMIN_ENDPOINT = "/hospital/admin/**";
     private static final String LOGIN_ENDPOINT = "/hospital/auth/login";
     private static final String REGISTER_ENDPOINT = "/hospital/auth/register";
-
-    @Autowired
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
-        this.jwtTokenProvider = jwtTokenProvider;
-    }
 
     @Bean
     @Override
@@ -39,9 +28,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(REGISTER_ENDPOINT).permitAll()
-                .antMatchers(ADMIN_ENDPOINT).hasRole("ADMIN")
-                .anyRequest().authenticated()
-                .and()
-                .apply(new JwtConfigurer(jwtTokenProvider));
+                .anyRequest().authenticated();
     }
 }

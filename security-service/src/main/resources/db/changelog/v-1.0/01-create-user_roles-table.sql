@@ -1,6 +1,6 @@
 create table user_roles (
-                            user_id bigint ,
-                            role_id bigint ,
+                            user_id BINARY(255) ,
+                            role_id BINARY(255) ,
                             CONSTRAINT FK_user_roles_user FOREIGN KEY (user_id)
                                 REFERENCES users(id)
                                 ON DELETE CASCADE,

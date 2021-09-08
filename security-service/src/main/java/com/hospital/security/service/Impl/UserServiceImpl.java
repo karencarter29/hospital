@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -53,12 +54,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
+    public User findById(UUID id) {
         return userRepository.findById(id).orElseThrow(NoSuchElementException::new);
     }
 
     @Override
-    public void delete(Long id) {
+    public void delete(UUID id) {
         userRepository.deleteById(id);
     }
 

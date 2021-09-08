@@ -8,14 +8,14 @@ import java.util.UUID;
 
 public class JwtUser implements UserDetails {
 
-    private final Long id;
+    private final UUID id;
     private final String username;
     private final String password;
     private final String firstName;
     private final String secondName;
     private final Collection<? extends GrantedAuthority> roles;
 
-    public JwtUser(Long id, String username, String password, String firstName, String secondName,
+    public JwtUser(UUID id, String username, String password, String firstName, String secondName,
                    Collection<? extends GrantedAuthority> roles) {
         this.id = id;
         this.username = username;
