@@ -18,6 +18,7 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Component
@@ -43,10 +44,7 @@ public class ActionChooseDoctor extends Action {
             if (doctors[i].getSpecialityId().getSpecialityName().equals(text)) {
                 serviceID.setDoctorId(doctors[i].getUserId());
             }
-
         }
-
-
         botAppointment.setDoctor(text);
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
@@ -67,11 +65,12 @@ public class ActionChooseDoctor extends Action {
     public ReplyKeyboard keyboardTooth() {
         Gson gson = new Gson();
         KeyboardRow keyboardRow = new KeyboardRow();
-        //List<Shift> shifts =  procedureService.getProceduresById(serviceID.getDoctorId());
+//        List<Shift> shifts =  procedureService.getProceduresById(serviceID.getDoctorId());
 //        for (int i = 0; i < shifts.size(); i++) {
-//            keyboardRow.add(shifts.get(i).getProcedure().getProcedure());
-//        }  ClassCastException
-        //shifts.stream().forEach(prod1 -> keyboardRow.add(prod1.getProcedure().getProcedure()));
+//            keyboardRow.add(shifts.get(i).getProcedure().getProcedureName());
+//        }
+
+        //  ClassCastException   shifts.stream().forEach(prod1 -> keyboardRow.add(prod1.getProcedure().getProcedure()));
 
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {

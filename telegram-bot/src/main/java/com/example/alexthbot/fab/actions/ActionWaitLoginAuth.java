@@ -23,7 +23,7 @@ public class ActionWaitLoginAuth extends Action {
         botUserService.setCommand(id,ActionEnum.PASSWORD_AUTH);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        sendMessage.setText("Введите логин:");
+        sendMessage.setText("Введите пароль:");
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
         try {
             absSender.execute(sendMessage);

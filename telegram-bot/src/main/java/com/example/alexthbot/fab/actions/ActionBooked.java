@@ -40,22 +40,16 @@ public class ActionBooked extends Action {
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
         botAppointment.setTime(text);
-        String s = LocalDateTime.now().toString();
-        botAppointment.setTimeBook(s.split("T")[0]);
+
         botUserService.setCommand(id, ActionEnum.SHOW_APPOINTMENTS);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        BotAppointment botAppointment2 = new BotAppointment();
-        botAppointment2.setTimeBook(botAppointment.getTimeBook());
-        botAppointment2.setDoctor(botAppointment.getDoctor());
-        botAppointment2.setProcedure(botAppointment.getProcedure());
-        botAppointment2.setDate(botAppointment.getDate());
-        botAppointment2.setTime(botAppointment.getTime());
+
         //постим аппоинтмент
-        //botAppointmentService.PostAppointment(botAppointment2);
+        botAppointmentService.PostAppointment(botAppointment);
 
 
-        sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"
+        sendMessage.setText("Ваша запись:"+ "\n"
                 + "Доктор: " + botAppointment.getDoctor() + "\n"
                 + "Процедура: " + botAppointment.getProcedure() + "\n"
                 + "День: " + botAppointment.getDate() + "\n"

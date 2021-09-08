@@ -5,6 +5,6 @@ import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import java.util.List;
 
 public interface BotAppointmentService {
-    public BotAppointment PostAppointment(BotAppointment botAppointment);
+    public String PostAppointment(BotAppointment botAppointment);
     public List<Appointment> GetAppointments();
 }

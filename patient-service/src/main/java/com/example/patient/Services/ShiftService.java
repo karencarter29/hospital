@@ -20,15 +20,13 @@ public class ShiftService {
     private ShiftRepository shiftRepository;
 
     @Transactional
-    public Shift addShift(ShiftDTO shift)
-    {
+    public Shift addShift(ShiftDTO shift) {
         List<Shift> startTime = shiftRepository.forStartTime(shift.getStartTime(), shift.getEndTime());
         List<Shift> endTime = shiftRepository.forEndTime(shift.getStartTime(), shift.getEndTime());
-        if(startTime.isEmpty() && endTime.isEmpty()){
-            if(shift.getStartTime().isBefore(shift.getEndTime())) {
+        if (shift.getStartTime().isBefore(shift.getEndTime())) {
+            if (startTime.isEmpty() && endTime.isEmpty()) {
                 return shiftRepository.save(convertToEntity(shift));
             }
-
         }
         return null;
     }
@@ -38,6 +36,7 @@ public class ShiftService {
         List<Shift> shiftList = shiftRepository.getShift(doctorId);
         return shiftList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
+
     @Transactional(readOnly = true)
     public List<ShiftDTO> getAllShifts() {
         List<Shift> shiftList = shiftRepository.findAll();
@@ -59,6 +58,7 @@ public class ShiftService {
     private ShiftDTO convertToDto(Shift shift) {
         return modelMapper.map(shift, ShiftDTO.class);
     }
+
     private Shift convertToEntity(ShiftDTO shiftDTO) {
         return modelMapper.map(shiftDTO, Shift.class);
     }

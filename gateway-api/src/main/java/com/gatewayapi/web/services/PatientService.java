@@ -43,7 +43,7 @@ public class PatientService {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentInfo);
     }
 
-    public ResponseEntity<Object> getAppointments() {
+    public ResponseEntity<Object> getAppointments(String id) {
         return ResponseEntity.ok().body(new Appointment[]{
                 new Appointment(new Shift(1L, new Procedure(1L, "Consultation"),
                         LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.IN_PROGRESS)});

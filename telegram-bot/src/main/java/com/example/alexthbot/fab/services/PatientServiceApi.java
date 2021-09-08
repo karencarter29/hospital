@@ -2,35 +2,46 @@ package com.example.alexthbot.fab.services;
 
 import com.example.alexthbot.fab.database.user.model.BotUser;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
+import com.example.alexthbot.fab.database.user.service.TokenService;
+import org.apache.http.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.function.ServerRequest;
 
 @Service
-@ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "true")
 public class PatientServiceApi implements PatientService{
     @Autowired
     BotUserService botUserService;
+    @Autowired
+    TokenService tokenService;
 
-    @Value("${gateway.api.create-user}")
+    @Value("${gateway.host}/user/")
     private String urlPostUser;
 
-    @Value("${gateway.api.check-login}")
+    @Value("${gateway.host}/user/checkLogin")
     private String urlChekLogin;
 
     @Value("${gateway.host}/user/get")
     private String urlGet;
 
 
-
+    //регистрация
     @Override
-    public BotUser postNewUser(BotUser botUser) {
+    public HttpHeaders postNewUser(BotUser botUser) {
+        UserDto userDto = new UserDto();
+        userDto.setPassword(botUser.getPassword());
+        userDto.setFirstName(botUser.getFirstName());
+        userDto.setSecondName(botUser.getSecondName());
+        userDto.setUsername(botUser.getLogin());
+        userDto.setRole(botUser.getRole().toString());
         RestTemplate restTemplate = new RestTemplate();
-        BotUser response = restTemplate.postForEntity(urlPostUser, botUser, BotUser.class).getBody();
-        return response;
+        HttpHeaders headers = restTemplate.postForEntity(urlPostUser, userDto, UserDto.class).getHeaders();
+        tokenService.setToken(headers);
+        return headers;
 
     }
 
@@ -46,7 +57,7 @@ public class PatientServiceApi implements PatientService{
     }
 
 
-
+    //логин
     @Override
     public BotUser userGet() {
         HttpEntity<BotUser> httpEntity = new HttpEntity<>(new BotUser());

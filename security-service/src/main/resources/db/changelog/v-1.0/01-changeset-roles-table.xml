@@ -20,7 +20,7 @@
                      relativeToChangelogFile="true"
                      splitStatements="true"
                      stripComments="true"
-                     path="01-drop-roles-table.sql"/>
+                     path="01-drop-users-table.sql"/>
         </rollback>
     </changeSet>
 

@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckLogPass {
-    private Long id;
     private String login;
     private String password;
 
