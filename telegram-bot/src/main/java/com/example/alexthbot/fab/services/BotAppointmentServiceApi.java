@@ -1,6 +1,7 @@
 package com.example.alexthbot.fab.services;
 
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.database.user.model.BotUser;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,14 +15,11 @@ import java.util.Objects;
 @Slf4j
 @Service
 public class BotAppointmentServiceApi implements BotAppointmentService {
-//    @Value("gateway.api.post-appoinment")
-//    private String urlPostApp;
-    @Value("http://localhost:8762/patient/appointment")
+    @Value("${gateway.host}/patient/appointment")
     private String urlPostApp;
 
-    //    @Value("gateway.api.get-appoinments")
-//    private String urlGetApps;
-    @Value("http://localhost:8762/patient/appointments")
+
+    @Value("${gateway.host}/patient/appointments")
     private String urlGetApps;
 
     @Override

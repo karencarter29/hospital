@@ -41,23 +41,34 @@ public class ChooseDoctorAfterLoginAndRegistration extends Action {
         String id = update.getMessage().getChatId().toString();
         SendMessage sendMessage = new SendMessage();
         if (authServiceApi.CheckLoginAndPassword(checkLogPass).is2xxSuccessful()) {
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-        sendMessage.setChatId(id);
-        sendMessage.setText("Выберите нужного доктора:");
-        sendMessage.setReplyMarkup(keyboard());
-        try {
-            absSender.execute(sendMessage);
-        } catch (
-                TelegramApiException e) {
-            e.printStackTrace();
-        }
-    }
-        else {
-            botUserService.setCommand(id,ActionEnum.START);
+            botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
             sendMessage.setChatId(id);
-            sendMessage.setText("Такого логина или пароля не существует, + \n " +
-                    "выберите логин или регистрацию");
+            sendMessage.setText("Выберите нужного доктора:");
+            sendMessage.setReplyMarkup(keyboard());
+            try {
+                absSender.execute(sendMessage);
+            } catch (
+                    TelegramApiException e) {
+                e.printStackTrace();
+            }
+        } else {
+            {
+                {
+                    botUserService.setCommand(id, ActionEnum.START);
+                    sendMessage.setChatId(id);
+                    sendMessage.setText("Такого логина или пароля не существует, \n " +
+                            "выберите логин или регистрацию");
+                    sendMessage.setReplyMarkup(getKeyboard());
+                    try {
+                        absSender.execute(sendMessage);
+                    } catch (
+                            TelegramApiException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
         }
+
     }
 
     @Override
@@ -66,6 +77,20 @@ public class ChooseDoctorAfterLoginAndRegistration extends Action {
         Gson gson = new Gson();
         Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
         Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpecialityId().getSpecialityName()));
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        keyboardRows.add(keyboardRow);
+
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
+
+    public ReplyKeyboardMarkup getKeyboard() {
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add("Логин");
+        keyboardRow.add("Регистрация");
+
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

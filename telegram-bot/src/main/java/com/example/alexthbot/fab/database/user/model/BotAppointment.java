@@ -19,13 +19,11 @@ public class BotAppointment {
     private String procedure;
     private String date;
     private String time;
-    private String timeBook;
 
-    public BotAppointment(String doctor, String procedure, String date, String time, String timeBook) {
+    public BotAppointment(String doctor, String procedure, String date, String time) {
         this.doctor = doctor;
         this.procedure = procedure;
         this.date = date;
         this.time = time;
-        this.timeBook = timeBook;
     }
 }
