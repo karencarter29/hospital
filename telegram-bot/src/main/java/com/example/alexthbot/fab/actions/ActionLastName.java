@@ -4,9 +4,7 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
-import com.example.alexthbot.fab.services.Doctor;
-import com.example.alexthbot.fab.services.DoctorService;
-import com.example.alexthbot.fab.services.PatientService;
+import com.example.alexthbot.fab.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,11 +24,11 @@ import java.util.List;
 public class ActionLastName extends Action {
     @Autowired
     private DoctorService doctorService;
-    @Autowired
-    private PatientService patientService;
 
     @Autowired
     private BotUserService botUserService;
+    @Autowired
+    PatientService patientService;
 
     @Override
     public void action(Update update, AbsSender absSender) {
@@ -40,6 +38,7 @@ public class ActionLastName extends Action {
         botUserService.setSecondName(id, name);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
         botUserService.setIdAndRole(update.getMessage().getChatId(), Role.ROLE_PATIENT);
+        //постим юзера
         //patientService.postNewUser(botUserService.user(id));
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
@@ -60,9 +59,8 @@ public class ActionLastName extends Action {
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
-        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
-
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpecialityId().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 
@@ -72,19 +70,7 @@ public class ActionLastName extends Action {
         return replyKeyboardMarkup;
     }
 
-    //public ReplyKeyboard keyboard() {
-//    KeyboardRow keyboardRow = new KeyboardRow();
-//    keyboardRow.add("Зубной техник");
-//    keyboardRow.add("Врач нарколог");
-//
-//    List<KeyboardRow> keyboardRows = new ArrayList<>();
-//    keyboardRows.add(keyboardRow);
-//
-//    ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//    replyKeyboardMarkup.setKeyboard(keyboardRows);
-//    replyKeyboardMarkup.setResizeKeyboard(true);
-//    return replyKeyboardMarkup;
-//}
+
     @Override
     public ActionEnum getKey() {
         return ActionEnum.CHOOSE_LAST_NAME;

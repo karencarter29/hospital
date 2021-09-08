@@ -1,14 +1,12 @@
 package com.gatewayapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -20,4 +18,6 @@ public class Shift {
     LocalDateTime startTime;
     LocalDateTime endTime;
     LocalDate date;
+
+
 }

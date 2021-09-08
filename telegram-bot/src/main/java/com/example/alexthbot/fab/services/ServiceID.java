@@ -3,12 +3,13 @@ package com.example.alexthbot.fab.services;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Service;
 
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-public class Procedure {
-    Long id;
-    Long specialityId;
-    String procedureName;
+@AllArgsConstructor
+@Service
+public class ServiceID {
+    private Long doctorId;
+    private String doctor;
 }

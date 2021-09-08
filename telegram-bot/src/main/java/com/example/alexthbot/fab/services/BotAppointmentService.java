@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface BotAppointmentService {
     public BotAppointment PostAppointment(BotAppointment botAppointment);
-    public List<String> GetAppointments();
+    public List<Appointment> GetAppointments();
 }

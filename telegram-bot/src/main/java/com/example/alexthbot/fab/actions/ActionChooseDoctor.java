@@ -1,11 +1,10 @@
 package com.example.alexthbot.fab.actions;
-
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
-import com.example.alexthbot.fab.services.Procedure;
-import com.example.alexthbot.fab.services.ProcedureService;
+import com.example.alexthbot.fab.services.*;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -27,11 +26,27 @@ public class ActionChooseDoctor extends Action {
     BotAppointment botAppointment;
     @Autowired
     ProcedureService procedureService;
+    @Autowired
+    DoctorService doctorService;
+    @Autowired
+    ServiceID serviceID;
+
     @Override
     public void action(Update update, AbsSender absSender) {
         SendMessage sendMessage = new SendMessage();
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
+        serviceID.setDoctor(text);
+        Gson gson = new Gson();
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        for (int i = 0; i < doctors.length; i++) {
+            if (doctors[i].getSpecialityId().getSpecialityName().equals(text)) {
+                serviceID.setDoctorId(doctors[i].getUserId());
+            }
+
+        }
+
+
         botAppointment.setDoctor(text);
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
@@ -50,24 +65,18 @@ public class ActionChooseDoctor extends Action {
 
 
     public ReplyKeyboard keyboardTooth() {
-        KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProceduresOfTooth()), Procedure[].class);
-        Arrays.stream(procedures).forEach(prod1 -> keyboardRow.add(prod1.getProcedure()));
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        keyboardRows.add(keyboardRow);
-
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        return replyKeyboardMarkup;
-    }
-
-    public ReplyKeyboard keyboardDrags() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        Gson gson = new Gson();
-        Procedure[] procedures = gson.fromJson(String.valueOf(procedureService.getProceduresOfDrags()), Procedure[].class);
-        Arrays.stream(procedures).forEach(prod1 -> keyboardRow.add(prod1.getProcedure()));
+        //List<Shift> shifts =  procedureService.getProceduresById(serviceID.getDoctorId());
+//        for (int i = 0; i < shifts.size(); i++) {
+//            keyboardRow.add(shifts.get(i).getProcedure().getProcedure());
+//        }  ClassCastException
+        //shifts.stream().forEach(prod1 -> keyboardRow.add(prod1.getProcedure().getProcedure()));
+
+        Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
+        for (int i = 0; i < shifts.length; i++) {
+            keyboardRow.add(shifts[i].getProcedure().getProcedureName());
+        }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 
@@ -77,21 +86,6 @@ public class ActionChooseDoctor extends Action {
         return replyKeyboardMarkup;
     }
 
-    public ReplyKeyboard keyboardDrag() {
-        KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Консультация (1час)");
-        keyboardRow.add("Бросить курить");
-        keyboardRow.add("Бросить пить");
-        keyboardRow.add("Лечение игромании");
-
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        keyboardRows.add(keyboardRow);
-
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        return replyKeyboardMarkup;
-    }
 
     @Override
     public ActionEnum getKey() {

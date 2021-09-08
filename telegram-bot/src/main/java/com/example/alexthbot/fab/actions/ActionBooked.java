@@ -5,6 +5,8 @@ import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.services.BotAppointmentService;
+import com.example.alexthbot.fab.services.ProcedureService;
+import com.example.alexthbot.fab.services.ServiceID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -27,6 +29,10 @@ public class ActionBooked extends Action {
     BotAppointmentService botAppointmentService;
     @Autowired
     ConfigurationAppointment configurationAppointment;
+    @Autowired
+    ProcedureService procedureService;
+    @Autowired
+    ServiceID serviceID;
 
 
     @Override
@@ -45,9 +51,8 @@ public class ActionBooked extends Action {
         botAppointment2.setProcedure(botAppointment.getProcedure());
         botAppointment2.setDate(botAppointment.getDate());
         botAppointment2.setTime(botAppointment.getTime());
-        botAppointment2.setDuration(botAppointment.getDuration());
-        //configurationAppointment.appointmentList.add(botAppointment2);
-        botAppointmentService.PostAppointment(botAppointment2);
+        //постим аппоинтмент
+        //botAppointmentService.PostAppointment(botAppointment2);
 
 
         sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"
@@ -55,7 +60,6 @@ public class ActionBooked extends Action {
                 + "Процедура: " + botAppointment.getProcedure() + "\n"
                 + "День: " + botAppointment.getDate() + "\n"
                 + "Время: " + botAppointment.getTime() + "\n"
-                + "Длительность процедуры: " + botAppointment.getDuration() + "\n"
         );
         sendMessage.setReplyMarkup(keyboard());
         try {

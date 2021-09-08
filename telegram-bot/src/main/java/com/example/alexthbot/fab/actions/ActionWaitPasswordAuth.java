@@ -19,7 +19,8 @@ public class ActionWaitPasswordAuth extends Action {
         String id = update.getMessage().getChatId().toString();
         String passwordForAuth = update.getMessage().getText();
         checkLogPass.setPassword(passwordForAuth);
-        botUserService.setCommand(id,ActionEnum.CHOOSE_DOCTOR);
+        checkLogPass.setId(update.getMessage().getChatId());
+        botUserService.setCommand(id,ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Введите пароль:");

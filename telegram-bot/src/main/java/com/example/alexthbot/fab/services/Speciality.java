@@ -1,4 +1,4 @@
-package com.gatewayapi.model;
+package com.example.alexthbot.fab.services;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

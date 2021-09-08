@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gatewayapi.model.Appointment;
 import com.gatewayapi.model.Condition;
+import com.gatewayapi.model.Procedure;
+import com.gatewayapi.model.Shift;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -13,6 +15,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -28,9 +33,9 @@ class AdminServiceTest {
     @Test
     public void getAppointmentsTest() {
         Appointment[] appointments = {
-                new Appointment(1L, 1L, Condition.RESERVED),
-                new Appointment(2L, 2L, Condition.IN_PROGRESS),
-                new Appointment(3L, 3L, Condition.AVAILABLE)
+                new Appointment( new Shift(1L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.RESERVED),
+                new Appointment( new Shift(2L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 2L, Condition.IN_PROGRESS),
+                new Appointment( new Shift(3L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 3L, Condition.AVAILABLE)
         };
         ObjectMapper objectMapper = new ObjectMapper();
         String result = "";
