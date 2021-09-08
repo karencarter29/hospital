@@ -47,7 +47,7 @@ public class ActionShowAppointments extends Action {
         }
         String s = "";
         String id = update.getMessage().getChatId().toString();
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Ваша запись учтена, вы так же можете записаться к другому врачу.");

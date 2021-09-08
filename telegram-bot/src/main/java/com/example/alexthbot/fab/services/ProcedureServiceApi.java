@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -19,7 +20,7 @@ public class ProcedureServiceApi implements ProcedureService {
     @Override
     public List<Shift> getProceduresById(Long id) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange("http://localhost:8762/patient/doctor/"+ id +"/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
+        ResponseEntity<ArrayList<Shift>> proceduresEntity = new RestTemplate().exchange("http://localhost:8762/patient/doctor/"+ id +"/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
         if (proceduresEntity.getStatusCode() == HttpStatus.OK) {
             log.info(proceduresEntity.getBody().toString());
             return proceduresEntity.getBody();

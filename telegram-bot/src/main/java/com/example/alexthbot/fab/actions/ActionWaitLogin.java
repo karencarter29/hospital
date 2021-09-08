@@ -21,8 +21,7 @@ public class ActionWaitLogin extends Action {
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
-        String firstName = update.getMessage().getFrom().getFirstName();
-        botUserService.setLogin(id,firstName + "_TG");
+
         botUserService.setCommand(id,ActionEnum.REGISTRATION_WAITING_PASSWORD);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
@@ -33,7 +32,6 @@ public class ActionWaitLogin extends Action {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
 
 

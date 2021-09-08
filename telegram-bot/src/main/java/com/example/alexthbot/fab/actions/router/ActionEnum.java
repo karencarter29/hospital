@@ -3,7 +3,7 @@ package com.example.alexthbot.fab.actions.router;
 public enum ActionEnum {
 
     START("/start"),
-    REGISTRATION("Регистрация"),
+    REGISTRATION("/registration"),
     CHOSE_ROLE("/chose_role"),
     REGISTRATION_WAITING_LOGIN("/wait login"),
     REGISTRATION_WAITING_PASSWORD("/wait password"),
@@ -16,9 +16,11 @@ public enum ActionEnum {
     CHOOSE_DATE("/choose date"),
     MIDDLE_BOOKED("/middle_booked"),
     SHOW_APPOINTMENTS("/show_appointments"),
-    LOGIN_AUTH("Логин"),
-    PASSWORD_AUTH("password_auth"),
-    CHOOSE_DOCTOR_AFTER_LOGIN("choose_doctor_after_login"),
+    LOGIN_AUTH("/login_auth"),
+    PASSWORD_AUTH("/password_auth"),
+    CHOOSE_DOCTOR_AFTER_LOGIN("/choose_doctor_after_login"),
+    CHOOSE_DOCTOR_SECOND_TIME("/choose_doctor_second_time"),
+    CHOOSE_LOGIN_OR_REGISTRATION("/Action_Wait_Login_Or_Registration"),
     ANY(null);
 
     private String command;
@@ -55,8 +57,8 @@ public enum ActionEnum {
         if (LOGIN_AUTH.command.equals(value)) return LOGIN_AUTH;
         if (PASSWORD_AUTH.command.equals(value)) return PASSWORD_AUTH;
         if (CHOOSE_DOCTOR_AFTER_LOGIN.command.equals(value)) return CHOOSE_DOCTOR_AFTER_LOGIN;
-
-        
+        if (CHOOSE_DOCTOR_SECOND_TIME.command.equals(value)) return CHOOSE_DOCTOR_SECOND_TIME;
+        if (CHOOSE_LOGIN_OR_REGISTRATION.command.equals(value)) return CHOOSE_LOGIN_OR_REGISTRATION;
         return ANY;
     }
 

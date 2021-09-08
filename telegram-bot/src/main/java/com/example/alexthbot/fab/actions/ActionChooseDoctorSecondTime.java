@@ -4,7 +4,9 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
-import com.example.alexthbot.fab.services.*;
+import com.example.alexthbot.fab.services.Doctor;
+import com.example.alexthbot.fab.services.DoctorService;
+import com.example.alexthbot.fab.services.PatientService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,8 +22,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 @Component
-public class ActionLastName extends Action {
+public class ActionChooseDoctorSecondTime extends Action {
     @Autowired
     private DoctorService doctorService;
 
@@ -34,13 +38,12 @@ public class ActionLastName extends Action {
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
         String name = update.getMessage().getText();
-        botUserService.setSecondName(id, name);
-        botUserService.setCommand(id, ActionEnum.REGISTRATION_WAITING_PASSWORD);
 
-
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        sendMessage.setText("Введите пароль:");
+        sendMessage.setText("Выберите нужного доктора: ");
+        sendMessage.setReplyMarkup(keyboard());
         try {
             absSender.execute(sendMessage);
         } catch (
@@ -51,11 +54,23 @@ public class ActionLastName extends Action {
 
 
 
+    @Override
+    public ReplyKeyboard keyboard() {
+        KeyboardRow keyboardRow = new KeyboardRow();
+        Gson gson = new Gson();
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpecialityId().getSpecialityName()));
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        keyboardRows.add(keyboardRow);
+
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
 
     @Override
     public ActionEnum getKey() {
-        return ActionEnum.CHOOSE_LAST_NAME;
+        return ActionEnum.CHOOSE_DOCTOR_SECOND_TIME;
     }
-
-
 }
