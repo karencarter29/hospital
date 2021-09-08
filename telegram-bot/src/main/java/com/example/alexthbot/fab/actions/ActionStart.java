@@ -18,19 +18,11 @@ public class ActionStart extends Action {
     @Override
     public void action(Update update, AbsSender absSender) {
         String chatId = update.getMessage().getChatId().toString();
-
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
         sendMessage.setReplyMarkup(getKeyboard());
-        if (update.getMessage().equals("Логин")) {
-          //  botUserService.setCommand(chatId,ActionEnum.LOGIN);
-        }
-        else if (update.getMessage().equals("Регистрация")){
-            botUserService.setCommand(chatId,ActionEnum.REGISTRATION_WAITING_PASSWORD);
-        }
-
-
+        botUserService.setCommand(chatId,ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {
@@ -42,10 +34,8 @@ public class ActionStart extends Action {
         KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add("Логин");
         keyboardRow.add("Регистрация");
-
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
-
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setKeyboard(keyboardRows);
         replyKeyboardMarkup.setResizeKeyboard(true);

@@ -4,9 +4,7 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
-import com.example.alexthbot.fab.services.Doctor;
-import com.example.alexthbot.fab.services.DoctorService;
-import com.example.alexthbot.fab.services.PatientService;
+import com.example.alexthbot.fab.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,28 +24,23 @@ import java.util.List;
 public class ActionLastName extends Action {
     @Autowired
     private DoctorService doctorService;
-    @Autowired
-    private PatientService patientService;
 
     @Autowired
     private BotUserService botUserService;
+    @Autowired
+    PatientService patientService;
 
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
         String name = update.getMessage().getText();
-
         botUserService.setSecondName(id, name);
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-        botUserService.setIdAndRole(update.getMessage().getChatId(), Role.PATIENT);
-        patientService.postNewUser(botUserService.user(id));
+        botUserService.setCommand(id, ActionEnum.REGISTRATION_WAITING_PASSWORD);
+
+
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        sendMessage.setText("Вы зарегистрированы как: \n Имя: " + botUserService.getFirstName(id) +
-                ", \nФамилия: " + botUserService.getSecondName(id) +
-                "\nЛогин: " + botUserService.getLogin(id) +
-                "\n Теперь выберите нужного доктора: ");
-        sendMessage.setReplyMarkup(keyboard());
+        sendMessage.setText("Введите пароль:");
         try {
             absSender.execute(sendMessage);
         } catch (
@@ -56,35 +49,9 @@ public class ActionLastName extends Action {
         }
     }
 
-    @Override
-    public ReplyKeyboard keyboard() {
-        KeyboardRow keyboardRow = new KeyboardRow();
-        Gson gson = new Gson();
-        Doctor[] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
-        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
 
-        List<KeyboardRow> keyboardRows = new ArrayList<>();
-        keyboardRows.add(keyboardRow);
 
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-        replyKeyboardMarkup.setKeyboard(keyboardRows);
-        replyKeyboardMarkup.setResizeKeyboard(true);
-        return replyKeyboardMarkup;
-    }
 
-    //public ReplyKeyboard keyboard() {
-//    KeyboardRow keyboardRow = new KeyboardRow();
-//    keyboardRow.add("Зубной техник");
-//    keyboardRow.add("Врач нарколог");
-//
-//    List<KeyboardRow> keyboardRows = new ArrayList<>();
-//    keyboardRows.add(keyboardRow);
-//
-//    ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
-//    replyKeyboardMarkup.setKeyboard(keyboardRows);
-//    replyKeyboardMarkup.setResizeKeyboard(true);
-//    return replyKeyboardMarkup;
-//}
     @Override
     public ActionEnum getKey() {
         return ActionEnum.CHOOSE_LAST_NAME;

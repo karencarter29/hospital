@@ -2,7 +2,6 @@ package com.example.patient.Services;
 
 import com.example.patient.DTO.PatientDTO;
 import com.example.patient.DTO.ShiftDTO;
-import com.example.patient.Model.Patient;
 import com.example.patient.Model.Shift;
 import com.example.patient.Repositories.ShiftRepository;
 import lombok.AllArgsConstructor;
@@ -21,26 +20,32 @@ public class ShiftService {
     private ShiftRepository shiftRepository;
 
     @Transactional
-    public Shift addShift(ShiftDTO shift) //@RequestBody shift
-    {
-//        List<Shift> shiftList = (List<Shift>)shiftRepository.findAll();
-//        for(Shift sh: shiftList) {
-//            if(shift.getStartTime().isAfter())
-//        }
-        return shiftRepository.save(convertToEntity(shift));
+    public Shift addShift(ShiftDTO shift) {
+        List<Shift> startTime = shiftRepository.forStartTime(shift.getStartTime(), shift.getEndTime());
+        List<Shift> endTime = shiftRepository.forEndTime(shift.getStartTime(), shift.getEndTime());
+        if (shift.getStartTime().isBefore(shift.getEndTime())) {
+            if (startTime.isEmpty() && endTime.isEmpty()) {
+                return shiftRepository.save(convertToEntity(shift));
+            }
+        }
+        return null;
     }
 
     @Transactional(readOnly = true)
-    public List<ShiftDTO> getShifts() {
-        List<Shift> shiftList = (List<Shift>) shiftRepository.findAll();
+    public List<ShiftDTO> getShifts(UUID doctorId) {
+        List<Shift> shiftList = shiftRepository.getShift(doctorId);
+        return shiftList.stream().map(this::convertToDto).collect(Collectors.toList());
+    }
+
+    @Transactional(readOnly = true)
+    public List<ShiftDTO> getAllShifts() {
+        List<Shift> shiftList = shiftRepository.findAll();
         return shiftList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
     @Transactional
     public Shift updateShift(ShiftDTO newShift) //@RequestBody shift
     {
-//        newShift.setSpecialityName(specialityName);
-//        newShift.setProcedureName(procedureName);
         return shiftRepository.save(convertToEntity(newShift));
     }
 
@@ -53,6 +58,7 @@ public class ShiftService {
     private ShiftDTO convertToDto(Shift shift) {
         return modelMapper.map(shift, ShiftDTO.class);
     }
+
     private Shift convertToEntity(ShiftDTO shiftDTO) {
         return modelMapper.map(shiftDTO, Shift.class);
     }

@@ -10,6 +10,9 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name="procedure_id_idx", columnList ="id")
+})
 public class Procedure {
     @Id
     @GeneratedValue

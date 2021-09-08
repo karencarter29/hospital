@@ -19,9 +19,14 @@ public class ShiftController {
         return shiftService.addShift(shift);
     }
 
+    @GetMapping("/{doctorId}")
+    public List<ShiftDTO> getShifts(@PathVariable UUID doctorId) {
+        return shiftService.getShifts(doctorId);
+    }
+
     @GetMapping
-    public List<ShiftDTO> getShifts() {
-        return shiftService.getShifts();
+    public List<ShiftDTO> getAllShifts() {
+        return shiftService.getAllShifts();
     }
 
     @PutMapping

@@ -21,23 +21,17 @@ public class ActionWaitLogin extends Action {
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
-        String firstName = update.getMessage().getFrom().getFirstName();
-        botUserService.setLogin(id,firstName + "_TG");
+
         botUserService.setCommand(id,ActionEnum.REGISTRATION_WAITING_PASSWORD);
-
-
-
-
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Введите пароль:");
-        //sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
+        sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
         try {
             absSender.execute(sendMessage);
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
-
     }
 
 

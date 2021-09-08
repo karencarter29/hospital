@@ -15,7 +15,8 @@ import java.util.UUID;
 @NoArgsConstructor
 public class PatientDTO {
     private UUID id;
-    private int userId;
+    private String firstName;
+    private String lastName;
     private String gender;
     private String phoneNumber;
     private LocalDate dateOfBirth;

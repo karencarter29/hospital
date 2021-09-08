@@ -7,9 +7,9 @@ import java.util.Locale;
 public enum Role {
 
 
-    PATIENT("пациент"),
-    DOCTOR("доктор"),
-    ADMIN("админ");
+    ROLE_PATIENT("PATIENT"),
+    ROLE_DOCTOR("DOCTOR"),
+    ROLE_ADMIN("ADMIN");
     private String value;
 
     Role(String value) {
@@ -26,9 +26,10 @@ public enum Role {
         }
         value = value.trim().toLowerCase(Locale.ROOT);
 
-        if (PATIENT.value.equals(value)) return PATIENT;
-        if (DOCTOR.value.equals(value)) return DOCTOR;
-        if (ADMIN.value.equals(value)) return ADMIN;
+
+        if (ROLE_PATIENT.value.equals(value)) return ROLE_PATIENT;
+        if (ROLE_DOCTOR.value.equals(value)) return ROLE_DOCTOR;
+        if (ROLE_ADMIN.value.equals(value)) return ROLE_ADMIN;
         throw new RoleNotFoundException(value);
     }
 }

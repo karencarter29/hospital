@@ -15,9 +15,8 @@ import java.util.List;
 @ConditionalOnProperty(prefix = "gateway", name = "state", havingValue = "true")
 public class DoctorServiceApi implements DoctorService {
 
-    @Value("${gateway.api.get-all-doctors}")
+    @Value("${gateway.host}/patient/doctors")
     private String url;
-
 
     @Override
     public List<Doctor> get() {
@@ -30,5 +29,6 @@ public class DoctorServiceApi implements DoctorService {
             throw new RuntimeException();//создадим свой кастомный
         }
         }
-    }
+
+}
 

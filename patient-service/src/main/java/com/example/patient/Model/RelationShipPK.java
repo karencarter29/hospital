@@ -7,11 +7,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class RelationShipPK implements Serializable {
     private Shift shift;
-    private Patient patient;
 
-    public RelationShipPK(Shift shift, Patient patient) {
+    public RelationShipPK(Shift shift) {
         this.shift = shift;
-        this.patient = patient;
     }
 
 
@@ -23,11 +21,4 @@ public class RelationShipPK implements Serializable {
         this.shift = shift;
     }
 
-    public Patient getPatient() {
-        return patient;
-    }
-
-    public void setPatient(Patient patient) {
-        this.patient = patient;
-    }
 }

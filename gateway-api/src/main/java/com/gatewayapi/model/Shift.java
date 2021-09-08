@@ -1,14 +1,12 @@
 package com.gatewayapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Random;
 
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -16,8 +14,10 @@ import java.util.Random;
 public class Shift {
     final Long id = new Random().nextLong();
     Long doctorId;
-    Long procedureId;
+    Procedure procedure;
     LocalDateTime startTime;
     LocalDateTime endTime;
     LocalDate date;
+
+
 }

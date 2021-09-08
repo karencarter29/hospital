@@ -3,6 +3,8 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.*;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,28 +16,33 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Component
 public class ActionChooseDate extends Action {
     @Autowired
     BotAppointment botAppointment;
+    @Autowired
+    DoctorServiceApi doctorServiceApi;
+    @Autowired
+    ProcedureService procedureService;
+    @Autowired
+    ServiceID serviceID;
 
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
-        if (text.equals("Консультация (1час)")) {
-            botAppointment.setProcedure(text);
-            botAppointment.setDuration("1 час");
-        } else {
-            botAppointment.setProcedure(text);
-            botAppointment.setDuration("Назначает врач");
-        }
-
-
+        botAppointment.setProcedure(text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_TIME);
-
+        Gson gson = new Gson();
+        Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
+        for (int i = 0; i < shifts.length; i++) {
+            if (shifts[i].getProcedure().getProcedureName().equals(text)) {
+                botAppointment.setId(shifts[i].getId());
+            }
+        }
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Выберите дату: ");
@@ -50,10 +57,14 @@ public class ActionChooseDate extends Action {
 
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("27 августа");
-        keyboardRow.add("28 августа");
-        keyboardRow.add("29 августа");
-        keyboardRow.add("30 августа");
+        Gson gson = new Gson();
+//        Shift[] shifts = gson.fromJson(String.valueOf(doctorServiceApi.get()), Shift[].class);
+//        Arrays.stream(shifts).forEach(shift1 -> keyboardRow.add(shift1.getDate().toString()));
+        Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
+        for (int i = 0; i < shifts.length; i++) {
+            System.out.println();
+            keyboardRow.add(Arrays.toString(shifts[i].getDate()));
+        }
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

@@ -13,6 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 public class Shift {
     private UUID id;
+    private UUID doctorId;
     private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;

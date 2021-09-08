@@ -16,9 +16,9 @@ import java.util.UUID;
 public class AppointmentController {
     private AppointmentService appointmentService;
 
-    @GetMapping
-    public List<AppointmentDTO> getAppointments() {
-        return appointmentService.appointments();
+    @GetMapping("/{patientId}")
+    public List<AppointmentDTO> getAppointments(@PathVariable UUID patientId) {
+        return appointmentService.appointments(patientId);
     }
 
     @PostMapping("/{shiftId}/{patientId}")

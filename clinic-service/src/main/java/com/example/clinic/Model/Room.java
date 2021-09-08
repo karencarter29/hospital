@@ -12,6 +12,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(RelationShipPK.class)
+@Table(indexes = {
+        @Index(name="room_hospitalId_idx", columnList = "hospitalId"),
+        @Index(name="room_doctorId_idx", columnList = "doctorId")
+})
 public class Room implements Serializable {
 
     @Id

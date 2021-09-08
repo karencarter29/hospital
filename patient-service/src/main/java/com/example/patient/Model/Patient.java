@@ -19,7 +19,8 @@ public class Patient {
     @Id
     @GeneratedValue
     private UUID id;
-    private int userId;
+    private String firstName;
+    private String lastName;
     private String gender;
     private String phoneNumber;
     private LocalDate dateOfBirth;
@@ -41,12 +42,20 @@ public class Patient {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<Appointment> getAppointments() {

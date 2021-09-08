@@ -31,8 +31,7 @@ public class BotUserService {
         changeUser(chatId,botUser -> botUser.setSecondName(secondName));
     }
 
-    public void setIdAndRole(Long chatId, Role role){
-        changeUser(chatId.toString(),botUser -> botUser.setId(chatId));
+    public void setRole(Long chatId, Role role){
         changeUser(chatId.toString(),botUser -> botUser.setRole(role));
     }
     public Long getId(){
