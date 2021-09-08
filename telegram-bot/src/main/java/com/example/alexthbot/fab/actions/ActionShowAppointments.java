@@ -3,6 +3,12 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
+import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.Appointment;
+import com.example.alexthbot.fab.services.BotAppointmentService;
+import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.services.Shift;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,34 +20,49 @@ import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 
 @Component
 public class ActionShowAppointments extends Action {
     @Autowired
     ConfigurationAppointment configurationAppointment;
+    @Autowired
+    BotAppointmentService botAppointmentService;
+    @Autowired
+    ServiceID serviceID;
     @Override
     public void action(Update update, AbsSender absSender) {
+        Gson gson = new Gson();
+        List<BotAppointment> botAppointments = new LinkedList<>() ;
+        Appointment[] appointments1 = gson.fromJson(String.valueOf(botAppointmentService.GetAppointments()),Appointment[].class);
+        for (int i = 0; i < appointments1.length; i++) {
+            BotAppointment botAppointment2 = new BotAppointment();
+            botAppointment2.setProcedure(appointments1[i].getShift().getProcedure().getProcedureName());
+            botAppointment2.setDate(Arrays.toString(appointments1[i].getShift().getDate()));
+            botAppointment2.setTime(Arrays.toString(appointments1[i].getShift().getStartTime()));
+            botAppointment2.setDoctor(serviceID.getDoctor());
+            botAppointments.add(botAppointment2);
+        }
         String s = "";
         String id = update.getMessage().getChatId().toString();
-        String text = update.getMessage().getText();
-        botUserService.setCommand(id, ActionEnum.CHOOSE_LAST_NAME);
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Ваша запись учтена, вы так же можете записаться к другому врачу.");
         sendMessage.setReplyMarkup(keyboard());
-        for (int i = 0; i < configurationAppointment.appointmentList.size(); i++) {
+        for (int i = 0; i < botAppointments.size(); i++) {
             s+=
-                    "Ваша запись от "+configurationAppointment.appointmentList.get(i).getTimeBook()+ " числа"+ "\n"
-                            + "Доктор: " + configurationAppointment.appointmentList.get(i).getDoctor() + "\n"
-                            + "Процедура: " + configurationAppointment.appointmentList.get(i).getProcedure() + "\n"
-                            + "День: " + configurationAppointment.appointmentList.get(i).getDate() + "\n"
-                            + "Время: " + configurationAppointment.appointmentList.get(i).getTime() + "\n"
-                            + "Длительность процедуры: " + configurationAppointment.appointmentList.get(i).getDuration() + "\n"
-                            + "\n"
+                             "Доктор: " + botAppointments.get(i).getDoctor() + "\n"
+                            + "Процедура: " + botAppointments.get(i).getProcedure() + "\n"
+                            + "День: " + botAppointments.get(i).getDate() + "\n"
+                            + "Время: " + botAppointments.get(i).getTime() + "\n"
+
                     ;
         }
         sendMessage.setText(s);
+        botAppointments.clear();
         try {
             absSender.execute(sendMessage);
         } catch (

@@ -4,6 +4,8 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.ProcedureService;
+import com.example.alexthbot.fab.services.ServiceID;
 import com.example.alexthbot.fab.services.Shift;
 import com.example.alexthbot.fab.services.TimeForBook;
 import com.google.gson.Gson;
@@ -29,18 +31,16 @@ public class ActionChooseTime extends Action {
     TimeForBook timeForBook;
     @Autowired
     ConfigurationAppointment configurationAppointment;
+    @Autowired
+    ProcedureService procedureService;
+    @Autowired
+    ServiceID serviceID;
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
-
         botAppointment.setDate(text);
-
-
-
-
         botUserService.setCommand(id, ActionEnum.MIDDLE_BOOKED);
-
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setText("Выберите время:");
@@ -56,9 +56,13 @@ public class ActionChooseTime extends Action {
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        String[] strings = gson.fromJson(String.valueOf(timeForBook.getTime()), String[].class);
-        Arrays.stream(strings).forEach(str1 -> keyboardRow.add(str1));
-
+        Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
+        for (int i = 0; i < shifts.length; i++) {
+            String s = Arrays.toString(shifts[i].getStartTime());
+            String time = s.substring(13, s.length()-15);
+            time=time.replace(',',':');
+            keyboardRow.add(time);
+        }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

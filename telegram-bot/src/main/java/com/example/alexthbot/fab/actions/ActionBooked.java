@@ -5,6 +5,8 @@ import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.services.BotAppointmentService;
+import com.example.alexthbot.fab.services.ProcedureService;
+import com.example.alexthbot.fab.services.ServiceID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -27,6 +29,10 @@ public class ActionBooked extends Action {
     BotAppointmentService botAppointmentService;
     @Autowired
     ConfigurationAppointment configurationAppointment;
+    @Autowired
+    ProcedureService procedureService;
+    @Autowired
+    ServiceID serviceID;
 
 
     @Override
@@ -34,28 +40,20 @@ public class ActionBooked extends Action {
         String id = update.getMessage().getChatId().toString();
         String text = update.getMessage().getText();
         botAppointment.setTime(text);
-        String s = LocalDateTime.now().toString();
-        botAppointment.setTimeBook(s.split("T")[0]);
+
         botUserService.setCommand(id, ActionEnum.SHOW_APPOINTMENTS);
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
-        BotAppointment botAppointment2 = new BotAppointment();
-        botAppointment2.setTimeBook(botAppointment.getTimeBook());
-        botAppointment2.setDoctor(botAppointment.getDoctor());
-        botAppointment2.setProcedure(botAppointment.getProcedure());
-        botAppointment2.setDate(botAppointment.getDate());
-        botAppointment2.setTime(botAppointment.getTime());
-        botAppointment2.setDuration(botAppointment.getDuration());
-        //configurationAppointment.appointmentList.add(botAppointment2);
-        botAppointmentService.PostAppointment(botAppointment2);
+
+        //постим аппоинтмент
+        //botAppointmentService.PostAppointment(botAppointment);
 
 
-        sendMessage.setText("Ваша запись от "+botAppointment.getTimeBook()+ " числа"+ "\n"
+        sendMessage.setText("Ваша запись:"+ "\n"
                 + "Доктор: " + botAppointment.getDoctor() + "\n"
                 + "Процедура: " + botAppointment.getProcedure() + "\n"
                 + "День: " + botAppointment.getDate() + "\n"
                 + "Время: " + botAppointment.getTime() + "\n"
-                + "Длительность процедуры: " + botAppointment.getDuration() + "\n"
         );
         sendMessage.setReplyMarkup(keyboard());
         try {

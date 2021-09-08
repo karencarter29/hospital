@@ -1,14 +1,14 @@
 package com.gatewayapi.web.services;
 
-import com.gatewayapi.model.Appointment;
-import com.gatewayapi.model.Condition;
-import com.gatewayapi.model.Doctor;
+import com.gatewayapi.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -31,9 +31,9 @@ public class DoctorService {
 
     public ResponseEntity<Object> getAppointments() {
         return ResponseEntity.ok().body(new Appointment[] {
-                new Appointment(1L, 1L, Condition.RESERVED),
-                new Appointment(2L, 2L, Condition.IN_PROGRESS),
-                new Appointment(3L, 3L, Condition.AVAILABLE)
+                new Appointment( new Shift(1L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.RESERVED),
+                new Appointment( new Shift(2L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 2L, Condition.IN_PROGRESS),
+                new Appointment( new Shift(3L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 3L, Condition.AVAILABLE)
         });
     }
 }

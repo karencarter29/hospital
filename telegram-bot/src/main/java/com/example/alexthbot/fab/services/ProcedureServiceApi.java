@@ -8,21 +8,19 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
 @Service
 public class ProcedureServiceApi implements ProcedureService {
 
-    @Value("${gateway.api.get-list-procedures}")
-    private String urlGetProcedureOfTooth;
-    @Value("${gateway.api.get-list-procedures}")
-    private String urlGetProcedureOfFrags;
+
 
     @Override
-    public List<Procedure> getProceduresOfTooth() {
+    public List<Shift> getProceduresById(Long id) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<List<Procedure>> proceduresEntity = new RestTemplate().exchange(urlGetProcedureOfTooth, HttpMethod.GET, httpEntity, CollectionParams.get());
+        ResponseEntity<ArrayList<Shift>> proceduresEntity = new RestTemplate().exchange("http://localhost:8762/patient/doctor/"+ id +"/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
         if (proceduresEntity.getStatusCode() == HttpStatus.OK) {
             log.info(proceduresEntity.getBody().toString());
             return proceduresEntity.getBody();
@@ -31,15 +29,6 @@ public class ProcedureServiceApi implements ProcedureService {
         }
     }
 
-    @Override
-    public List<Procedure> getProceduresOfDrags() {
-        HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<List<Procedure>> proceduresEntity = new RestTemplate().exchange(urlGetProcedureOfFrags, HttpMethod.GET, httpEntity, CollectionParams.get());
-        if (proceduresEntity.getStatusCode() == HttpStatus.OK) {
-            log.info(proceduresEntity.getBody().toString());
-            return proceduresEntity.getBody();
-        } else {
-            throw new RuntimeException();//создадим свой кастомный
-        }
-    }
+
+
 }

@@ -2,10 +2,11 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
-import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.actions.router.Role;
+import com.example.alexthbot.fab.database.user.service.BotUserService;
 import com.example.alexthbot.fab.services.Doctor;
 import com.example.alexthbot.fab.services.DoctorService;
-import com.example.alexthbot.fab.services.ProcedureService;
+import com.example.alexthbot.fab.services.PatientService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,6 @@ import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
-import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRemove;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -22,26 +22,28 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
 @Component
-public class ChooseDoctorAfterLogin extends Action {
+public class ActionChooseDoctorSecondTime extends Action {
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
 
     @Autowired
-    BotAppointment botAppointment;
+    private BotUserService botUserService;
     @Autowired
-    ProcedureService procedureService;
+    PatientService patientService;
+
     @Override
     public void action(Update update, AbsSender absSender) {
-        SendMessage sendMessage = new SendMessage();
         String id = update.getMessage().getChatId().toString();
-        String text = update.getMessage().getText();
-        botAppointment.setDoctor(text);
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
-        sendMessage.setChatId(id);
-        sendMessage.setReplyMarkup(keyboard());
-        sendMessage.setText("Выберите процедуру: \n(В первый раз советуем выбрать консультацию)");
+        String name = update.getMessage().getText();
 
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
+        SendMessage sendMessage = new SendMessage();
+        sendMessage.setChatId(id);
+        sendMessage.setText("Выберите нужного доктора: ");
+        sendMessage.setReplyMarkup(keyboard());
         try {
             absSender.execute(sendMessage);
         } catch (
@@ -50,13 +52,14 @@ public class ChooseDoctorAfterLogin extends Action {
         }
     }
 
+
+
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
-        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
-
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpecialityId().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 
@@ -68,6 +71,6 @@ public class ChooseDoctorAfterLogin extends Action {
 
     @Override
     public ActionEnum getKey() {
-        return ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN;
+        return ActionEnum.CHOOSE_DOCTOR_SECOND_TIME;
     }
 }
