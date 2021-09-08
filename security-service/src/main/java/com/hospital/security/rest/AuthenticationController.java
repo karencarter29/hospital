@@ -1,5 +1,6 @@
 package com.hospital.security.rest;
 
+import com.hospital.security.config.SecretConfig;
 import com.hospital.security.dto.AuthenticationRequestDto;
 import com.hospital.security.dto.UserDto;
 import com.hospital.security.model.User;
@@ -26,38 +27,22 @@ import java.util.Map;
 @RequestMapping(value = "/hospital/auth")
 public class AuthenticationController {
 
-    private final AuthenticationManager authenticationManager;
-
-    private final JwtTokenProvider jwtTokenProvider;
-
     private final UserService userService;
 
+    private final SecretConfig secretConfig;
+
     @Autowired
-    public AuthenticationController(AuthenticationManager authenticationManager, JwtTokenProvider jwtTokenProvider, UserService userService) {
-        this.authenticationManager = authenticationManager;
-        this.jwtTokenProvider = jwtTokenProvider;
+    public AuthenticationController(UserService userService, SecretConfig secretConfig) {
         this.userService = userService;
+        this.secretConfig = secretConfig;
     }
 
     @PostMapping("/login")
-    public ResponseEntity login(@RequestBody AuthenticationRequestDto requestDto) {
+    public ResponseEntity<String> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
-            String username = requestDto.getUsername();
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
-            User user = userService.findByUsername(username);
-
-            if (user == null) {
-                throw new UsernameNotFoundException("User with username: " + username + " not found");
-            }
-            UserDto userDto = new UserDto();
-            userDto.setFirstName(user.getFirstName());
-            userDto.setSecondName(user.getSecondName());
-            userDto.setId(user.getId());
-            userDto.setUsername(username);
-            String token = jwtTokenProvider.createToken(userDto, user.getRoles());
-
+            String token = userService.login(requestDto);
             HttpHeaders responseHeaders = new HttpHeaders();
-            responseHeaders.set("Authorization", token);
+            responseHeaders.set(secretConfig.getHeader(), token);
 
             return ResponseEntity.ok().headers(responseHeaders).build();
         } catch (AuthenticationException e) {
@@ -66,8 +51,11 @@ public class AuthenticationController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity register(@RequestBody UserDto userDto) {
+    public ResponseEntity<String> register(@RequestBody UserDto userDto) {
         userService.register(userDto);
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        String token = userService.getTokenForUser(userDto);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set(secretConfig.getHeader(), token);
+        return ResponseEntity.ok().headers(responseHeaders).build();
     }
 }
