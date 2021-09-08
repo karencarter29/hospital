@@ -36,7 +36,7 @@ public class ActionWaitPassword extends Action {
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
         botUserService.setRole(update.getMessage().getChatId(), Role.ROLE_PATIENT);
         //постим юзера
-        //patientService.postNewUser(botUserService.user(id));
+        patientService.postNewUser(botUserService.user(id));
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(id);
         sendMessage.setReplyMarkup(keyboard());
