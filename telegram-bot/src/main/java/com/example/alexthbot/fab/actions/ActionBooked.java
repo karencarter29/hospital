@@ -46,7 +46,7 @@ public class ActionBooked extends Action {
         sendMessage.setChatId(id);
 
         //постим аппоинтмент
-        //botAppointmentService.PostAppointment(botAppointment);
+        botAppointmentService.PostAppointment(botAppointment);
 
 
         sendMessage.setText("Ваша запись:"+ "\n"
