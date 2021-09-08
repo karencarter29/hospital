@@ -13,13 +13,11 @@ import java.util.List;
 @Service
 public class DateServiceApi implements DateService {
 
-    @Value("http://192.168.0.118:8762/patient/doctor/1/shifts")
-    private String urlGetData;
 
     @Override
-    public List<Shift> getData() {
+    public List<Shift> getData(Long id) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
-        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange(urlGetData, HttpMethod.GET, httpEntity, CollectionParams.get());
+        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange("http://192.168.0.118:8762/patient/doctor/"+ id +"/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
         if (proceduresEntity.getStatusCode() == HttpStatus.OK) {
             log.info(proceduresEntity.getBody().toString());
             return proceduresEntity.getBody();

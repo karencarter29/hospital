@@ -2,10 +2,11 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
+import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
-import com.example.alexthbot.fab.services.Doctor;
-import com.example.alexthbot.fab.services.DoctorService;
-import com.example.alexthbot.fab.services.ProcedureService;
+import com.example.alexthbot.fab.database.user.model.CheckLogPass;
+import com.example.alexthbot.fab.database.user.service.BotUserService;
+import com.example.alexthbot.fab.services.*;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,25 +24,27 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class ChooseDoctorAfterLogin extends Action {
+public class ChooseDoctorAfterLoginAndRegistration extends Action {
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
+    @Autowired
+    CheckLogPass checkLogPass;
+    @Autowired
+    private BotUserService botUserService;
+    @Autowired
+    PatientService patientService;
+    @Autowired
+    AuthServiceApi authServiceApi;
 
-    @Autowired
-    BotAppointment botAppointment;
-    @Autowired
-    ProcedureService procedureService;
     @Override
     public void action(Update update, AbsSender absSender) {
-        SendMessage sendMessage = new SendMessage();
         String id = update.getMessage().getChatId().toString();
-        String text = update.getMessage().getText();
-        botAppointment.setDoctor(text);
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
+        SendMessage sendMessage = new SendMessage();
+        if (authServiceApi.CheckLoginAndPassword(checkLogPass).is2xxSuccessful()) {
+        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
         sendMessage.setChatId(id);
+        sendMessage.setText("Выберите нужного доктора:");
         sendMessage.setReplyMarkup(keyboard());
-        sendMessage.setText("Выберите процедуру: \n(В первый раз советуем выбрать консультацию)");
-
         try {
             absSender.execute(sendMessage);
         } catch (
@@ -49,14 +52,20 @@ public class ChooseDoctorAfterLogin extends Action {
             e.printStackTrace();
         }
     }
+        else {
+            botUserService.setCommand(id,ActionEnum.START);
+            sendMessage.setChatId(id);
+            sendMessage.setText("Такого логина или пароля не существует, + \n " +
+                    "выберите логин или регистрацию");
+        }
+    }
 
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctor = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
-        Arrays.stream(doctor).forEach(doctor1 -> keyboardRow.add(doctor1.getName()));
-
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpecialityId().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

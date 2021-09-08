@@ -5,6 +5,5 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 public interface ProcedureService {
-    public List<Procedure> getProceduresOfTooth();
-    public List<Procedure> getProceduresOfDrags();
+    public List<Shift> getProceduresById(Long id);
 }
