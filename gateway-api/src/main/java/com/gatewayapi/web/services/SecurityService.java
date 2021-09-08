@@ -44,9 +44,9 @@ public class SecurityService {
         Patient patient = getPatientInformation(Objects.requireNonNull(headers.getFirst("Authorization")));
         String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
         ResponseEntity<String> response2 = restTemplate.postForEntity(url1, patient, String.class);
-        if (response2.getStatusCode() != HttpStatus.OK || response2.getStatusCode() != HttpStatus.CREATED) {
-            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "The registration failed. Please try later.");
-        }
+//        if (response2.getStatusCode() != HttpStatus.OK || response2.getStatusCode() != HttpStatus.CREATED) {
+//            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "The registration failed. Please try later.");
+//        }
         return response;
     }
 
