@@ -1,5 +1,6 @@
 package com.hospital.security.security.jwt;
 
+import com.hospital.security.config.SecretConfig;
 import com.hospital.security.dto.UserDto;
 import com.hospital.security.model.Role;
 import io.jsonwebtoken.*;
@@ -25,13 +26,10 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    @Value("${jwt.token.secret}")
-    private String secret;
+    private final SecretConfig secretConfig;
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder;
+    public JwtTokenProvider(SecretConfig secretConfig) {
+        this.secretConfig = secretConfig;
     }
 
     public String createToken(UserDto userDto, List<Role> roles) {
@@ -48,7 +46,7 @@ public class JwtTokenProvider {
                 setClaims(claims).
                 setIssuedAt(now).
                 setExpiration(exp).
-                signWith(SignatureAlgorithm.HS256, secret).
+                signWith(SignatureAlgorithm.HS256, secretConfig.getSecret()).
                 compact();
     }
 
@@ -56,11 +54,5 @@ public class JwtTokenProvider {
         List<String> result = new ArrayList<>();
         roles.forEach(role -> result.add(role.getName()));
         return result;
-    }
-
-
-    @PostConstruct
-    protected void init() {
-        secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 }

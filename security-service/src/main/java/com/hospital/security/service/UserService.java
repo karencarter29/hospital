@@ -1,5 +1,6 @@
 package com.hospital.security.service;
 
+import com.hospital.security.dto.AuthenticationRequestDto;
 import com.hospital.security.dto.UserDto;
 import com.hospital.security.model.User;
 
@@ -17,4 +18,8 @@ public interface UserService {
     void delete(UUID id);
 
     List<User> findAll();
+
+    String login(AuthenticationRequestDto requestDto);
+
+    String getTokenForUser(UserDto userDto);
 }
