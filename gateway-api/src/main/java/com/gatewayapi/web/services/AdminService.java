@@ -2,17 +2,11 @@ package com.gatewayapi.web.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gatewayapi.model.Appointment;
-import com.gatewayapi.model.Condition;
-import com.gatewayapi.model.Doctor;
-import com.gatewayapi.model.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Map;
 
 @Service
@@ -44,31 +38,13 @@ public class AdminService {
     public ResponseEntity<Object> getAllShifts() {
         String url = "url to get all shifts";
 //        restTemplate.getForObject(url, ResponseEntity.class);
-        return ResponseEntity.ok().body(getShifts());
+        return ResponseEntity.ok().build();
     }
 
     public ResponseEntity<Object> getAllAppointments() {
         String url = "url to get all appointments";
         //restTemplate.getForObject(url, ResponseEntity.class);
-        return ResponseEntity.ok().body(getAppointments());
-    }
-
-    private String getAppointments() {
-        Appointment[] appointments = {
-                new Appointment(new Shift(1L,new Procedure(1L,"Чистка зубов"), LocalDateTime.now(), LocalDateTime.now(),LocalDate.now()), 1L, Condition.RESERVED),
-                new Appointment(new Shift(2L,new Procedure(1L,"Консультация"), LocalDateTime.now(), LocalDateTime.now(),LocalDate.now()), 2L, Condition.IN_PROGRESS),
-                new Appointment(new Shift(3L,new Procedure(1L,"Отбеливание"), LocalDateTime.now(), LocalDateTime.now(),LocalDate.now()), 3L, Condition.AVAILABLE)
-        };
-        return convertObjectToJson(appointments);
-    }
-
-    private String getShifts() {
-        Shift[] shifts = {
-              new Shift(1L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(2L, new Procedure(2L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(3L, new Procedure(3L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())
-        };
-        return convertObjectToJson(shifts);
+        return ResponseEntity.ok().build();
     }
 
     private String convertObjectToJson(Object object) {
