@@ -30,12 +30,9 @@ public class PatientService {
         });
     }
 
-    public ResponseEntity<Object> getShiftsByDoctor(Long id) {
-        return ResponseEntity.ok().body(new Shift[]{
-                new Shift(id, new Procedure(1L, "Consultation"),
-                        LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-                new Shift(id, new Procedure(2L, "Consultation"),
-                        LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
+    public ResponseEntity<Object> getShiftsByDoctor(String doctorId) {
+        String url = ADDRESS + "url to get shifts by doctor id";
+        return null;
     }
 
     public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
@@ -43,9 +40,10 @@ public class PatientService {
         return ResponseEntity.status(HttpStatus.CREATED).body(appointmentInfo);
     }
 
-    public ResponseEntity<Object> getAppointments(String id) {
+    public ResponseEntity<Object> getAppointments(String patientId) {
+        String url = ADDRESS + "url for get appointments by patient id";
         return ResponseEntity.ok().body(new Appointment[]{
-                new Appointment(new Shift(1L, new Procedure(1L, "Consultation"),
+                new Appointment(new Shift("1L", new Procedure(1L, "Consultation"),
                         LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.IN_PROGRESS)});
     }
 }

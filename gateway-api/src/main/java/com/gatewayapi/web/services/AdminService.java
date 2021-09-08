@@ -2,7 +2,10 @@ package com.gatewayapi.web.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gatewayapi.model.*;
+import com.gatewayapi.model.Appointment;
+import com.gatewayapi.model.Condition;
+import com.gatewayapi.model.Doctor;
+import com.gatewayapi.model.Shift;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
