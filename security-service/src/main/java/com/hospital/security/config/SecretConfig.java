@@ -16,6 +16,6 @@ public class SecretConfig {
     @Value("${config.jwt.prefix:Bearer_}")
     private String prefix;
 
-    @Value("${config.jwt.secret:hospitalsecrettt }")
+    @Value("${config.jwt.secret:hospitalsecrettt}")
     private String secret;
 }
