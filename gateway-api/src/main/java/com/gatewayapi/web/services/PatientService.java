@@ -16,7 +16,7 @@ public class PatientService {
     private static final String PATIENT_SERVICE_ADDRESS = "http://localhost:8082";
     private static final String CLINIC_SERVICE_ADDRESS = "http://localhost:8083";
 
-    RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Autowired
     public PatientService(RestTemplateBuilder restTemplateBuilder) {

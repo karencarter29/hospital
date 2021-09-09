@@ -45,7 +45,7 @@ public class ActionChooseDoctor extends Action {
             }
         }
         botAppointment.setDoctor(text);
-        sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
+//        sendMessage.setReplyMarkup(new ReplyKeyboardRemove());
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
 
         sendMessage.setChatId(id);
@@ -71,10 +71,10 @@ public class ActionChooseDoctor extends Action {
 
         //  ClassCastException   shifts.stream().forEach(prod1 -> keyboardRow.add(prod1.getProcedure().getProcedure()));
 
-        Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
-        for (int i = 0; i < shifts.length; i++) {
-            keyboardRow.add(shifts[i].getProcedureName());
-        }
+//        Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
+//        for (int i = 0; i < shifts.length; i++) {
+//            keyboardRow.add(shifts[i].getProcedureName());
+//        }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 
