@@ -4,7 +4,7 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
 import com.example.alexthbot.fab.database.user.service.TokenService;
-import com.example.alexthbot.fab.services.Doctor;
+import com.example.alexthbot.fab.services.entities.Doctor;
 import com.example.alexthbot.fab.services.DoctorService;
 import com.example.alexthbot.fab.services.PatientService;
 import com.example.alexthbot.fab.services.ServiceID;
