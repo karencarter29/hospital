@@ -2,6 +2,7 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -22,6 +23,7 @@ public class ActionStart extends Action {
         sendMessage.setChatId(chatId);
         sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
         sendMessage.setReplyMarkup(getKeyboard());
+
         botUserService.setCommand(chatId,ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
         try {
             absSender.execute(sendMessage);

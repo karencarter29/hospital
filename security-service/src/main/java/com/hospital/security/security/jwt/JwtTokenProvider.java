@@ -26,11 +26,8 @@ import java.util.List;
 @Component
 public class JwtTokenProvider {
 
-    private final SecretConfig secretConfig;
-
-    public JwtTokenProvider(SecretConfig secretConfig) {
-        this.secretConfig = secretConfig;
-    }
+    @Value("${jwt.token.secret}")
+    private String secret;
 
     public String createToken(UserDto userDto, List<Role> roles) {
         Claims claims = Jwts.claims();
@@ -46,7 +43,7 @@ public class JwtTokenProvider {
                 setClaims(claims).
                 setIssuedAt(now).
                 setExpiration(exp).
-                signWith(SignatureAlgorithm.HS256, secretConfig.getSecret()).
+                signWith(SignatureAlgorithm.HS256, secret).
                 compact();
     }
 
@@ -54,5 +51,10 @@ public class JwtTokenProvider {
         List<String> result = new ArrayList<>();
         roles.forEach(role -> result.add(role.getName()));
         return result;
+    }
+
+    @PostConstruct
+    protected void init() {
+        secret = Base64.getEncoder().encodeToString(secret.getBytes());
     }
 }

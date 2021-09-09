@@ -15,10 +15,14 @@ import java.util.function.Consumer;
 public class BotUserService {
 
     @Autowired
-    protected Cache<String, BotUser> cache;
+    protected Cache<String, BotUser> cache ;
     @Autowired
     BotUser botUser;
 
+
+    public void setID(Long chatId){
+        changeUser(chatId.toString(),botUser -> botUser.setId(chatId));
+    }
     public void setCommand(String chatId, ActionEnum actionEnum){
         changeUser(chatId,botUser -> botUser.setCommand(actionEnum.getCommand()));
     }

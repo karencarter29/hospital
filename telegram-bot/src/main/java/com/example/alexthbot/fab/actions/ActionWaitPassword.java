@@ -3,9 +3,11 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
+import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.Doctor;
 import com.example.alexthbot.fab.services.DoctorService;
 import com.example.alexthbot.fab.services.PatientService;
+import com.example.alexthbot.fab.services.ServiceID;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,7 +29,10 @@ public class ActionWaitPassword extends Action {
     DoctorService doctorService;
     @Autowired
     PatientService patientService;
-
+    @Autowired
+    ServiceID serviceID;
+    @Autowired
+    TokenService tokenService;
     @Override
     public void action(Update update, AbsSender absSender) {
         String id = update.getMessage().getChatId().toString();
@@ -35,6 +40,8 @@ public class ActionWaitPassword extends Action {
         botUserService.setPassword(id, password);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
         botUserService.setRole(update.getMessage().getChatId(), Role.ROLE_PATIENT);
+        serviceID.setIdChat(id);
+
         //постим юзера
         patientService.postNewUser(botUserService.user(id));
         SendMessage sendMessage = new SendMessage();

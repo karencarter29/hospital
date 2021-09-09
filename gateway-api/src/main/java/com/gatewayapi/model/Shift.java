@@ -13,7 +13,7 @@ import java.util.Random;
 @Setter
 public class Shift {
     final Long id = new Random().nextLong();
-    Long doctorId;
+    String doctorId;
     Procedure procedure;
     LocalDateTime startTime;
     LocalDateTime endTime;

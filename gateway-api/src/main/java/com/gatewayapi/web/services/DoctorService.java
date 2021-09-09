@@ -31,9 +31,9 @@ public class DoctorService {
 
     public ResponseEntity<Object> getAppointments() {
         return ResponseEntity.ok().body(new Appointment[] {
-                new Appointment( new Shift(1L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.RESERVED),
-                new Appointment( new Shift(2L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 2L, Condition.IN_PROGRESS),
-                new Appointment( new Shift(3L, new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 3L, Condition.AVAILABLE)
+                new Appointment( new Shift("1L", new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 1L, Condition.RESERVED),
+                new Appointment( new Shift("2L", new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 2L, Condition.IN_PROGRESS),
+                new Appointment( new Shift("3L", new Procedure(1L, "Consultation"), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()), 3L, Condition.AVAILABLE)
         });
     }
 }
