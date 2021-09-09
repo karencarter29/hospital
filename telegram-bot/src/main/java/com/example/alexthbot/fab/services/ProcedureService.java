@@ -1,6 +1,6 @@
 package com.example.alexthbot.fab.services;
 
-import org.springframework.stereotype.Service;
+import com.example.alexthbot.fab.services.entities.Shift;
 
 import java.util.List;
 
