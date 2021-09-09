@@ -1,6 +1,7 @@
 package com.example.alexthbot.fab.services;
 
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.services.entities.Appointment;
 
 import java.util.List;
 

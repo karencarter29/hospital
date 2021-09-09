@@ -3,14 +3,12 @@ package com.example.alexthbot.fab.services;
 import com.example.alexthbot.fab.database.user.model.BotUser;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
 import com.example.alexthbot.fab.database.user.service.TokenService;
-import org.apache.http.Header;
+import com.example.alexthbot.fab.services.entities.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.servlet.function.ServerRequest;
 
 @Service
 public class PatientServiceApi implements PatientService{
