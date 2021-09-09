@@ -20,12 +20,14 @@ public class DoctorServiceApi implements DoctorService {
     TokenService tokenService;
     @Autowired
     BotUserService botUserService;
+    @Autowired
+    ServiceID serviceID;
     @Value("${gateway.host}/patient/doctors")
     private String url;
 
     @Override
     public List<Doctor> get() {
-        HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(botUserService.getId().toString()));
+        HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
         ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(url, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (doctorsEntity.getStatusCode() == HttpStatus.OK) {
             log.info(doctorsEntity.getBody().toString());
