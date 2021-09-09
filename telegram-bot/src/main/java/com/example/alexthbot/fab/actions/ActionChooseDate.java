@@ -64,7 +64,7 @@ public class ActionChooseDate extends Action {
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
             System.out.println();
-            keyboardRow.add(Arrays.toString(shifts[i].getDate()));
+            keyboardRow.add(shifts[i].getDate());
         }
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();

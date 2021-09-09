@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BotAppointment {
-    private Long id;
+    private String id;
     private String doctor;
     private String procedure;
     private String date;

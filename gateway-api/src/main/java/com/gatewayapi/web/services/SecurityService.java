@@ -12,7 +12,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
@@ -23,7 +22,7 @@ import java.util.Objects;
 public class SecurityService {
 
     private static final String ADDRESS_SECURITY_SERVICE = "http://localhost:8077";
-    private static final String ADDRESS_PATIENT_SERVICE = "http://localhost:8084";
+    private static final String ADDRESS_PATIENT_SERVICE = "http://localhost:8082";
 
     private final RestTemplate restTemplate;
     private final TokenConfig tokenConfig;
@@ -43,10 +42,7 @@ public class SecurityService {
         HttpHeaders headers = response.getHeaders();
         Patient patient = getPatientInformation(Objects.requireNonNull(headers.getFirst("Authorization")));
         String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
-        ResponseEntity<String> response2 = restTemplate.postForEntity(url1, patient, String.class);
-//        if (response2.getStatusCode() != HttpStatus.OK || response2.getStatusCode() != HttpStatus.CREATED) {
-//            throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED, "The registration failed. Please try later.");
-//        }
+        restTemplate.postForEntity(url1, patient, String.class);
         return response;
     }
 

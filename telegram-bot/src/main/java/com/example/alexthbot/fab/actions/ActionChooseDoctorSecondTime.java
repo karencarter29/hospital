@@ -58,7 +58,7 @@ public class ActionChooseDoctorSecondTime extends Action {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
         Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
-        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpecialityId().getSpecialityName()));
+        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

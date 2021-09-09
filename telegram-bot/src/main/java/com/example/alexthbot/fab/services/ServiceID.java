@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class ServiceID {
-    private Long doctorId;
+    private String doctorId;
     private String doctor;
     private String idChat;
 }

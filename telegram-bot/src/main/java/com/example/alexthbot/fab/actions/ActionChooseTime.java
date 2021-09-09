@@ -58,10 +58,10 @@ public class ActionChooseTime extends Action {
         Gson gson = new Gson();
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
-            String s = Arrays.toString(shifts[i].getStartTime());
-            String time = s.substring(13, s.length()-15);
-            time=time.replace(',',':');
-            keyboardRow.add(time);
+            String s = shifts[i].getStartTime();
+//            String time = s.substring(13, s.length()-15);
+//            time=time.replace(',',':');
+            keyboardRow.add(s);
         }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

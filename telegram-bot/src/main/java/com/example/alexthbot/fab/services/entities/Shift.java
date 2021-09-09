@@ -8,18 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Shift {
-    Long id;
-    Long doctorId;
+    String id;
+    String doctorId;
     Procedure procedure;
-    String[] startTime;
-    String[] endTime;
-    String[] date;
-
-    public Shift(Long doctorId, Procedure procedure, String[] startTime, String[] endTime, String[] date) {
-        this.doctorId = doctorId;
-        this.procedure = procedure;
-        this.startTime = startTime;
-        this.endTime = endTime;
-        this.date = date;
-    }
+    String startTime;
+    String endTime;
+    String date;
+    String procedureName;
 }

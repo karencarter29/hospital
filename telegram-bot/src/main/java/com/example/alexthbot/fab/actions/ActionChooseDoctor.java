@@ -40,8 +40,8 @@ public class ActionChooseDoctor extends Action {
         Gson gson = new Gson();
         Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
         for (int i = 0; i < doctors.length; i++) {
-            if (doctors[i].getSpecialityId().getSpecialityName().equals(text)) {
-                serviceID.setDoctorId(doctors[i].getUserId());
+            if (doctors[i].getSpeciality().getSpecialityName().equals(text)) {
+                serviceID.setDoctorId(doctors[i].getId());
             }
         }
         botAppointment.setDoctor(text);
@@ -73,7 +73,7 @@ public class ActionChooseDoctor extends Action {
 
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
-            keyboardRow.add(shifts[i].getProcedure().getProcedureName());
+            keyboardRow.add(shifts[i].getProcedureName());
         }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

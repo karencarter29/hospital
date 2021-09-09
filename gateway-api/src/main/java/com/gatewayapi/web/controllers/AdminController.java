@@ -23,10 +23,10 @@ public class AdminController {
         return adminService.getAllAppointments();
     }
 
-    @PostMapping(value = "/appointment", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
-        return adminService.createAppointment(appointmentInfo);
-    }
+//    @PostMapping(value = "/appointment", consumes = MediaType.APPLICATION_JSON)
+//    public ResponseEntity<Object> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
+//        return adminService.createAppointment(appointmentInfo);
+//    }
 
     @PostMapping(value = "/shift", consumes = MediaType.APPLICATION_JSON)
     public ResponseEntity<Object> createShift(@RequestBody Map<String, Object> shiftInfo) {

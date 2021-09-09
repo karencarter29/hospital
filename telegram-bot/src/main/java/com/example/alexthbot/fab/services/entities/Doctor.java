@@ -10,9 +10,11 @@ import java.util.UUID;
 @AllArgsConstructor
 @Data
 public class Doctor {
-    Long userId;
-    Speciality specialityId;
+    String id;
+    String firstName;
+    String lastName;
     String phoneNumber;
+    Speciality speciality;
 }
 
 
