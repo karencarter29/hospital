@@ -7,7 +7,7 @@ import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.entities.Doctor;
 import com.example.alexthbot.fab.services.DoctorService;
 import com.example.alexthbot.fab.services.PatientService;
-import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -5,7 +5,7 @@ import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.services.ProcedureService;
-import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.services.entities.Shift;
 import com.example.alexthbot.fab.services.TimeForBook;
 import com.google.gson.Gson;

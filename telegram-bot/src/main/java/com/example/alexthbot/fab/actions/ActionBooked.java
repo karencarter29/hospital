@@ -6,7 +6,7 @@ import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.services.BotAppointmentService;
 import com.example.alexthbot.fab.services.ProcedureService;
-import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,7 +17,6 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.Keyboard
 import org.telegram.telegrambots.meta.bots.AbsSender;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,7 +45,7 @@ public class ActionBooked extends Action {
         sendMessage.setChatId(id);
 
         //постим аппоинтмент
-        botAppointmentService.PostAppointment(botAppointment);
+        botAppointmentService.postAppointment(botAppointment);
 
 
         sendMessage.setText("Ваша запись:"+ "\n"

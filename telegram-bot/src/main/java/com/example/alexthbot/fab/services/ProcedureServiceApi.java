@@ -1,6 +1,7 @@
 package com.example.alexthbot.fab.services;
 
 
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.entities.Shift;
 import com.example.alexthbot.fab.utils.CollectionParams;
@@ -10,7 +11,6 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j

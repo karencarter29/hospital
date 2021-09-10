@@ -1,5 +1,6 @@
 package com.example.alexthbot.fab.services;
 
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.entities.Shift;
 import com.example.alexthbot.fab.utils.CollectionParams;

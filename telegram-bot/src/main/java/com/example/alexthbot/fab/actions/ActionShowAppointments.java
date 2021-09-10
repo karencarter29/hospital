@@ -6,7 +6,7 @@ import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.services.entities.Appointment;
 import com.example.alexthbot.fab.services.BotAppointmentService;
-import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,7 +35,7 @@ public class ActionShowAppointments extends Action {
     public void action(Update update, AbsSender absSender) {
         Gson gson = new Gson();
         List<BotAppointment> botAppointments = new LinkedList<>() ;
-        Appointment[] appointments1 = gson.fromJson(String.valueOf(botAppointmentService.GetAppointments()),Appointment[].class);
+        Appointment[] appointments1 = gson.fromJson(String.valueOf(botAppointmentService.getAppointments()),Appointment[].class);
         for (int i = 0; i < appointments1.length; i++) {
             BotAppointment botAppointment2 = new BotAppointment();
             botAppointment2.setProcedure(appointments1[i].getShift().getProcedure().getProcedureName());

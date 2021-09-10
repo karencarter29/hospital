@@ -1,6 +1,6 @@
 package com.example.alexthbot.fab.services;
 
-import com.example.alexthbot.fab.database.user.service.BotUserService;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.entities.Doctor;
 import com.example.alexthbot.fab.utils.CollectionParams;
@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import java.util.Objects;
+
 @Slf4j
 @Service
 public class DoctorServiceApi implements DoctorService {
@@ -27,7 +29,7 @@ public class DoctorServiceApi implements DoctorService {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
         ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(url, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (doctorsEntity.getStatusCode() == HttpStatus.OK) {
-            log.info(doctorsEntity.getBody().toString());
+            log.info(Objects.requireNonNull(doctorsEntity.getBody()).toString());
             return doctorsEntity.getBody();
         } else {
             throw new RuntimeException();//создадим свой кастомный

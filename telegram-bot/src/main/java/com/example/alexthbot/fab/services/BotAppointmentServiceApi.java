@@ -23,7 +23,7 @@ public class BotAppointmentServiceApi implements BotAppointmentService {
     private String urlGetApps;
 
     @Override
-    public String PostAppointment(BotAppointment botAppointment) {
+    public String postAppointment(BotAppointment botAppointment) {
         RestTemplate restTemplate = new RestTemplate();
         String body = restTemplate.postForEntity(urlPostApp, botAppointment.getId(), String.class).getBody();
         log.info(botAppointment.toString());
@@ -31,11 +31,11 @@ public class BotAppointmentServiceApi implements BotAppointmentService {
     }
 
     @Override
-    public List<Appointment> GetAppointments() {
+    public List<Appointment> getAppointments() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<List<Appointment>> appResponse = new RestTemplate().exchange(urlGetApps, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (appResponse.getStatusCode() == HttpStatus.OK) {
-            log.info(Objects.requireNonNull(appResponse.getBody()).toString());
+            log.info((appResponse.getBody()).toString());
             return appResponse.getBody();
         } else {
             throw new RuntimeException();

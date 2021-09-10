@@ -1,6 +1,6 @@
 package com.example.alexthbot.fab.database.user.service;
 
-import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;

@@ -6,6 +6,6 @@ import com.example.alexthbot.fab.services.entities.Appointment;
 import java.util.List;
 
 public interface BotAppointmentService {
-    public String PostAppointment(BotAppointment botAppointment);
-    public List<Appointment> GetAppointments();
+    public String postAppointment(BotAppointment botAppointment);
+    public List<Appointment> getAppointments();
 }
