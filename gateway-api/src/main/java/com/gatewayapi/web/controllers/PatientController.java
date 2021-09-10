@@ -10,14 +10,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @RestController
 @RequestMapping("/patient")
 public class PatientController {
 
-    PatientService patientService;
-    TokenConfig tokenConfig;
+    private final PatientService patientService;
+    private final TokenConfig tokenConfig;
 
     @Autowired
     PatientController(PatientService patientService, TokenConfig tokenConfig) {
@@ -25,19 +23,26 @@ public class PatientController {
         this.tokenConfig = tokenConfig;
     }
 
-    @PostMapping(value = "/appointment/{shift_id}", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
-        return patientService.createAppointment(appointmentInfo);
+    @PostMapping(value = "/appointment/{shift_id}")
+    public ResponseEntity<String> createAppointment(@PathVariable(name = "shift_id") String shiftId,
+                                                    @RequestHeader("Authorization") String header) {
+        String patientId = getPatientIdFromToken(header);
+        return patientService.createAppointment(shiftId, patientId);
     }
 
     @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getMyAppointments(@RequestHeader("Authorization") String header) {
+    public ResponseEntity<String> getMyAppointments(@RequestHeader("Authorization") String header) {
         String id = getPatientIdFromToken(header);
         return patientService.getAppointments(id);
     }
 
+    @GetMapping(value = "/doctors", produces = MediaType.APPLICATION_JSON)
+    public ResponseEntity<String> getDoctors() {
+        return patientService.getDoctors();
+    }
+
     @GetMapping(value = "/doctor/{id}/shifts", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getDoctorShifts(@PathVariable(name = "id") String id) {
+    public ResponseEntity<String> getDoctorShifts(@PathVariable(name = "id") String id) {
         return patientService.getShiftsByDoctor(id);
     }
 
@@ -47,6 +52,6 @@ public class PatientController {
                 .setSigningKey(tokenConfig.getSecret().getBytes())
                 .parseClaimsJws(token)
                 .getBody();
-        return claims.getId();
+        return claims.get("id", String.class);
     }
 }

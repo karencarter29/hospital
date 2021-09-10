@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Data
 public class Speciality {
-    Long id;
+    String id;
     String specialityName;
 }

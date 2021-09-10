@@ -22,7 +22,7 @@ public class ProcedureServiceApi implements ProcedureService {
     ServiceID serviceID;
 
     @Override
-    public List<Shift> getProceduresById(Long id) {
+    public List<Shift> getProceduresById(String id) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
         ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange("http://localhost:8762/patient/doctor/"+ id +"/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
         if (proceduresEntity.getStatusCode() == HttpStatus.OK) {

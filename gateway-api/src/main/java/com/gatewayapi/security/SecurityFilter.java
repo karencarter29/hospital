@@ -3,6 +3,7 @@ package com.gatewayapi.security;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.NonNull;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,6 +19,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class SecurityFilter extends OncePerRequestFilter {
 
     private final TokenConfig tokenConfig;
@@ -34,6 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         String header = httpServletRequest.getHeader(tokenConfig.getHeader());
 
         if (header == null || !header.startsWith(tokenConfig.getPrefix())) {
+            log.info(header);
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             return;
         }

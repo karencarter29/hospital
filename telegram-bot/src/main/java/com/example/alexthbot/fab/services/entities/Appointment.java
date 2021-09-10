@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Appointment {
     Shift shift;
-    Long patientId;
+    String patientId;
     Condition condition;
 }
 

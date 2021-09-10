@@ -39,8 +39,8 @@ public class ActionShowAppointments extends Action {
         for (int i = 0; i < appointments1.length; i++) {
             BotAppointment botAppointment2 = new BotAppointment();
             botAppointment2.setProcedure(appointments1[i].getShift().getProcedure().getProcedureName());
-            botAppointment2.setDate(Arrays.toString(appointments1[i].getShift().getDate()));
-            botAppointment2.setTime(Arrays.toString(appointments1[i].getShift().getStartTime()));
+            botAppointment2.setDate(appointments1[i].getShift().getDate());
+            botAppointment2.setTime(appointments1[i].getShift().getStartTime());
             botAppointment2.setDoctor(serviceID.getDoctor());
             botAppointments.add(botAppointment2);
         }

@@ -74,7 +74,10 @@ public class UserServiceImpl implements UserService {
         if (user == null) {
             throw new UsernameNotFoundException("User with username: " + username + " not found");
         }
-        return secretConfig.getPrefix() + jwtTokenProvider.createToken(getUserDtoFromUser(user), user.getRoles());
+        Role role = roleRepository.findByName("ROLE_PATIENT");
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+        return secretConfig.getPrefix() + jwtTokenProvider.createToken(getUserDtoFromUser(user), roles);
     }
 
     @Override

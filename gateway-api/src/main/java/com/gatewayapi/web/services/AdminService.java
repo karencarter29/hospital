@@ -27,9 +27,9 @@ public class AdminService {
     }
 
 
-    public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
-        return patientService.createAppointment(appointmentInfo);
-    }
+//    public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
+//        return patientService.createAppointment(appointmentInfo);
+//    }
 
     public ResponseEntity<Object> createShift(Map<String, Object> shiftInfo) {
         return doctorService.createShift(shiftInfo);
