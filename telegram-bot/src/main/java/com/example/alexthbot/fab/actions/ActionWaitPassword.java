@@ -3,11 +3,11 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
-import com.example.alexthbot.fab.services.entities.Doctor;
-import com.example.alexthbot.fab.services.DoctorService;
-import com.example.alexthbot.fab.services.PatientService;
-import com.example.alexthbot.fab.services.ServiceID;
+import com.example.alexthbot.fab.services.api.DoctorService;
+import com.example.alexthbot.fab.services.api.PatientService;
+import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,8 +16,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,37 +24,27 @@ import java.util.List;
 @Component
 public class ActionWaitPassword extends Action {
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
     @Autowired
-    PatientService patientService;
+    private PatientService patientService;
     @Autowired
-    ServiceID serviceID;
+    private ServiceID serviceID;
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
+
     @Override
-    public void action(Update update, AbsSender absSender) {
-        String id = update.getMessage().getChatId().toString();
-        String password = update.getMessage().getText();
+    public void action(Update update, SendMessage sendMessage, String password, String id) {
         botUserService.setPassword(id, password);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
         botUserService.setRole(update.getMessage().getChatId(), Role.ROLE_PATIENT);
         serviceID.setIdChat(id);
-
         //постим юзера
         patientService.postNewUser(botUserService.user(id));
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(id);
         sendMessage.setReplyMarkup(keyboard());
         sendMessage.setText("Вы зарегистрированы как: \n Имя: " + botUserService.getFirstName(id) +
                 ", \nФамилия: " + botUserService.getSecondName(id) +
                 "\nЛогин: " + botUserService.getLogin(id) +
                 "\n Теперь выберите нужного доктора: ");
-        try {
-            absSender.execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
-
     }
 
     @Override
