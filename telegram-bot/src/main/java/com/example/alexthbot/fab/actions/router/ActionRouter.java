@@ -15,7 +15,7 @@ public class ActionRouter {
         driveMap.put(key, value);
     }
 
-    public Action get(ActionEnum key){
+    public Action get(ActionEnum key) {
         return driveMap.get(key);
     }
 }

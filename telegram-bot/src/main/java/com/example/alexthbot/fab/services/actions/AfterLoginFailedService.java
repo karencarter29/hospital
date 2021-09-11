@@ -1,40 +1,39 @@
-package com.example.alexthbot.fab.actions;
+package com.example.alexthbot.fab.services.actions;
 
-import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
-import org.springframework.stereotype.Component;
+import com.example.alexthbot.fab.database.user.service.BotUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Component
-public class ActionStart extends Action {
+@Service
+public class AfterLoginFailedService {
+    @Autowired
+    private BotUserService botUserService;
 
-    @Override
-    public void action(Update update, SendMessage sendMessage, String text, String id) {
-        sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
+    public void afterLogin(SendMessage sendMessage, String id) {
+        botUserService.setCommand(id, ActionEnum.START);
+        sendMessage.setText("Такого логина или пароля не существует, \n " +
+                "выберите логин или регистрацию");
         sendMessage.setReplyMarkup(getKeyboard());
-        botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
     }
 
     public ReplyKeyboardMarkup getKeyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add("Логин");
         keyboardRow.add("Регистрация");
+
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
+
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setKeyboard(keyboardRows);
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
-    }
-
-    @Override
-    public ActionEnum getKey() {
-        return ActionEnum.START;
     }
 }
