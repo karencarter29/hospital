@@ -1,7 +1,8 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api;
 
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
-import com.example.alexthbot.fab.services.entities.Appointment;
+import com.example.alexthbot.fab.exeptions.ApiGatewayException;
+import com.example.alexthbot.fab.services.api.entities.Appointment;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
-import java.util.Objects;
 
 @Slf4j
 @Service
@@ -38,7 +38,7 @@ public class BotAppointmentServiceApi implements BotAppointmentService {
             log.info((appResponse.getBody()).toString());
             return appResponse.getBody();
         } else {
-            throw new RuntimeException();
+            throw ApiGatewayException.appointments();
         }
     }
 }

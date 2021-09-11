@@ -1,6 +1,6 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api;
 
-import com.example.alexthbot.fab.services.entities.Shift;
+import com.example.alexthbot.fab.services.api.entities.Shift;
 
 import java.util.List;
 

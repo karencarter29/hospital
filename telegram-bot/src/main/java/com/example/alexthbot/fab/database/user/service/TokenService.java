@@ -16,11 +16,11 @@ public class TokenService {
     @Autowired
     ServiceID serviceID;
 
-    public void setToken(HttpHeaders token){
-        cacheT.put(serviceID.getIdChat(),token);
+    public void setToken(HttpHeaders token) {
+        cacheT.put(serviceID.getIdChat(), token);
     }
 
-    public HttpHeaders getToken(String id){
+    public HttpHeaders getToken(String id) {
         return cacheT.get(id);
     }
 
