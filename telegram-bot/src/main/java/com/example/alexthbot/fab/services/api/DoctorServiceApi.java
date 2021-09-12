@@ -1,17 +1,22 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api;
 
-import com.example.alexthbot.fab.database.user.service.BotUserService;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
-import com.example.alexthbot.fab.services.entities.Doctor;
+import com.example.alexthbot.fab.exeptions.ApiGatewayException;
+import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+
 @Slf4j
 @Service
 public class DoctorServiceApi implements DoctorService {
@@ -30,9 +35,9 @@ public class DoctorServiceApi implements DoctorService {
             log.info(doctorsEntity.getBody().toString());
             return doctorsEntity.getBody();
         } else {
-            throw new RuntimeException();//создадим свой кастомный
+            throw ApiGatewayException.doctors();
         }
-        }
+    }
 
 }
 

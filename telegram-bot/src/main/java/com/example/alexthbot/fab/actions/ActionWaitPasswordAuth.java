@@ -3,9 +3,9 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.CheckLogPass;
-import com.example.alexthbot.fab.services.AuthServiceApi;
-import com.example.alexthbot.fab.services.entities.Doctor;
-import com.example.alexthbot.fab.services.DoctorService;
+import com.example.alexthbot.fab.services.api.AuthServiceApi;
+import com.example.alexthbot.fab.services.api.DoctorService;
+import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,8 +14,6 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,35 +22,27 @@ import java.util.List;
 @Component
 public class ActionWaitPasswordAuth extends Action {
     @Autowired
-    CheckLogPass checkLogPass;
+    private CheckLogPass checkLogPass;
     @Autowired
-    AuthServiceApi authServiceApi;
+    private AuthServiceApi authServiceApi;
     @Autowired
-    DoctorService doctorService;
+    private DoctorService doctorService;
+
     @Override
-    public void action(Update update, AbsSender absSender) {
-        String id = update.getMessage().getChatId().toString();
-        String passwordForAuth = update.getMessage().getText();
-        checkLogPass.setPassword(passwordForAuth);
+    public void action(Update update, SendMessage sendMessage, String text, String id) {
+        checkLogPass.setPassword(text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
-        SendMessage sendMessage = new SendMessage();
-        sendMessage.setChatId(id);
-        sendMessage.setText("Выберите доктора");
-        if (authServiceApi.CheckLoginAndPassword(checkLogPass).is2xxSuccessful()) {
+        if (authServiceApi.checkLoginAndPassword(checkLogPass).is2xxSuccessful()) {
+            sendMessage.setText("Выберите доктора");
             botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
             sendMessage.setReplyMarkup(keyboard());
-        }
-        else{
+        } else {
             botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
             sendMessage.setText("Такого логина или пароля не существует");
             sendMessage.setReplyMarkup(getKeyboard());
         }
-        try {
-            absSender.execute(sendMessage);
-        } catch (TelegramApiException e) {
-            e.printStackTrace();
-        }
     }
+
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
@@ -81,6 +71,7 @@ public class ActionWaitPasswordAuth extends Action {
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
     }
+
     @Override
     public ActionEnum getKey() {
         return ActionEnum.PASSWORD_AUTH;
