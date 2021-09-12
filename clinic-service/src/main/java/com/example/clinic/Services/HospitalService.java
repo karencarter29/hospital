@@ -6,8 +6,10 @@ import com.example.clinic.Repositories.HospitalRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,25 +18,32 @@ public class HospitalService {
     private HospitalRepository hospitalRepository;
     private ModelMapper modelMapper;
 
-    public Hospital addHospital(Hospital hospital) {
-        return hospitalRepository.save(hospital);
+    @Transactional
+    public Hospital addHospital(HospitalDTO hospital) {
+        return hospitalRepository.save(convertToEntity(hospital));
     }
 
+    @Transactional(readOnly = true)
     public List<HospitalDTO> getHospitals() {
-        List<Hospital> hospitalList = (List<Hospital>) hospitalRepository.findAll();
+        List<Hospital> hospitalList = hospitalRepository.findAll();
         return hospitalList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Hospital updateHospital(Hospital hospital) {
-        return hospitalRepository.save(hospital);
+    @Transactional
+    public Hospital updateHospital(HospitalDTO hospital) {
+        return hospitalRepository.save(convertToEntity(hospital));
     }
 
-    public void deleteHospital(int id) {
+    @Transactional
+    public void deleteHospital(UUID id) {
         hospitalRepository.deleteById(id);
     }
 
     private HospitalDTO convertToDto(Hospital hospital) {
         return modelMapper.map(hospital, HospitalDTO.class);
+    }
+    private Hospital convertToEntity(HospitalDTO hospitalDTO) {
+        return modelMapper.map(hospitalDTO, Hospital.class);
     }
 
 }

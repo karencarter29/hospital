@@ -2,11 +2,13 @@ package com.example.clinic.Controllers;
 
 import com.example.clinic.DTO.ProcedureDTO;
 import com.example.clinic.Model.Procedure;
+import com.example.clinic.Model.Speciality;
 import com.example.clinic.Services.ProcedureService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -14,9 +16,9 @@ import java.util.List;
 public class ProcedureController {
     private ProcedureService procedureService;
 
-    @PostMapping
-    public Procedure addProcedure(@RequestBody Procedure procedure) {
-        return procedureService.addProcedure(procedure);
+    @PostMapping("{specialityId}")
+    public Procedure addProcedure(@RequestBody ProcedureDTO procedure, @PathVariable UUID specialityId) {
+        return procedureService.addProcedure(procedure, specialityId);
     }
 
     @GetMapping
@@ -25,9 +27,9 @@ public class ProcedureController {
     }
 
 
-    @PutMapping
-    public Procedure updateProcedure(@RequestBody Procedure newProcedure) {
-        return procedureService.updateProcedure(newProcedure);
+    @PutMapping("/{specialityId}")
+    public Procedure updateProcedure(@RequestBody ProcedureDTO newProcedure, @PathVariable UUID specialityId) {
+        return procedureService.updateProcedure(newProcedure, specialityId);
     }
 
     @GetMapping("/procedures")
@@ -35,8 +37,8 @@ public class ProcedureController {
         return procedureService.getProcedureNames();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteProcedure(@PathVariable int id) {
+    @DeleteMapping("/{id}")
+    public void deleteProcedure(@PathVariable UUID id) {
         procedureService.deleteProcedure(id);
     }
 }

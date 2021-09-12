@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -15,7 +16,7 @@ public class SpecialityController {
     private SpecialityService specialityService;
 
     @PostMapping
-    public Speciality saveSpeciality(@RequestBody Speciality speciality) {
+    public Speciality saveSpeciality(@RequestBody SpecialityDTO speciality) {
         return specialityService.saveSpeciality(speciality);
     }
 
@@ -25,12 +26,12 @@ public class SpecialityController {
     }
 
     @PutMapping
-    public Speciality updateSpeciality(@RequestBody Speciality speciality) {
+    public Speciality updateSpeciality(@RequestBody SpecialityDTO speciality) {
         return specialityService.updateSpeciality(speciality);
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteSpeciality(@PathVariable int id) {
+    @DeleteMapping("/{id}")
+    public void deleteSpeciality(@PathVariable UUID id) {
         specialityService.deleteSpeciality(id);
     }
 

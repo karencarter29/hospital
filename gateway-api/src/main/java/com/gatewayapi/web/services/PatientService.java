@@ -1,47 +1,48 @@
 package com.gatewayapi.web.services;
 
-import com.gatewayapi.model.Appointment;
-import com.gatewayapi.model.Condition;
-import com.gatewayapi.model.Shift;
-import org.springframework.http.HttpStatus;
+import com.gatewayapi.web.exceptions.handlers.RestTemplateExceptionHandler;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Map;
-import java.util.UUID;
-
 @Service
 public class PatientService {
 
-    private static final String ADDRESS = "";
+    private static final String PATIENT_SERVICE_ADDRESS = "http://localhost:8082";
+    private static final String CLINIC_SERVICE_ADDRESS = "http://localhost:8083";
 
-    RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
-//    PatientService(RestTemplate restTemplate) {
-//        this.restTemplate = restTemplate;
-//    }
-
-    public ResponseEntity<Object> getShiftsByDoctor(String id) {
-        String url = ADDRESS + "url to get shifts by doctor";
-        //restTemplate.getForObject(url, ResponseEntity.class)
-        return ResponseEntity.ok().body(new Shift[]{
-                new Shift(UUID.fromString(id), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-                new Shift(UUID.fromString(id), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())});
+    @Autowired
+    public PatientService(RestTemplateBuilder restTemplateBuilder) {
+        this.restTemplate = restTemplateBuilder.errorHandler(new RestTemplateExceptionHandler()).build();
     }
 
-    public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
-        String url = ADDRESS + "url to create appointment";
-        //restTemplate.postForEntity(url, appointmentInfo, String.class);
-        return ResponseEntity.status(HttpStatus.CREATED).body("");
+    public ResponseEntity<String> getShiftsByDoctor(String doctorId) {
+        String url = CLINIC_SERVICE_ADDRESS + "/shift/" + doctorId;
+        return restTemplate.getForEntity(url, String.class);
     }
 
-    public ResponseEntity<Object> getAppointments() {
-        String url = ADDRESS + "url to get appointments by patient";
-        //restTemplate.getForObject(url, ResponseEntity.class)
-        return ResponseEntity.ok().body(new Appointment[]{
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS)});
+    public ResponseEntity<String> getDoctors() {
+        String url = CLINIC_SERVICE_ADDRESS + "/doctor";
+        return restTemplate.getForEntity(url, String.class);
+    }
+
+    public ResponseEntity<String> createAppointment(String shiftId, String patientId) {
+        String url = PATIENT_SERVICE_ADDRESS + "/appointment/" + shiftId + "/" + patientId;
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<String> httpEntity = new HttpEntity<>(headers);
+        return restTemplate.postForEntity(url, httpEntity, String.class);
+    }
+
+    public ResponseEntity<String> getAppointments(String patientId) {
+        String url = PATIENT_SERVICE_ADDRESS + "/appointment/" + patientId;
+        return restTemplate.getForEntity(url, String.class);
     }
 }

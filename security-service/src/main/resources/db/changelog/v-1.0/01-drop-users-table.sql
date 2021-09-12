@@ -1,6 +1,7 @@
-alter table users
-   drop index UK_r43af9ap4edm43mmtq01oddj6
-GO
 
-drop table users
+drop table users;
+GO
+drop table roles;
+GO
+drop table user_roles;
 GO

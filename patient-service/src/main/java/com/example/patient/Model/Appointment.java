@@ -1,32 +1,51 @@
 package com.example.patient.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.context.annotation.Configuration;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@IdClass(RelationShipPK.class)
-public class Appointment implements Serializable{
+@Table(indexes = {
+        @Index(name="appointment_shiftId_idx", columnList = "shiftId"),
+        @Index(name="appointment_patientId_idx", columnList = "patientId")
+})
+public class Appointment implements Serializable {
+
     @Id
+    @Column(name="shiftId")
+    private UUID id;
+
     @OneToOne(targetEntity = Shift.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "shiftId")
     @JsonIgnore
+    @MapsId
     private Shift shift;
 
-    @Id
     @ManyToOne(targetEntity = Patient.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId")
-     @JsonIgnore
+    @JsonIgnore
     private Patient patient;
 
+
+    public Appointment(Shift shift, Patient patient) {
+        this.shift = shift;
+        this.patient = patient;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
 
     public Shift getShift() {
         return shift;

@@ -2,63 +2,49 @@ package com.gatewayapi.web.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gatewayapi.model.Appointment;
-import com.gatewayapi.model.Condition;
-import com.gatewayapi.model.Shift;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.UUID;
 
 @Service
 public class AdminService {
 
-    private RestTemplate restTemplate = new RestTemplate();
+    private RestTemplate restTemplate;
 
-    private DoctorService doctorService = new DoctorService();
-    private PatientService patientService = new PatientService();
+    private DoctorService doctorService;
+    private PatientService patientService;
 
+    public AdminService() {}
 
-    public ResponseEntity<?> createAppointment(Map<String, Object> appointmentInfo) {
-        return patientService.createAppointment(appointmentInfo);
+    @Autowired
+    public AdminService(RestTemplate restTemplate, DoctorService doctorService, PatientService patientService) {
+        this.restTemplate = restTemplate;
+        this.patientService = patientService;
+        this.doctorService = doctorService;
     }
 
-    public ResponseEntity<?> createShift(Map<String, Object> shiftInfo) {
+
+//    public ResponseEntity<Object> createAppointment(Map<String, Object> appointmentInfo) {
+//        return patientService.createAppointment(appointmentInfo);
+//    }
+
+    public ResponseEntity<String> createShift(Map<String, Object> shiftInfo) {
         return doctorService.createShift(shiftInfo);
     }
 
-    public ResponseEntity<?> getAllShifts() {
+    public ResponseEntity<String> getAllShifts() {
         String url = "url to get all shifts";
-        //restTemplate.getForObject(url, ResponseEntity.class);
-        return ResponseEntity.ok().body(getShifts());
+//        restTemplate.getForObject(url, ResponseEntity.class);
+        return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<?> getAllAppointments() {
+    public ResponseEntity<String> getAllAppointments() {
         String url = "url to get all appointments";
         //restTemplate.getForObject(url, ResponseEntity.class);
-        return ResponseEntity.ok().body(getAppointments());
-    }
-
-    private String getAppointments() {
-        Appointment[] appointments = {
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.RESERVED),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.IN_PROGRESS),
-                new Appointment(UUID.randomUUID(), UUID.randomUUID(), Condition.AVAILABLE)
-        };
-        return convertObjectToJson(appointments);
-    }
-
-    private String getShifts() {
-        Shift[] shifts = {
-              new Shift(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now()),
-              new Shift(UUID.randomUUID(), UUID.randomUUID(), LocalDateTime.now(), LocalDateTime.now(), LocalDate.now())
-        };
-        return convertObjectToJson(shifts);
+        return ResponseEntity.ok().build();
     }
 
     private String convertObjectToJson(Object object) {

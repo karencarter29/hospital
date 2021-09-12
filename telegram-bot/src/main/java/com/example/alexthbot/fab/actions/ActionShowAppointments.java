@@ -2,7 +2,11 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
-import com.example.alexthbot.fab.configuration.ConfigurationAppointment;
+import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
+import com.example.alexthbot.fab.services.api.BotAppointmentService;
+import com.example.alexthbot.fab.services.api.entities.Appointment;
+import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -10,44 +14,49 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
-import org.telegram.telegrambots.meta.bots.AbsSender;
-import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
 public class ActionShowAppointments extends Action {
+
     @Autowired
-    ConfigurationAppointment configurationAppointment;
+    private BotAppointmentService botAppointmentService;
+    @Autowired
+    private ServiceID serviceID;
+
     @Override
-    public void action(Update update, AbsSender absSender) {
-        String s = "";
-        String id = update.getMessage().getChatId().toString();
-        String text = update.getMessage().getText();
-        botUserService.setCommand(id, ActionEnum.CHOOSE_LAST_NAME);
-        SendMessage sendMessage = new SendMessage();
+    public void action(Update update, SendMessage sendMessage, String text, String id) {
         sendMessage.setChatId(id);
-        sendMessage.setText("Ваша запись учтена, вы так же можете записаться к другому врачу.");
-        sendMessage.setReplyMarkup(keyboard());
-        for (int i = 0; i < configurationAppointment.appointmentList.size(); i++) {
-            s+=
-                    "Ваша запись от "+configurationAppointment.appointmentList.get(i).getTimeBook()+ " числа"+ "\n"
-                            + "Доктор: " + configurationAppointment.appointmentList.get(i).getDoctor() + "\n"
-                            + "Кабинет: " + configurationAppointment.appointmentList.get(i).getNumberRoom() + "\n"
-                            + "Процедура: " + configurationAppointment.appointmentList.get(i).getProcedure() + "\n"
-                            + "День: " + configurationAppointment.appointmentList.get(i).getDate() + "\n"
-                            + "Время: " + configurationAppointment.appointmentList.get(i).getTime() + "\n"
-                            + "Длительность процедуры: " + configurationAppointment.appointmentList.get(i).getDuration() + "\n"
-                            + "\n"
-                    ;
-        }
-        sendMessage.setText(s);
         try {
-            absSender.execute(sendMessage);
-        } catch (
-                TelegramApiException e) {
-            e.printStackTrace();
+            Gson gson = new Gson();
+            List<BotAppointment> botAppointments = new ArrayList<>();
+            List<Appointment> appointments = botAppointmentService.getAppointments();
+            Appointment[] appointments1 = gson.fromJson(String.valueOf(appointments), Appointment[].class);
+            for (int i = 0; i < appointments1.length; i++) {
+                BotAppointment botAppointment2 = new BotAppointment();
+                botAppointment2.setProcedure(appointments1[i].getShift().getProcedure().getProcedureName());
+                botAppointment2.setDate(appointments1[i].getShift().getDate());
+                botAppointment2.setTime(appointments1[i].getShift().getStartTime());
+                botAppointment2.setDoctor(serviceID.getDoctor());
+                botAppointments.add(botAppointment2);
+            }
+            String s = "Ваша запись учтена, вы так же можете записаться к другому врачу.\n";
+            botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
+            sendMessage.setReplyMarkup(keyboard());
+            for (int i = 0; i < botAppointments.size(); i++) {
+                s +=
+                        "Доктор: " + botAppointments.get(i).getDoctor() + "\n"
+                                + "Процедура: " + botAppointments.get(i).getProcedure() + "\n"
+                                + "День: " + botAppointments.get(i).getDate() + "\n"
+                                + "Время: " + botAppointments.get(i).getTime() + "\n"
+                ;
+            }
+            sendMessage.setText(s);
+            botAppointments.clear();
+        } catch (RuntimeException e) {
+            sendMessage.setText("Ошибка получения записей");
         }
     }
 
@@ -63,6 +72,7 @@ public class ActionShowAppointments extends Action {
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
     }
+
     @Override
     public ActionEnum getKey() {
         return ActionEnum.SHOW_APPOINTMENTS;

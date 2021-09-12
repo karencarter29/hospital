@@ -1,26 +1,32 @@
 package com.example.clinic.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(indexes = {
+        @Index(name="procedure_id_idx", columnList ="id")
+})
 public class Procedure {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
+    @GeneratedValue
+    private UUID id;
     private String procedureName;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Speciality speciality;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

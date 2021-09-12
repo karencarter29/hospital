@@ -8,14 +8,14 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class SpecialityDTO {
-    private int id;
+    private UUID id;
     private String specialityName;
-    private List<Doctor> doctors = new ArrayList<Doctor>();
-    private List<Procedure> procedures = new ArrayList<Procedure>();
-
+    private List<Doctor> doctors = new ArrayList<>();
+    private List<Procedure> procedures = new ArrayList<>();
 }

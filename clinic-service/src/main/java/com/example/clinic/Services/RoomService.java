@@ -3,7 +3,6 @@ package com.example.clinic.Services;
 import com.example.clinic.DTO.RoomDTO;
 import com.example.clinic.Model.Doctor;
 import com.example.clinic.Model.Hospital;
-import com.example.clinic.Model.RelationShipPK;
 import com.example.clinic.Model.Room;
 import com.example.clinic.Repositories.DoctorRepository;
 import com.example.clinic.Repositories.HospitalRepository;
@@ -11,9 +10,10 @@ import com.example.clinic.Repositories.RoomRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
@@ -24,39 +24,37 @@ public class RoomService {
     private DoctorRepository doctorRepository;
     private ModelMapper modelMapper;
 
-    public Room saveRoom(RoomDTO room) throws ParseException {
-        Room r = convertToEntity(room);
-        roomRepository.saveRoom(r.getHospital().getId(), r.getDoctor().getId());
+    @Transactional
+    public Room saveRoom(UUID hospitalId, UUID doctorId, String roomNumber) {
+        Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
+        Doctor d = doctorRepository.findById(doctorId).orElse(null);
+        Room r = new Room(h, d, roomNumber);
+        roomRepository.saveRoom(hospitalId, doctorId, roomNumber);
         return r;
     }
 
+    @Transactional(readOnly = true)
     public List<RoomDTO> getRooms() {
-        List<Room> roomList = (List<Room>) roomRepository.findAll();
+        List<Room> roomList = roomRepository.findAll();
         return roomList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    public Room updateRoom(Room room) {
-        return roomRepository.save(room);
+    @Transactional
+    public Room updateRoom(UUID hospitalId, UUID doctorId, String roomNumber) {
+        Hospital h = hospitalRepository.findById(hospitalId).orElse(null);
+        Doctor d = doctorRepository.findById(doctorId).orElse(null);
+        Room r = new Room(h, d, roomNumber);
+        roomRepository.updateRoom(hospitalId, doctorId, roomNumber);
+       return r;
     }
 
-    public void deleteRoom(int hospitalId, int doctorId) {
+    @Transactional
+    public void deleteRoom(UUID hospitalId, UUID doctorId) {
         roomRepository.deleteRoom(hospitalId, doctorId);
     }
 
     private RoomDTO convertToDto(Room room) {
-        RoomDTO roomDTO = modelMapper.map(room, RoomDTO.class);
-        return roomDTO;
+        return modelMapper.map(room, RoomDTO.class);
     }
 
-    private Room convertToEntity(RoomDTO roomDTO) throws ParseException {
-        Room room = modelMapper.map(roomDTO, Room.class);
-
-        if (roomDTO.getDoctor().getId() != 0 && roomDTO.getHospital().getId() != 0) {
-            Doctor doctor = doctorRepository.findById(roomDTO.getDoctor().getId()).get();
-            Hospital hospital = hospitalRepository.findById(roomDTO.getHospital().getId()).get();
-            room.setDoctor(doctor);
-            room.setHospital(hospital);
-        }
-        return room;
-    }
 }

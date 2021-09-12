@@ -1,49 +1,66 @@
 package com.example.patient.Services;
 
-
+import com.example.patient.DTO.PatientDTO;
 import com.example.patient.DTO.ShiftDTO;
 import com.example.patient.Model.Shift;
-import com.example.patient.Repositories.AppointmentRepository;
 import com.example.patient.Repositories.ShiftRepository;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class ShiftService {
     private ModelMapper modelMapper;
-    private AppointmentRepository appointmentRepository;
     private ShiftRepository shiftRepository;
 
-    public Shift addShift(Shift shift) //@RequestBody shift
-    {
-        //shift.setDoctorId(idDoctor);
-        return shiftRepository.save(shift);
+    @Transactional
+    public Shift addShift(ShiftDTO shift) {
+        List<Shift> startTime = shiftRepository.forStartTime(shift.getStartTime(), shift.getEndTime());
+        List<Shift> endTime = shiftRepository.forEndTime(shift.getStartTime(), shift.getEndTime());
+        if (shift.getStartTime().isBefore(shift.getEndTime())) {
+            if (startTime.isEmpty() && endTime.isEmpty()) {
+                return shiftRepository.save(convertToEntity(shift));
+            }
+        }
+        return null;
     }
 
-    public List<ShiftDTO> getShifts() {
-        List<Shift> shiftList = (List<Shift>) shiftRepository.findAll();
+    @Transactional(readOnly = true)
+    public List<ShiftDTO> getShifts(UUID doctorId) {
+        List<Shift> shiftList = shiftRepository.getShift(doctorId);
         return shiftList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    //
-    public Shift updateShift(Shift newShift) //@RequestBody shift
-    {
-        return shiftRepository.save(newShift);
+    @Transactional(readOnly = true)
+    public List<ShiftDTO> getAllShifts() {
+        List<Shift> shiftList = shiftRepository.findAll();
+        return shiftList.stream().map(this::convertToDto).collect(Collectors.toList());
     }
 
-    //
-    public void deleteShift(int shiftId) {//@PathVariable id
+    @Transactional
+    public Shift updateShift(ShiftDTO newShift) //@RequestBody shift
+    {
+        return shiftRepository.save(convertToEntity(newShift));
+    }
+
+    @Transactional
+    public void deleteShift(UUID shiftId) {//@PathVariable id
         shiftRepository.deleteById(shiftId);
     }
 
-    //
+
     private ShiftDTO convertToDto(Shift shift) {
         return modelMapper.map(shift, ShiftDTO.class);
+    }
+
+    private Shift convertToEntity(ShiftDTO shiftDTO) {
+        return modelMapper.map(shiftDTO, Shift.class);
     }
 
 }

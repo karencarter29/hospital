@@ -1,6 +1,6 @@
 package com.gatewayapi.web.controllers;
 
-import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.gatewayapi.security.TokenParser;
 import com.gatewayapi.web.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +13,13 @@ import java.util.Map;
 @RequestMapping("/doctor")
 public class DoctorController {
 
-    private DoctorService doctorService;
+    private final DoctorService doctorService;
+    private final TokenParser tokenParser;
 
     @Autowired
-    DoctorController(DoctorService doctorService) {
+    DoctorController(DoctorService doctorService, TokenParser tokenParser) {
         this.doctorService = doctorService;
-    }
-
-    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getDoctors() {
-        return doctorService.getDoctors();
+        this.tokenParser = tokenParser;
     }
 
     @PostMapping(value = "/shift", consumes = MediaType.APPLICATION_JSON)
@@ -31,12 +28,14 @@ public class DoctorController {
     }
 
     @GetMapping("/shifts")
-    public ResponseEntity<?> getMyShifts() {
-        return doctorService.getShifts();
+    public ResponseEntity<String> getMyShifts(@RequestHeader("Authorization") String header) {
+        String doctorId = tokenParser.getUserId(header);
+        return doctorService.getShiftsByDoctor(doctorId);
     }
 
     @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<?> getPatientsAppointments() {
-        return doctorService.getAppointments();
+    public ResponseEntity<String> getPatientsAppointments(@RequestHeader("Authorization") String header) {
+        String doctorId = tokenParser.getUserId(header);
+        return doctorService.getAppointments(doctorId);
     }
 }

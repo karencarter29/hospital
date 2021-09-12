@@ -8,13 +8,15 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class PatientDTO {
-    private int id;
-    private int userId;
+    private UUID id;
+    private String firstName;
+    private String lastName;
     private String gender;
     private String phoneNumber;
     private LocalDate dateOfBirth;

@@ -6,8 +6,8 @@ import com.example.clinic.Services.RoomService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.ParseException;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -15,9 +15,9 @@ import java.util.List;
 public class RoomController {
     private RoomService roomService;
 
-    @PostMapping
-    public Room saveRoom(@RequestBody RoomDTO room) throws ParseException {
-        return roomService.saveRoom(room);
+    @PostMapping("/{hospitalId}/{doctorId}")
+    public Room saveRoom(@RequestBody String roomNumber, @PathVariable UUID hospitalId, @PathVariable UUID doctorId) {
+        return roomService.saveRoom( hospitalId, doctorId, roomNumber);
     }
 
     @GetMapping
@@ -25,13 +25,13 @@ public class RoomController {
         return roomService.getRooms();
     }
 
-    @PutMapping
-    public Room updateRoom(@RequestBody Room room) {
-        return roomService.updateRoom(room);
+    @PutMapping("/{hospitalId}/{doctorId}")
+    public Room updateRoom(@RequestBody String roomNumber, @PathVariable UUID hospitalId, @PathVariable UUID doctorId) {
+        return roomService.updateRoom(hospitalId, doctorId, roomNumber );
     }
 
-    @DeleteMapping("/delete/id/id1")
-    public void deleteRoom(@PathVariable int id, @PathVariable int id1) {
+    @DeleteMapping("/{id}/{id1}")
+    public void deleteRoom(@PathVariable UUID id, @PathVariable UUID id1) {
         roomService.deleteRoom(id, id1);
     }
 }

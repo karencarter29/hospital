@@ -1,22 +1,16 @@
 package com.gatewayapi.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Getter
 @Setter
+@AllArgsConstructor
+@Data
 public class Doctor {
-
-    public Doctor(UUID id, String name) {
-        this.userId = id;
-        this.name = name;
-    }
-
-    UUID userId;
-    UUID specialityId;
+    Long userId;
+    Speciality specialityId;
     String phoneNumber;
-
-    String name;
 }

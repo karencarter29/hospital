@@ -1,10 +1,12 @@
 package com.example.clinic.Model;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Id;
+
+import lombok.NoArgsConstructor;
+
 import java.io.Serializable;
 
 //@Embeddable
+@NoArgsConstructor
 public class RelationShipPK implements Serializable {
     private Hospital hospital;
     private Doctor doctor;

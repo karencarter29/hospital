@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/patient")
@@ -18,7 +19,7 @@ public class PatientController {
     private PatientService patientService;
 
     @PostMapping
-    public Patient addPatient(@RequestBody Patient patient) {
+    public Patient addPatient(@RequestBody PatientDTO patient) {
         return patientService.addPatient(patient);
     }
 
@@ -27,11 +28,11 @@ public class PatientController {
         return patientService.getPatient();
     }
     @PutMapping
-    public Patient updatePatient(@RequestBody Patient patient, @RequestBody Appointment appointment) {
-        return patientService.updatePatient(patient, appointment);
+    public Patient updatePatient(@RequestBody PatientDTO patient) {
+        return patientService.updatePatient(patient);
     }
-    @DeleteMapping
-    public void deleletePatient(int patientId) {
+    @DeleteMapping("/{patientId}")
+    public void deleletePatient(@PathVariable UUID patientId) {
         patientService.deletePatient(patientId);
     }
 }

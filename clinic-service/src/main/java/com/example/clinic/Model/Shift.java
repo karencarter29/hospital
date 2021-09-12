@@ -6,15 +6,17 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @AllArgsConstructor
 @Data
 @NoArgsConstructor
 public class Shift {
-    private int id;
-    private int doctorId;
+    private UUID id;
+    private UUID doctorId;
+    private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
-    private Long procedureId;
+    private String procedureName;
 }

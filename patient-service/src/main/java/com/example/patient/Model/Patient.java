@@ -1,5 +1,6 @@
 package com.example.patient.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -8,21 +9,23 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 public class Patient {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    private int userId;
+//    @GeneratedValue
+    private UUID id;
+    private String firstName;
+    private String lastName;
     private String gender;
     private String phoneNumber;
     private LocalDate dateOfBirth;
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
+    @JsonIgnore
     private List<Appointment> appointments = new ArrayList<>();
 
     public void addAppointment(Appointment appointment) {
@@ -30,20 +33,29 @@ public class Patient {
         appointments.add(appointment);
     }
 
-    public int getId() {
+    public UUID getId() {
+
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public List<Appointment> getAppointments() {
@@ -78,12 +90,5 @@ public class Patient {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public List<Appointment> getAppointment() {
-        return appointments;
-    }
-
-    public void setAppointment(List<Appointment> appointments) {
-        this.appointments = appointments;
-    }
 }
 

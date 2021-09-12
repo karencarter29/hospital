@@ -6,16 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.UUID;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class DoctorDTO {
-    private int  id;
-    private int userId;
-
+    private UUID id;
+    private String firstName;
+    private String lastName;
     private String phoneNumber;
     private Speciality speciality;
-    private Room room;
-
-
 }

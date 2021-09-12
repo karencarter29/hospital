@@ -4,12 +4,13 @@ import com.example.alexthbot.fab.actions.router.Role;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Component
 public class BotUser {
     private Long id;
     private String firstName;

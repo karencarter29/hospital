@@ -12,6 +12,10 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(RelationShipPK.class)
+@Table(indexes = {
+        @Index(name="room_hospitalId_idx", columnList = "hospitalId"),
+        @Index(name="room_doctorId_idx", columnList = "doctorId")
+})
 public class Room implements Serializable {
 
     @Id
@@ -26,15 +30,7 @@ public class Room implements Serializable {
     @JsonIgnore
     private Doctor doctor;
 
-    private Long room_number;
-
-//    public Long getId() {
-//        return id;
-//    }
-//
-//    public void setId(Long id) {
-//        this.id = id;
-//    }
+    private String roomNumber;
 
 
     public Hospital getHospital() {
@@ -53,11 +49,11 @@ public class Room implements Serializable {
         this.doctor = doctor;
     }
 
-    public Long getRoom_number() {
-        return room_number;
+    public String getRoomNumber() {
+        return roomNumber;
     }
 
-    public void setRoom_number(Long room_number) {
-        this.room_number = room_number;
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
     }
 }

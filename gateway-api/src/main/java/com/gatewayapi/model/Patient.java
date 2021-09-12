@@ -9,7 +9,9 @@ import java.util.UUID;
 @Getter
 @Setter
 public class Patient {
-    UUID userId;
+    String id;
+    String firstName;
+    String lastName;
     String gender;
     String phoneNumber;
     LocalDate birthday;

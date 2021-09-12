@@ -2,16 +2,13 @@ package com.example.patient.Controllers;
 
 import com.example.patient.DTO.AppointmentDTO;
 import com.example.patient.Model.Appointment;
-import com.example.patient.Model.Patient;
-import com.example.patient.Model.Shift;
 import com.example.patient.Services.AppointmentService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @AllArgsConstructor
@@ -19,23 +16,23 @@ import java.util.Map;
 public class AppointmentController {
     private AppointmentService appointmentService;
 
-    @GetMapping
-    public List<AppointmentDTO> getAppointments() {
-        return appointmentService.appointments();
+    @GetMapping("/{patientId}")
+    public List<AppointmentDTO> getAppointments(@PathVariable UUID patientId) {
+        return appointmentService.appointments(patientId);
     }
 
-    @PostMapping
-    public Appointment saveAppointment(@RequestBody AppointmentDTO appointment) throws ParseException {
-        return appointmentService.saveAppointment(appointment);
+    @PostMapping("/{shiftId}/{patientId}")
+    public Appointment saveAppointment(@PathVariable UUID shiftId, @PathVariable  UUID patientId){
+        return appointmentService.saveAppointment(shiftId, patientId);
     }
 
-    @PutMapping
-    public Appointment updateAppointment(@RequestBody AppointmentDTO newApp) throws ParseException {
-        return appointmentService.updateAppointment(newApp);
+    @PutMapping("/{shiftId}/{patientId}")
+    public Appointment updateAppointment(@PathVariable UUID shiftId, @PathVariable UUID patientId) {
+        return appointmentService.updateAppointment(shiftId, patientId);
     }
 
-    @DeleteMapping("delete/{shiftId}/{patientId}")
-    public void deleteAppointment(@PathVariable int shiftId, @PathVariable int patientId) {
+    @DeleteMapping("/{shiftId}/{patientId}")
+    public void deleteAppointment(@PathVariable UUID shiftId, @PathVariable UUID patientId) {
         appointmentService.deleteAppointment(shiftId, patientId);
     }
 }

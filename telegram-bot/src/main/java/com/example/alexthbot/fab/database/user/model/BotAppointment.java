@@ -5,32 +5,22 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.*;
-import java.time.LocalDateTime;
 
 @Component
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class BotAppointment {
-    private Long id;
+    private String id;
     private String doctor;
     private String procedure;
     private String date;
     private String time;
-    private String duration;
-    private String numberRoom;
-    private String timeBook;
 
-    public BotAppointment(String doctor, String procedure, String date, String time, String duration, String numberRoom, String timeBook) {
+    public BotAppointment(String doctor, String procedure, String date, String time) {
         this.doctor = doctor;
         this.procedure = procedure;
         this.date = date;
         this.time = time;
-        this.duration = duration;
-        this.numberRoom = numberRoom;
-        this.timeBook = timeBook;
     }
-
-
 }

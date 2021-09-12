@@ -1,49 +1,56 @@
 package com.example.clinic.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.UUID;
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="doctor")
-public class Doctor{
+public class Doctor {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int  id;
-    private int userId;
-
+    @GeneratedValue
+    private UUID id;
+    private String firstName;
+    private String lastName;
     private String phoneNumber;
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private Speciality speciality;
-//    @OneToOne(//mappedBy = "doctor", cascade = CascadeType.ALL,
-//            fetch = FetchType.LAZY)
-//    private Room room;
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phone_number) {
-        this.phoneNumber = phone_number;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public Speciality getSpeciality() {
@@ -54,11 +61,4 @@ public class Doctor{
         this.speciality = speciality;
     }
 
-//    public Room getRoom() {
-//        return room;
-//    }
-//
-//    public void setRoom(Room room) {
-//        this.room = room;
-//    }
 }

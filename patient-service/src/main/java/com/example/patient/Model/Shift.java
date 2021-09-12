@@ -2,44 +2,69 @@ package com.example.patient.Model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
-//@JsonIgnoreProperties(ignoreUnknown = true)
-public class Shift  {
+@Table(indexes = {
+        @Index(name="shift_doctorId_idx", columnList = "doctorId")
+})
+public class Shift {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    private int id;
-    private int doctorId;
+    @GeneratedValue
+    private UUID id;
+    private UUID doctorId;
+    private String specialityName;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;
-    private int procedureId;
+    private String procedureName;
+    @OneToOne(mappedBy = "shift", cascade = CascadeType.ALL)
+    @PrimaryKeyJoinColumn
+    private Appointment appointment;
 
-    public int getId() {
-        return id;
+    public Appointment getAppointment() {
+        return appointment;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAppointment(Appointment appointment) {
+        this.appointment = appointment;
     }
 
-    public int getDoctorId() {
+    public UUID getDoctorId() {
         return doctorId;
     }
 
-    public void setDoctorId(int doctorId) {
+    public void setDoctorId(UUID doctorId) {
         this.doctorId = doctorId;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public String getSpecialityName() {
+        return specialityName;
+    }
+
+    public void setSpecialityName(String specialityName) {
+        this.specialityName = specialityName;
+    }
+
+    public String getProcedureName() {
+        return procedureName;
+    }
+
+    public void setProcedureName(String procedureName) {
+        this.procedureName = procedureName;
     }
 
     public LocalTime getStartTime() {
@@ -66,11 +91,15 @@ public class Shift  {
         this.date = date;
     }
 
-    public int getProcedureId() {
-        return procedureId;
-    }
-
-    public void setProcedureId(int procedureId) {
-        this.procedureId = procedureId;
+    @Override
+    public String toString() {
+        return "Shift{" +
+                "id=" + id +
+                ", specialityName='" + specialityName + '\'' +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                ", date=" + date +
+                ", procedureName='" + procedureName + '\'' +
+                '}';
     }
 }
