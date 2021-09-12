@@ -1,4 +1,4 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Procedure {
-    Long id;
-    Long specialityId;
+    String id;
+    String specialityId;
     String procedureName;
 }

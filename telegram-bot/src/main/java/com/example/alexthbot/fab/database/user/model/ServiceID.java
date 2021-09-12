@@ -1,4 +1,4 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.database.user.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 @Service
 public class ServiceID {
-    private Long doctorId;
+    private String doctorId;
     private String doctor;
     private String idChat;
 }

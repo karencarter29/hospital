@@ -17,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Patient {
     @Id
-    @GeneratedValue
+//    @GeneratedValue
     private UUID id;
     private String firstName;
     private String lastName;

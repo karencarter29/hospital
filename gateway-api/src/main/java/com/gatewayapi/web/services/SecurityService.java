@@ -16,14 +16,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 @Slf4j
 public class SecurityService {
 
     private static final String ADDRESS_SECURITY_SERVICE = "http://localhost:8077";
-    private static final String ADDRESS_PATIENT_SERVICE = "http://localhost:8084";
+    private static final String ADDRESS_PATIENT_SERVICE = "http://localhost:8082";
 
     private final RestTemplate restTemplate;
     private final TokenConfig tokenConfig;
@@ -38,12 +37,12 @@ public class SecurityService {
         String url = ADDRESS_SECURITY_SERVICE + "/hospital/auth/register";
         ResponseEntity<String> response = restTemplate.postForEntity(url, userInformation, String.class);
         if (response.getStatusCode() != HttpStatus.OK) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Registration is failed. Please try again");
+            return response;
         }
-            HttpHeaders headers = response.getHeaders();
-            Patient patient = getPatientInformation(Objects.requireNonNull(headers.getFirst("Authorization")));
-            String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
-            restTemplate.postForEntity(url1, patient, String.class);
+        HttpHeaders headers = response.getHeaders();
+        Patient patient = getPatientInformation(Objects.requireNonNull(headers.getFirst("Authorization")));
+        String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
+        restTemplate.postForEntity(url1, patient, String.class);
         return response;
     }
 

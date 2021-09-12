@@ -1,4 +1,4 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api.entities;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Appointment {
     Shift shift;
-    Long patientId;
+    String patientId;
     Condition condition;
 }
 

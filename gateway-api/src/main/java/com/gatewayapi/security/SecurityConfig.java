@@ -32,6 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/patient/**").hasRole("PATIENT")
                 .antMatchers("/doctor/**").hasRole("DOCTOR")
                 .antMatchers("/user/**").permitAll()
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated();
     }
 }

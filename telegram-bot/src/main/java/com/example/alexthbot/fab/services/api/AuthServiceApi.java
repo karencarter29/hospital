@@ -1,4 +1,4 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api;
 
 import com.example.alexthbot.fab.database.user.model.CheckLogPass;
 import com.example.alexthbot.fab.database.user.service.TokenService;
@@ -14,11 +14,11 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class AuthServiceApi {
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
     @Value("${gateway.host}/user/get")
-    String url;
+    private String url;
 
-    public HttpStatus CheckLoginAndPassword(CheckLogPass checkLogPass) {
+    public HttpStatus checkLoginAndPassword(CheckLogPass checkLogPass) {
         RestTemplate restTemplate = new RestTemplate();
         ResponseEntity<HttpStatus> httpStatusResponseEntity = restTemplate.postForEntity(url, checkLogPass, HttpStatus.class);
         //токен после логина

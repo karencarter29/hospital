@@ -1,4 +1,4 @@
-package com.example.alexthbot.fab.services;
+package com.example.alexthbot.fab.services.api;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @Data
 public class Speciality {
-    Long id;
+    String id;
     String specialityName;
 }
