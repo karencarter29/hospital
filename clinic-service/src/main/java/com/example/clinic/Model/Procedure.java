@@ -15,7 +15,6 @@ import java.util.UUID;
 })
 public class Procedure {
     @Id
-    @GeneratedValue
     private UUID id;
     private String procedureName;
     @ManyToOne(fetch = FetchType.LAZY)

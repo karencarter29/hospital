@@ -1,13 +1,12 @@
 package com.gatewayapi.model;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Room {
-    Long id;
-    Long hospitalId;
-    Long doctorId;
-    Long roomNumber;
+    private Hospital hospital;
+    private Doctor doctor;
+    private String roomNumber;
 }

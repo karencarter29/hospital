@@ -5,12 +5,15 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+import java.util.UUID;
+
+
 @AllArgsConstructor
 @Data
 public class Doctor {
-    Long userId;
-    Speciality specialityId;
-    String phoneNumber;
+    private UUID id;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private Speciality speciality;
 }

@@ -4,20 +4,19 @@ import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Random;
+import java.util.UUID;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 public class Shift {
-    final Long id = new Random().nextLong();
-    String doctorId;
-    Procedure procedure;
-    LocalDateTime startTime;
-    LocalDateTime endTime;
-    LocalDate date;
-
-
+    private UUID id;
+    private UUID doctorId;
+    private String specialityName;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private LocalDate date;
+    private String procedureName;
 }

@@ -15,7 +15,6 @@ import java.util.UUID;
 })
 public class Shift {
     @Id
-    @GeneratedValue
     private UUID id;
     private UUID doctorId;
     private String specialityName;

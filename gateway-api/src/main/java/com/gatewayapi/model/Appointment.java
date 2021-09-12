@@ -1,17 +1,12 @@
 package com.gatewayapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class Appointment {
-    Shift shift;
-    Long patientId;
-    Condition condition;
+    private Shift shift;
+    private Patient patient;
 }
 

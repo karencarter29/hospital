@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Hospital {
     @Id
-    @GeneratedValue
     private UUID id;
     private String name;
     private String address;
