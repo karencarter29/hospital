@@ -31,17 +31,17 @@ public class AdminService {
 //        return patientService.createAppointment(appointmentInfo);
 //    }
 
-    public ResponseEntity<Object> createShift(Map<String, Object> shiftInfo) {
+    public ResponseEntity<String> createShift(Map<String, Object> shiftInfo) {
         return doctorService.createShift(shiftInfo);
     }
 
-    public ResponseEntity<Object> getAllShifts() {
+    public ResponseEntity<String> getAllShifts() {
         String url = "url to get all shifts";
 //        restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<Object> getAllAppointments() {
+    public ResponseEntity<String> getAllAppointments() {
         String url = "url to get all appointments";
         //restTemplate.getForObject(url, ResponseEntity.class);
         return ResponseEntity.ok().build();

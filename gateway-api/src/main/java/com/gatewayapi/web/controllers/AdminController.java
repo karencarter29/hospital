@@ -14,22 +14,22 @@ public class AdminController {
     AdminService adminService = new AdminService();
 
     @GetMapping(value = "/shifts", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getAllShifts() {
+    public ResponseEntity<String> getAllShifts() {
         return adminService.getAllShifts();
     }
 
     @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getAllAppointments() {
+    public ResponseEntity<String> getAllAppointments() {
         return adminService.getAllAppointments();
     }
 
 //    @PostMapping(value = "/appointment", consumes = MediaType.APPLICATION_JSON)
-//    public ResponseEntity<Object> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
+//    public ResponseEntity<String> createAppointment(@RequestBody Map<String, Object> appointmentInfo) {
 //        return adminService.createAppointment(appointmentInfo);
 //    }
 
     @PostMapping(value = "/shift", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> createShift(@RequestBody Map<String, Object> shiftInfo) {
+    public ResponseEntity<String> createShift(@RequestBody Map<String, Object> shiftInfo) {
         return adminService.createShift(shiftInfo);
     }
 }
