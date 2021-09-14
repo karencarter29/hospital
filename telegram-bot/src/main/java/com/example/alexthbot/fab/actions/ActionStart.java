@@ -2,6 +2,8 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -13,9 +15,11 @@ import java.util.List;
 
 @Component
 public class ActionStart extends Action {
-
+@Autowired
+    ServiceID serviceID;
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
+        serviceID.setIdChat(id);
         sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
         sendMessage.setReplyMarkup(getKeyboard());
         botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);

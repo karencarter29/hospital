@@ -4,15 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class Shift {
-    String id;
-    String doctorId;
-    Procedure procedure;
-    String startTime;
-    String endTime;
-    String date;
-    String procedureName;
+    private String id;
+    private String doctorId;
+    private String specialityName;
+    private String startTime;
+    private String endTime;
+    private String date;
+    private String procedureName;
 }

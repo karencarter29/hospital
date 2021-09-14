@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CheckLogPass {
-    private String login;
+    private String username;
     private String password;
 
 

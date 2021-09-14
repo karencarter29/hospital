@@ -2,13 +2,16 @@ package com.example.clinic;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
 
 @SpringBootApplication
-//@Configuration
+@Configuration
 //@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 @EnableFeignClients
 public class ClinicApplication {

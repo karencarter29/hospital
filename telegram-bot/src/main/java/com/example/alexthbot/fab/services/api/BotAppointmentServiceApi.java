@@ -1,10 +1,12 @@
 package com.example.alexthbot.fab.services.api;
 
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
+import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.exeptions.ApiGatewayException;
 import com.example.alexthbot.fab.services.api.entities.Appointment;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,9 @@ import java.util.List;
 @Slf4j
 @Service
 public class BotAppointmentServiceApi implements BotAppointmentService {
+    @Autowired
+    private TokenService tokenService;
+
     @Value("${gateway.host}/patient/appointment")
     private String urlPostApp;
 
@@ -23,11 +28,12 @@ public class BotAppointmentServiceApi implements BotAppointmentService {
     private String urlGetApps;
 
     @Override
-    public String postAppointment(BotAppointment botAppointment) {
+    public HttpHeaders postAppointment(BotAppointment botAppointment) {
         RestTemplate restTemplate = new RestTemplate();
-        String body = restTemplate.postForEntity(urlPostApp, botAppointment.getId(), String.class).getBody();
+        HttpHeaders headers = restTemplate.postForEntity("http://localhost:8762/patient/appointment/" + botAppointment.getId(), botAppointment.getId(), String.class).getHeaders();
         log.info(botAppointment.toString());
-        return body;
+        tokenService.setToken(headers);
+        return headers;
     }
 
     @Override

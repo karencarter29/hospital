@@ -26,4 +26,13 @@ public class AuthServiceApi {
         log.info(httpStatusResponseEntity.toString());
         return httpStatusResponseEntity.getStatusCode();
     }
+
+//    public HttpStatus checkLoginAndPassword(CheckLogPass checkLogPass) {
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<HttpStatus> httpStatusResponseEntity = restTemplate.postForEntity(url, checkLogPass, HttpStatus.class);
+//        //токен после логина
+//        tokenService.setToken(httpStatusResponseEntity.getHeaders());
+//        log.info(httpStatusResponseEntity.toString());
+//        return httpStatusResponseEntity.getStatusCode();
+//    }
 }
