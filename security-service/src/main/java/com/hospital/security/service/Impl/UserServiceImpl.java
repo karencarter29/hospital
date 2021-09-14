@@ -45,6 +45,12 @@ public class UserServiceImpl implements UserService {
         this.secretConfig = secretConfig;
     }
 
+    public void addRole(String name) {
+        Role role = new Role();
+        role.setName(name);
+        roleRepository.save(role);
+    }
+
     @Override
     @Transactional
     public void register(UserDto userDto) {
