@@ -3,6 +3,7 @@ package com.example.alexthbot.fab.services.api;
 
 import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
+import com.example.alexthbot.fab.exeptions.ApiGatewayException;
 import com.example.alexthbot.fab.services.api.entities.Shift;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
@@ -32,8 +33,12 @@ public class ProcedureServiceApi implements ProcedureService {
             log.info(proceduresEntity.getBody().toString());
             return proceduresEntity.getBody();
         } else {
-            throw new RuntimeException();//создадим свой кастомный
+            throw ApiGatewayException.procedures();
         }
+
+
+
+
     }
 
 

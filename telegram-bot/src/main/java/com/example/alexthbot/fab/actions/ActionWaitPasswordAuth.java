@@ -3,11 +3,13 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.CheckLogPass;
+import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.api.AuthServiceApi;
 import com.example.alexthbot.fab.services.api.DoctorService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -27,12 +29,14 @@ public class ActionWaitPasswordAuth extends Action {
     private AuthServiceApi authServiceApi;
     @Autowired
     private DoctorService doctorService;
-
+@Autowired
+private TokenService tokenService;
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         checkLogPass.setPassword(text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
-        if (authServiceApi.checkLoginAndPassword(checkLogPass).is2xxSuccessful()) {
+        HttpStatus httpStatus = authServiceApi.checkLoginAndPassword(checkLogPass);
+        if (httpStatus.is2xxSuccessful()) {
             sendMessage.setText("Выберите доктора");
             botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
             sendMessage.setReplyMarkup(keyboard());

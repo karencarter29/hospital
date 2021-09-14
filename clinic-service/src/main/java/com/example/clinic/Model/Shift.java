@@ -14,7 +14,7 @@ import java.util.UUID;
 public class Shift {
     private UUID id;
     private UUID doctorId;
-    private String specialityName;
+    private Procedure procedure;
     private LocalTime startTime;
     private LocalTime endTime;
     private LocalDate date;

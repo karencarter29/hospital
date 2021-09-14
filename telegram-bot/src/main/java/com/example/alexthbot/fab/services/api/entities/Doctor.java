@@ -1,6 +1,5 @@
 package com.example.alexthbot.fab.services.api.entities;
 
-import com.example.alexthbot.fab.services.api.Speciality;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;

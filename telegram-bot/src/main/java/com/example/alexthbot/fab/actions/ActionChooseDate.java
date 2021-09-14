@@ -4,7 +4,6 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.BotAppointment;
 import com.example.alexthbot.fab.database.user.model.ServiceID;
-import com.example.alexthbot.fab.services.api.DoctorServiceApi;
 import com.example.alexthbot.fab.services.api.ProcedureService;
 import com.example.alexthbot.fab.services.api.entities.Shift;
 import com.google.gson.Gson;
@@ -23,8 +22,7 @@ import java.util.List;
 public class ActionChooseDate extends Action {
     @Autowired
     private BotAppointment botAppointment;
-    @Autowired
-    private DoctorServiceApi doctorServiceApi;
+
     @Autowired
     private ProcedureService procedureService;
     @Autowired
@@ -38,7 +36,7 @@ public class ActionChooseDate extends Action {
         Gson gson = new Gson();
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
-            if (shifts[i].getProcedure().getProcedureName().equals(text)) {
+            if (shifts[i].getProcedureName().equals(text)) {
                 botAppointment.setId(shifts[i].getId());
             }
         }
@@ -53,7 +51,7 @@ public class ActionChooseDate extends Action {
 //        Arrays.stream(shifts).forEach(shift1 -> keyboardRow.add(shift1.getDate().toString()));
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
-            keyboardRow.add(shifts[i].getDate());
+            //keyboardRow.add(shifts[i].getDate());
         }
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();

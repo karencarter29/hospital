@@ -7,7 +7,7 @@ import java.util.Locale;
 public enum Role {
 
 
-    ROLE_PATIENT("PATIENT"),
+    ROLE_PATIENT("ROLE_PATIENT"),
     ROLE_DOCTOR("DOCTOR"),
     ROLE_ADMIN("ADMIN");
     private String value;
