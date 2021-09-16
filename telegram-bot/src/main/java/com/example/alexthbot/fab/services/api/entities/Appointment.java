@@ -10,8 +10,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Appointment {
-    Shift shift;
-    String patientId;
-    Condition condition;
+    private Shift shift;
+    private String patientId;
+    private Condition condition;
 }
 

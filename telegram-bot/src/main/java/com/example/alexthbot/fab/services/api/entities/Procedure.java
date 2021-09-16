@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Procedure {
-    String id;
-    String specialityId;
-    String procedureName;
+    private String id;
+    private String specialityId;
+    private String procedureName;
 }

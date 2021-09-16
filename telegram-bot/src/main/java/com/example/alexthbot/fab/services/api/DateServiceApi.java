@@ -33,7 +33,7 @@ public class DateServiceApi implements DateService {
             log.info(proceduresEntity.getBody().toString());
             return proceduresEntity.getBody();
         } else {
-            throw ApiGatewayException.dates();//создадим свой кастомный
+            throw ApiGatewayException.dates();
         }
     }
 }
