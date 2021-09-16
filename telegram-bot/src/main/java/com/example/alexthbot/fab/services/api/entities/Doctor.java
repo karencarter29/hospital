@@ -10,11 +10,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Data
 public class Doctor {
-    String id;
-    String firstName;
-    String lastName;
-    String phoneNumber;
-    Speciality speciality;
+    private String id;
+    private String firstName;
+    private String lastName;
+    private String phoneNumber;
+    private Speciality speciality;
 }
 
 
