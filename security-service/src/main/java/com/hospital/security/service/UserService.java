@@ -25,5 +25,4 @@ public interface UserService {
 
     String getTokenForUser(UserDto userDto);
 
-    public void addRole(String name);
 }

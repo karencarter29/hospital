@@ -37,11 +37,6 @@ public class AuthenticationController {
         this.secretConfig = secretConfig;
     }
 
-    @PostMapping("/role")
-    public void addRole(@RequestBody String name) {
-        userService.addRole(name);
-    }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
