@@ -1,5 +1,5 @@
 create table users (
-   id VARCHAR(255) not null,
+   id varchar(255) NOT NULL,
     password varchar(255) not null,
     username varchar(255) not null,
    first_name varchar(255) not null,
