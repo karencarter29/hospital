@@ -1,5 +1,6 @@
 package com.gatewayapi.web.controllers;
 
+import com.gatewayapi.security.TokenParser;
 import com.gatewayapi.web.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,24 +14,22 @@ import java.util.Map;
 public class DoctorController {
 
     private final DoctorService doctorService;
+    private final TokenParser tokenParser;
 
     @Autowired
-    DoctorController(DoctorService doctorService) {
+    DoctorController(DoctorService doctorService, TokenParser tokenParser) {
         this.doctorService = doctorService;
+        this.tokenParser = tokenParser;
     }
 
     @PostMapping(value = "/shift", consumes = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> createShift(@RequestBody Map<String, Object> payload) {
+    public ResponseEntity<String> createShift(@RequestBody Map<String, Object> payload) {
         return doctorService.createShift(payload);
     }
 
     @GetMapping("/shifts")
-    public ResponseEntity<Object> getMyShifts() {
-        return doctorService.getShifts();
-    }
-
-    @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<Object> getPatientsAppointments() {
-        return doctorService.getAppointments();
+    public ResponseEntity<String> getMyShifts(@RequestHeader("Authorization") String header) {
+        String doctorId = tokenParser.getUserId(header);
+        return doctorService.getShiftsByDoctor(doctorId);
     }
 }

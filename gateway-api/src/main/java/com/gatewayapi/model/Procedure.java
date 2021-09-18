@@ -1,16 +1,15 @@
 package com.gatewayapi.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.Random;
+import java.util.UUID;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 @AllArgsConstructor
 public class Procedure {
-    final Long id = new Random().nextLong();
-    Long specialityId;
-    String procedureName;
+    private UUID id;
+    private String procedureName;
+    private Speciality speciality;
 }

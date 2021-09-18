@@ -41,7 +41,7 @@ public class BotUserService {
 
 
     public void setLogin(String chatId, String login) {
-        changeUser(chatId, botUser -> botUser.setLogin(login));
+        changeUser(chatId, botUser -> botUser.setUsername(login));
     }
 
     public void setPassword(String chatId, String password) {
@@ -71,7 +71,7 @@ public class BotUserService {
     }
 
     public String getLogin(String chatId) {
-        return (cache.getIfPresent(chatId)).getLogin();
+        return (cache.getIfPresent(chatId)).getUsername();
     }
 
 }

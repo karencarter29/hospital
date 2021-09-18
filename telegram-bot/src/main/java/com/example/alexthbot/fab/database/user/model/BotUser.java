@@ -16,7 +16,7 @@ public class BotUser {
     private String firstName;
     private String secondName;
     private Role role;
-    private String login;
+    private String username;
     private String password;
     private String command;
 
@@ -24,7 +24,7 @@ public class BotUser {
         this.firstName = firstName;
         this.secondName = secondName;
         this.role = role;
-        this.login = login;
+        this.username = login;
         this.password = password;
         this.command = command;
     }

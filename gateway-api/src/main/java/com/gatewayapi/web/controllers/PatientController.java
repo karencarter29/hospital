@@ -1,11 +1,9 @@
 package com.gatewayapi.web.controllers;
 
-import com.gatewayapi.security.TokenConfig;
+import com.gatewayapi.security.TokenParser;
 import com.gatewayapi.web.services.PatientService;
 import javax.ws.rs.core.MediaType;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,24 +13,24 @@ import org.springframework.web.bind.annotation.*;
 public class PatientController {
 
     private final PatientService patientService;
-    private final TokenConfig tokenConfig;
+    private final TokenParser tokenParser;
 
     @Autowired
-    PatientController(PatientService patientService, TokenConfig tokenConfig) {
+    PatientController(PatientService patientService, TokenParser tokenParser) {
         this.patientService = patientService;
-        this.tokenConfig = tokenConfig;
+        this.tokenParser = tokenParser;
     }
 
     @PostMapping(value = "/appointment/{shift_id}")
     public ResponseEntity<String> createAppointment(@PathVariable(name = "shift_id") String shiftId,
                                                     @RequestHeader("Authorization") String header) {
-        String patientId = getPatientIdFromToken(header);
+        String patientId = tokenParser.getUserId(header);
         return patientService.createAppointment(shiftId, patientId);
     }
 
     @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<String> getMyAppointments(@RequestHeader("Authorization") String header) {
-        String id = getPatientIdFromToken(header);
+        String id = tokenParser.getUserId(header);
         return patientService.getAppointments(id);
     }
 
@@ -44,14 +42,5 @@ public class PatientController {
     @GetMapping(value = "/doctor/{id}/shifts", produces = MediaType.APPLICATION_JSON)
     public ResponseEntity<String> getDoctorShifts(@PathVariable(name = "id") String id) {
         return patientService.getShiftsByDoctor(id);
-    }
-
-    private String getPatientIdFromToken(String header) {
-        String token = header.replace(tokenConfig.getPrefix(), "");
-        Claims claims = Jwts.parser()
-                .setSigningKey(tokenConfig.getSecret().getBytes())
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.get("id", String.class);
     }
 }

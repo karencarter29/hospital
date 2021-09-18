@@ -55,16 +55,16 @@
             <artifactId>spring-cloud-starter-openfeign</artifactId>
             <version>3.0.3</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.cloudspannerecosystem</groupId>
-            <artifactId>liquibase-spanner</artifactId>
-            <version>1.0.5</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.google.cloudspannerecosystem</groupId>-->
+<!--            <artifactId>liquibase-spanner</artifactId>-->
+<!--            <version>1.0.5</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>org.liquibase</groupId>
-            <artifactId>liquibase-core</artifactId>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.liquibase</groupId>-->
+<!--            <artifactId>liquibase-core</artifactId>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.google.cloud</groupId>
             <artifactId>google-cloud-spanner-hibernate-dialect</artifactId>

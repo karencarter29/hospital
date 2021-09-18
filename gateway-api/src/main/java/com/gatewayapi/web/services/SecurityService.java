@@ -48,6 +48,7 @@ public class SecurityService {
 
     public ResponseEntity<String> auth(Map<String, Object> userInformation) {
         String url = ADDRESS_SECURITY_SERVICE + "/hospital/auth/login";
+        log.info("Login: {}", userInformation);
         return restTemplate.postForEntity(url, userInformation, String.class);
     }
 
