@@ -1,5 +1,6 @@
 package com.example.clinic.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -13,12 +14,14 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Speciality {
     @Id
-    @GeneratedValue(generator = "hibernate-uuid")
+    @GeneratedValue
     private UUID id;
     private String specialityName;
     @OneToMany(mappedBy = "speciality", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Doctor> doctors = new ArrayList<>();
     @OneToMany(mappedBy = "speciality", fetch = FetchType.LAZY)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Procedure> procedures = new ArrayList<>();
 
     public void addDoctor(Doctor doctor)

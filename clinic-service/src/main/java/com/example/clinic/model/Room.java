@@ -1,6 +1,7 @@
 package com.example.clinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -24,6 +25,7 @@ public class Room implements Serializable {
     @ManyToOne(targetEntity = Hospital.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "hospitalId")
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Hospital hospital;
 
 
@@ -31,6 +33,7 @@ public class Room implements Serializable {
     @OneToOne(targetEntity = Doctor.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "doctorId")
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Doctor doctor;
 
     private String roomNumber;

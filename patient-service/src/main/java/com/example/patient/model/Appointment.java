@@ -1,6 +1,7 @@
 package com.example.patient.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
 
@@ -18,21 +19,18 @@ public class Appointment implements Serializable {
 
     @Id
     @Column(name="shiftId")
-  //  @Type(type = "uuid")
-    @Type(type="org.hibernate.type.BinaryType")
     private UUID id;
 
     @OneToOne(targetEntity = Shift.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "shiftId")
-  //  @Type(type = "uuid")
-    @Type(type="org.hibernate.type.BinaryType")
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @MapsId
     private Shift shift;
 
     @ManyToOne(targetEntity = Patient.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "patientId")
-    @Type(type="org.hibernate.type.BinaryType")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @JsonIgnore
     private Patient patient;
 

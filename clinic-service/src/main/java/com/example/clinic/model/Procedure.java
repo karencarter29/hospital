@@ -1,6 +1,7 @@
 package com.example.clinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -15,11 +16,12 @@ import java.util.UUID;
 })
 public class Procedure {
     @Id
-    @GeneratedValue(generator = "hibernate-uuid")
+    @GeneratedValue
     private UUID id;
     private String procedureName;
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Speciality speciality;
 
     public UUID getId() {

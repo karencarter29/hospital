@@ -1,5 +1,6 @@
 package com.example.patient.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Type;
@@ -17,10 +18,8 @@ import java.util.UUID;
 })
 public class Shift {
     @Id
-    @GeneratedValue(generator = "hibernate-uuid")
-    @Type(type="org.hibernate.type.BinaryType")
+    @GeneratedValue
     private UUID id;
-    @Type(type="org.hibernate.type.BinaryType")
     private UUID doctorId;
     private String specialityName;
     private LocalTime startTime;
@@ -28,6 +27,7 @@ public class Shift {
     private LocalDate date;
     private String procedureName;
     @OneToOne(mappedBy = "shift", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @PrimaryKeyJoinColumn
     private Appointment appointment;
 
