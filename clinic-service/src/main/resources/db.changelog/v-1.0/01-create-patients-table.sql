@@ -1,5 +1,4 @@
 
-
 CREATE TABLE doctor (
                         id BYTES(255) NOT NULL,
                         first_name STRING(255),
