@@ -1,7 +1,10 @@
 package com.example.patient.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,6 +27,7 @@ public class Shift {
     private LocalDate date;
     private String procedureName;
     @OneToOne(mappedBy = "shift", cascade = CascadeType.ALL)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     @PrimaryKeyJoinColumn
     private Appointment appointment;
 
