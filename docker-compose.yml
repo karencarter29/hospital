@@ -1,0 +1,38 @@
+version: '3.1'
+services:
+  EUREKA-SERVER:
+    image: "gcr.io/kh-054-java/eureka-server"
+    ports:
+      - "8761:8761"
+  GATEWAY-API:
+    image: "gcr.io/kh-054-java/gateway-api"
+    ports:
+      - "8762:8762"
+    links:
+        - EUREKA-SERVER
+    environment:
+        EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://EUREKA-SERVER:8761/eureka
+  SECURITY-SERVICE:
+    image: "gcr.io/kh-054-java/security-service"
+    ports:
+      - "8077:8077"
+    links:
+      - EUREKA-SERVER
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://EUREKA-SERVER:8761/eureka
+  PATIENT_SERVICE:
+    image: "gcr.io/kh-054-java/patient-service"
+    ports:
+      - "8082:8082"
+    links:
+      - EUREKA-SERVER
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://EUREKA-SERVER:8761/eureka
+  CLINIC_SERVICE:
+    image: "gcr.io/kh-054-java/clinic-service"
+    ports:
+      - "8083:8083"
+    links:
+      - EUREKA-SERVER
+    environment:
+      EUREKA_CLIENT_SERVICEURL_DEFAULTZONE: http://EUREKA-SERVER:8761/eureka

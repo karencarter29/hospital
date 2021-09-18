@@ -1,5 +1,6 @@
 package com.gatewayapi.web.controllers;
 
+import com.gatewayapi.security.TokenParser;
 import com.gatewayapi.web.services.DoctorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +31,5 @@ public class DoctorController {
     public ResponseEntity<String> getMyShifts(@RequestHeader("Authorization") String header) {
         String doctorId = tokenParser.getUserId(header);
         return doctorService.getShiftsByDoctor(doctorId);
-    }
-
-    @GetMapping(value = "/appointments", produces = MediaType.APPLICATION_JSON)
-    public ResponseEntity<String> getPatientsAppointments(@RequestHeader("Authorization") String header) {
-        String doctorId = tokenParser.getUserId(header);
-        return doctorService.getAppointments(doctorId);
     }
 }
