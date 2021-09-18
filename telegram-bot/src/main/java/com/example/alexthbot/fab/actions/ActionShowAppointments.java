@@ -41,27 +41,27 @@ public class ActionShowAppointments extends Action {
                 botAppointment2.setDoctor(serviceID.getDoctor());
                 botAppointments.add(botAppointment2);
             }
-            String s = "Ваша запись учтена, вы так же можете записаться к другому врачу.\n";
+            String s = "Your record is taken into account, you can also make an appointment with another doctor.\n";
             botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
             sendMessage.setReplyMarkup(keyboard());
             for (int i = 0; i < botAppointments.size(); i++) {
                 s +=
-                        "Доктор: " + botAppointments.get(i).getDoctor() + "\n"
-                                + "Процедура: " + botAppointments.get(i).getProcedure() + "\n"
-                                + "День: " + botAppointments.get(i).getDate() + "\n"
-                                + "Время: " + botAppointments.get(i).getTime() + "\n"
+                        "Doctor: " + botAppointments.get(i).getDoctor() + "\n"
+                                + "Procedure: " + botAppointments.get(i).getProcedure() + "\n"
+                                + "Day: " + botAppointments.get(i).getDate() + "\n"
+                                + "Time: " + botAppointments.get(i).getTime() + "\n"
                 ;
             }
             sendMessage.setText(s);
             botAppointments.clear();
         } catch (RuntimeException e) {
-            sendMessage.setText("Ошибка получения записей");
+            sendMessage.setText("Error getting appointments");
         }
     }
-
+@Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Записаться к другому врачу");
+        keyboardRow.add("Make an appointment with another doctor");
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

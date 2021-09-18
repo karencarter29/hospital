@@ -32,7 +32,7 @@ public class DoctorServiceApi implements DoctorService {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
         ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(urlGetDoctors, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (doctorsEntity.getStatusCode() == HttpStatus.OK) {
-            log.info(doctorsEntity.getBody().toString());
+            log.info("Answer from method getDoctors {}",doctorsEntity.getBody());
             return doctorsEntity.getBody();
         } else {
             throw ApiGatewayException.doctors();

@@ -4,7 +4,6 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
 import com.example.alexthbot.fab.services.api.DoctorService;
-import com.example.alexthbot.fab.services.api.PatientService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ActionChooseDoctorSecondTime extends Action {
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
-        sendMessage.setText("Выберите нужного доктора: ");
+        sendMessage.setText("Choose needed doctor: ");
         sendMessage.setReplyMarkup(keyboard());
     }
 

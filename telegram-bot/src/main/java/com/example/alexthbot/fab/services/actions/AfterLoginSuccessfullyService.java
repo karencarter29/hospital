@@ -25,7 +25,7 @@ public class AfterLoginSuccessfullyService {
 
     public void afterLogin(SendMessage sendMessage, String id) {
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-        sendMessage.setText("Выберите нужного доктора:");
+        sendMessage.setText("Choose the right doctor:");
         sendMessage.setReplyMarkup(keyboard());
     }
 

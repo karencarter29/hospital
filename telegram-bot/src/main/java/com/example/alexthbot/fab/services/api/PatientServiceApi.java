@@ -4,12 +4,14 @@ import com.example.alexthbot.fab.database.user.model.BotUser;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
 import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.api.entities.UserDto;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+@Slf4j
 @Service
 public class PatientServiceApi implements PatientService {
     @Autowired
@@ -17,7 +19,7 @@ public class PatientServiceApi implements PatientService {
     @Autowired
     private TokenService tokenService;
 
-    @Value("gateway.post.user")
+    @Value("${gateway.post.user}")
     private String urlPostUser;
 
     @Value("${gateway.api.check-login}")
@@ -37,6 +39,8 @@ public class PatientServiceApi implements PatientService {
         userDto.setUsername(botUser.getUsername());
         userDto.setRole(botUser.getRole().toString());
         HttpHeaders headers = new RestTemplate().postForEntity(urlPostUser, userDto, UserDto.class).getHeaders();
+        log.info("postNewUser, UserDTO: {}",userDto);
+        log.info("postNewUser, BotUser: {}",botUser);
         tokenService.setToken(headers);
         return headers;
 

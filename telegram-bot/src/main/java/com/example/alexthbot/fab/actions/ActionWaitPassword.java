@@ -3,8 +3,6 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.actions.router.Role;
-import com.example.alexthbot.fab.database.user.model.ServiceID;
-import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.api.DoctorService;
 import com.example.alexthbot.fab.services.api.PatientService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
@@ -27,10 +25,6 @@ public class ActionWaitPassword extends Action {
     private DoctorService doctorService;
     @Autowired
     private PatientService patientService;
-    @Autowired
-    private ServiceID serviceID;
-    @Autowired
-    private TokenService tokenService;
 
     @Override
     public void action(Update update, SendMessage sendMessage, String password, String id) {
@@ -41,10 +35,10 @@ public class ActionWaitPassword extends Action {
         //постим юзера
         patientService.postNewUser(botUserService.user(id));
         sendMessage.setReplyMarkup(keyboard());
-        sendMessage.setText("Вы зарегистрированы как: \n Имя: " + botUserService.getFirstName(id) +
-                ", \nФамилия: " + botUserService.getSecondName(id) +
-                "\nЛогин: " + botUserService.getLogin(id) +
-                "\n Теперь выберите нужного доктора: ");
+        sendMessage.setText("You have been registered as: \n Name: " + botUserService.getFirstName(id) +
+                ", \nSecond Name: " + botUserService.getSecondName(id) +
+                "\nLogin: " + botUserService.getLogin(id) +
+                "\n Now select the doctor you want: ");
     }
 
     @Override

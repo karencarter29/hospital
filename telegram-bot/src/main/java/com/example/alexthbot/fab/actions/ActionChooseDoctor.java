@@ -45,7 +45,7 @@ public class ActionChooseDoctor extends Action {
         botAppointment.setDoctor(text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
         sendMessage.setReplyMarkup(keyboardTooth());
-        sendMessage.setText("Выберите процедуру: \n(В первый раз советуем выбрать консультацию)");
+        sendMessage.setText("Choose a procedure: \n(For the first time we advise you to choose a consultation)");
 
 
     }

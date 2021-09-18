@@ -40,10 +40,10 @@ public class ActionChooseDate extends Action {
                 botAppointment.setId(shifts[i].getId());
             }
         }
-        sendMessage.setText("Выберите дату: ");
+        sendMessage.setText("Choose data: ");
         sendMessage.setReplyMarkup(keyboard());
     }
-
+    @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();

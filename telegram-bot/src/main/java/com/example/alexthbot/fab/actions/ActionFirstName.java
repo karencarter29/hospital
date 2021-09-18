@@ -13,7 +13,7 @@ public class ActionFirstName extends Action {
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botUserService.setFirstName(id, text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_LAST_NAME);
-        sendMessage.setText("Напишите свою фамилию:");
+        sendMessage.setText("Type your surname:");
     }
 
     @Override
