@@ -13,7 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Speciality {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "hibernate-uuid")
     private UUID id;
     private String specialityName;
     @OneToMany(mappedBy = "speciality", fetch = FetchType.LAZY)

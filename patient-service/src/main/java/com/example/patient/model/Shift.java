@@ -2,6 +2,8 @@ package com.example.patient.model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -15,8 +17,10 @@ import java.util.UUID;
 })
 public class Shift {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "hibernate-uuid")
+    @Type(type="org.hibernate.type.BinaryType")
     private UUID id;
+    @Type(type="org.hibernate.type.BinaryType")
     private UUID doctorId;
     private String specialityName;
     private LocalTime startTime;

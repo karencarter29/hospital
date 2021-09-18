@@ -15,7 +15,7 @@ import java.util.UUID;
 })
 public class Procedure {
     @Id
-    @GeneratedValue
+    @GeneratedValue(generator = "hibernate-uuid")
     private UUID id;
     private String procedureName;
     @ManyToOne(fetch = FetchType.LAZY)

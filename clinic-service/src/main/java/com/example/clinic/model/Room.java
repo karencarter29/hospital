@@ -5,16 +5,18 @@ import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 
+
 import javax.persistence.*;
 import java.io.Serializable;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(RelationShipPK.class)
 @Table(indexes = {
-        @Index(name="room_hospitalId_idx", columnList = "hospitalId"),
-        @Index(name="room_doctorId_idx", columnList = "doctorId")
+        @Index(name = "room_hospitalId_idx", columnList = "hospitalId"),
+        @Index(name = "room_doctorId_idx", columnList = "doctorId")
 })
 public class Room implements Serializable {
 
@@ -24,6 +26,7 @@ public class Room implements Serializable {
     @JsonIgnore
     private Hospital hospital;
 
+
     @Id
     @OneToOne(targetEntity = Doctor.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "doctorId")
@@ -31,7 +34,6 @@ public class Room implements Serializable {
     private Doctor doctor;
 
     private String roomNumber;
-
 
     public Hospital getHospital() {
         return hospital;

@@ -3,6 +3,7 @@ package com.example.patient.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,7 +17,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Patient {
     @Id
-//    @GeneratedValue
+    @Type(type="org.hibernate.type.BinaryType")
     private UUID id;
     private String firstName;
     private String lastName;

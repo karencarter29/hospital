@@ -9,6 +9,6 @@ import java.util.List;
 
 @FeignClient(name="feignAppointmentService", url="http://localhost:8082/appointment")
 public interface AppointmentService {
-    @GetMapping
-    public List<AppointmentForDoctor> getAppointments();
+    @GetMapping("/doctor")
+     List<AppointmentForDoctor> getAppointments();
 }

@@ -14,17 +14,17 @@ import java.util.UUID;
 public interface AppointmentRepository extends CrudRepository<Appointment, Shift> {
 
 
-    @Query(value="INSERT INTO Appointment(shift_id, patient_id) values(:shift.id, :patient.id)", nativeQuery = true)
+    @Query(value = "INSERT INTO Appointment(shift_id, patient_id) values(:shift.id, :patient.id)", nativeQuery = true)
     @Transactional
     @Modifying
     void saveApp(@Param("shift.id") UUID shiftId, @Param("patient.id") UUID patientId);
 
-    @Query(value="DELETE FROM Appointment a where a.shift_id=:shift.id and a.patient_id=:patient.id", nativeQuery = true)
+    @Query(value = "DELETE FROM Appointment a where a.shift_id=:shift.id and a.patient_id=:patient.id", nativeQuery = true)
     @Transactional
     @Modifying
     void deleteApp(@Param("shift.id") UUID shiftId, @Param("patient.id") UUID patientId);
 
-    @Query(value="UPDATE Appointment SET shift_id=:shift.id WHERE patient_id=:patient.id", nativeQuery = true)
+    @Query(value = "UPDATE Appointment SET shift_id=:shift.id WHERE patient_id=:patient.id", nativeQuery = true)
     @Transactional
     @Modifying
     void updateApp(@Param("shift.id") UUID shiftId, @Param("patient.id") UUID patientId);
@@ -33,4 +33,5 @@ public interface AppointmentRepository extends CrudRepository<Appointment, Shift
     @Transactional
     @Modifying
     List<Appointment> getAppointments(@Param("patient.id") UUID patientId);
+
 }
