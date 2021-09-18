@@ -32,17 +32,17 @@ public class ActionChooseTime extends Action {
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botAppointment.setDate(text);
         botUserService.setCommand(id, ActionEnum.MIDDLE_BOOKED);
-        sendMessage.setText("Выберите время:");
+        sendMessage.setText("Choose time:");
         sendMessage.setReplyMarkup(keyboard());
     }
-
+@Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
-           // String s = shifts[i].getStartTime();
-            //keyboardRow.add(s);
+            String s = shifts[i].getStartTime();
+            keyboardRow.add(s);
         }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

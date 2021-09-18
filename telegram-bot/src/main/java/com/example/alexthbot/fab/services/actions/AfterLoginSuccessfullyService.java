@@ -25,14 +25,14 @@ public class AfterLoginSuccessfullyService {
 
     public void afterLogin(SendMessage sendMessage, String id) {
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-        sendMessage.setText("Выберите нужного доктора:");
+        sendMessage.setText("Choose the right doctor:");
         sendMessage.setReplyMarkup(keyboard());
     }
 
     private ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
         Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

@@ -17,14 +17,14 @@ public class ActionRegistration extends Action {
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         sendMessage.setChatId(id);
-        sendMessage.setText("Ваш логин автоматически сгенерирован \n Нажмите далее:");
+        sendMessage.setText("Your login is automatically generated \n Click next:");
         sendMessage.setReplyMarkup(getKeyboard());
         botUserService.setCommand(id, ActionEnum.REGISTRATION_WAITING_LOGIN);
     }
 
     public ReplyKeyboardMarkup getKeyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Далее");
+        keyboardRow.add("Next");
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();

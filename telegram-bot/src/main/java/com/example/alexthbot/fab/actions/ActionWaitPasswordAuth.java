@@ -3,7 +3,6 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.CheckLogPass;
-import com.example.alexthbot.fab.database.user.service.TokenService;
 import com.example.alexthbot.fab.services.api.AuthServiceApi;
 import com.example.alexthbot.fab.services.api.DoctorService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
@@ -29,20 +28,18 @@ public class ActionWaitPasswordAuth extends Action {
     private AuthServiceApi authServiceApi;
     @Autowired
     private DoctorService doctorService;
-@Autowired
-private TokenService tokenService;
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         checkLogPass.setPassword(text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
         HttpStatus httpStatus = authServiceApi.checkLoginAndPassword(checkLogPass);
         if (httpStatus.is2xxSuccessful()) {
-            sendMessage.setText("Выберите доктора");
+            sendMessage.setText("Choose a doctor");
             botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
             sendMessage.setReplyMarkup(keyboard());
         } else {
             botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
-            sendMessage.setText("Такого логина или пароля не существует");
+            sendMessage.setText("There is no such login or password");
             sendMessage.setReplyMarkup(getKeyboard());
         }
     }
@@ -51,7 +48,7 @@ private TokenService tokenService;
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
         Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
@@ -64,8 +61,8 @@ private TokenService tokenService;
 
     public ReplyKeyboardMarkup getKeyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Логин");
-        keyboardRow.add("Регистрация");
+        keyboardRow.add("Login");
+        keyboardRow.add("Registration");
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

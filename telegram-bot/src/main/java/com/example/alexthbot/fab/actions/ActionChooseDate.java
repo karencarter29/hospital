@@ -40,18 +40,16 @@ public class ActionChooseDate extends Action {
                 botAppointment.setId(shifts[i].getId());
             }
         }
-        sendMessage.setText("Выберите дату: ");
+        sendMessage.setText("Choose data: ");
         sendMessage.setReplyMarkup(keyboard());
     }
-
+    @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-//        Shift[] shifts = gson.fromJson(String.valueOf(doctorServiceApi.get()), Shift[].class);
-//        Arrays.stream(shifts).forEach(shift1 -> keyboardRow.add(shift1.getDate().toString()));
         Shift[] shifts = gson.fromJson(String.valueOf(procedureService.getProceduresById(serviceID.getDoctorId())), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
-            //keyboardRow.add(shifts[i].getDate());
+            keyboardRow.add(shifts[i].getDate());
         }
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();

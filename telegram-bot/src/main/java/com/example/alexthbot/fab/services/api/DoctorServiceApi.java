@@ -21,18 +21,18 @@ import java.util.List;
 @Service
 public class DoctorServiceApi implements DoctorService {
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
     @Autowired
-    ServiceID serviceID;
-    @Value("${gateway.host}/patient/doctors")
-    private String url;
+    private ServiceID serviceID;
+    @Value("${gateway.api.get.doctors}")
+    private String urlGetDoctors;
 
     @Override
-    public List<Doctor> get() {
+    public List<Doctor> getDoctors() {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
-        ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(url, HttpMethod.GET, httpEntity, CollectionParams.get());
+        ResponseEntity<List<Doctor>> doctorsEntity = new RestTemplate().exchange(urlGetDoctors, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (doctorsEntity.getStatusCode() == HttpStatus.OK) {
-            log.info(doctorsEntity.getBody().toString());
+            log.info("Answer from method getDoctors {}",doctorsEntity.getBody());
             return doctorsEntity.getBody();
         } else {
             throw ApiGatewayException.doctors();

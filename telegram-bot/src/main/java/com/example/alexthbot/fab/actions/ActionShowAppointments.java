@@ -20,7 +20,6 @@ import java.util.List;
 
 @Component
 public class ActionShowAppointments extends Action {
-
     @Autowired
     private BotAppointmentService botAppointmentService;
     @Autowired
@@ -36,33 +35,33 @@ public class ActionShowAppointments extends Action {
             Appointment[] appointments1 = gson.fromJson(String.valueOf(appointments), Appointment[].class);
             for (int i = 0; i < appointments1.length; i++) {
                 BotAppointment botAppointment2 = new BotAppointment();
-//                botAppointment2.setProcedure(appointments1[i].getShift().getProcedure().getProcedureName());
-//                botAppointment2.setDate(appointments1[i].getShift().getDate());
-//                botAppointment2.setTime(appointments1[i].getShift().getStartTime());
+                botAppointment2.setProcedure(appointments1[i].getShift().getProcedureName());
+                botAppointment2.setDate(appointments1[i].getShift().getDate());
+                botAppointment2.setTime(appointments1[i].getShift().getStartTime());
                 botAppointment2.setDoctor(serviceID.getDoctor());
                 botAppointments.add(botAppointment2);
             }
-            String s = "Ваша запись учтена, вы так же можете записаться к другому врачу.\n";
+            String s = "Your record is taken into account, you can also make an appointment with another doctor.\n";
             botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
             sendMessage.setReplyMarkup(keyboard());
             for (int i = 0; i < botAppointments.size(); i++) {
                 s +=
-                        "Доктор: " + botAppointments.get(i).getDoctor() + "\n"
-                                + "Процедура: " + botAppointments.get(i).getProcedure() + "\n"
-                                + "День: " + botAppointments.get(i).getDate() + "\n"
-                                + "Время: " + botAppointments.get(i).getTime() + "\n"
+                        "Doctor: " + botAppointments.get(i).getDoctor() + "\n"
+                                + "Procedure: " + botAppointments.get(i).getProcedure() + "\n"
+                                + "Day: " + botAppointments.get(i).getDate() + "\n"
+                                + "Time: " + botAppointments.get(i).getTime() + "\n"
                 ;
             }
             sendMessage.setText(s);
             botAppointments.clear();
         } catch (RuntimeException e) {
-            sendMessage.setText("Ошибка получения записей");
+            sendMessage.setText("Error getting appointments");
         }
     }
-
+@Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Записаться к другому врачу");
+        keyboardRow.add("Make an appointment with another doctor");
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
