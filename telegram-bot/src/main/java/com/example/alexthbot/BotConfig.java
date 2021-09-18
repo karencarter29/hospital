@@ -21,7 +21,7 @@ public class BotConfig {
 
     @Bean
     public SetWebhook setWebhookInstance() {
-        return SetWebhook.builder().url("https://83c4-31-202-112-40.ngrok.io").build();
+        return SetWebhook.builder().url("https://5b74-31-202-112-40.ngrok.io").build();
     }
 
     @Bean

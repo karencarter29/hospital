@@ -9,6 +9,7 @@ import com.example.alexthbot.fab.services.api.ProcedureService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.example.alexthbot.fab.services.api.entities.Shift;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -17,6 +18,7 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,10 +56,16 @@ public class ActionChooseDoctor extends Action {
     public ReplyKeyboard keyboardTooth() {
         Gson gson = new Gson();
         KeyboardRow keyboardRow = new KeyboardRow();
+        JsonReader reader = new JsonReader(new StringReader(procedureService.getProceduresById(serviceID.getDoctorId()).toString()));
+        reader.setLenient(true);
         Shift[] shifts = gson.fromJson(String.valueOf((procedureService.getProceduresById(serviceID.getDoctorId()))), Shift[].class);
         for (int i = 0; i < shifts.length; i++) {
             keyboardRow.add(shifts[i].getProcedureName());
         }
+//        Shift[] shifts = gson.fromJson(String.valueOf((procedureService.getProceduresById(serviceID.getDoctorId()))), Shift[].class);
+//        for (int i = 0; i < shifts.length; i++) {
+//            keyboardRow.add(shifts[i].getProcedureName());
+//        }
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

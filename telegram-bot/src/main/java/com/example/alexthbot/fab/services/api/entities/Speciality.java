@@ -12,4 +12,6 @@ import lombok.Setter;
 public class Speciality {
     private String id;
     private String specialityName;
+    private Doctor [] doctors;
+    private Procedure [] procedures;
 }
