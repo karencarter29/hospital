@@ -34,7 +34,7 @@ public class PatientServiceApi implements PatientService {
         userDto.setPassword(botUser.getPassword());
         userDto.setFirstName(botUser.getFirstName());
         userDto.setSecondName(botUser.getSecondName());
-        userDto.setUsername(botUser.getLogin());
+        userDto.setUsername(botUser.getUsername());
         userDto.setRole(botUser.getRole().toString());
         HttpHeaders headers = new RestTemplate().postForEntity(urlPostUser, userDto, UserDto.class).getHeaders();
         tokenService.setToken(headers);
@@ -47,7 +47,7 @@ public class PatientServiceApi implements PatientService {
         HttpEntity<Void> httpEntity = new HttpEntity<>(new HttpHeaders());
         ResponseEntity<BotUser> BotUserEntity = new RestTemplate().exchange(urlChekLogin, HttpMethod.GET, httpEntity, BotUser.class);
         if (BotUserEntity.getStatusCode() == HttpStatus.OK) {
-            return BotUserEntity.getBody().getLogin();
+            return BotUserEntity.getBody().getUsername();
         } else {
             throw new RuntimeException();
         }

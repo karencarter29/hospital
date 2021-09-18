@@ -28,8 +28,4 @@ public class DoctorService {
         String url = CLINIC_SERVICE_ADDRESS + "/shift/" + doctorId;
         return restTemplate.getForEntity(url, String.class);
     }
-
-    public ResponseEntity<String> getAppointments(String doctorId) {
-        return ResponseEntity.ok().build(); //todo: implement the method to get appointments by doctor
-    }
 }
