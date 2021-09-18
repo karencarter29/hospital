@@ -34,6 +34,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers(LOGIN_ENDPOINT).permitAll()
                 .antMatchers(REGISTER_ENDPOINT).permitAll()
+                .antMatchers("/hospital/auth/role").permitAll()
                 .anyRequest().authenticated();
     }
 }
