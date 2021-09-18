@@ -16,4 +16,7 @@ public class ApiGatewayException extends RuntimeException {
     public static ApiGatewayException dates() {
         return new ApiGatewayException("Ошибка получения свободных дней");
     }
-}
+
+    public static ApiGatewayException procedures() {return new ApiGatewayException("Нет доступных процедур");}
+    public static ApiGatewayException times () { return new ApiGatewayException("Нет доступного времени для этой даты");}
+        }

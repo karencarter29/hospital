@@ -40,8 +40,6 @@ public class MainTelegramBot extends TelegramLongPollingBot {
         return token;
     }
 
-
-
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage()){
@@ -70,8 +68,10 @@ public class MainTelegramBot extends TelegramLongPollingBot {
         if (update.hasCallbackQuery()){
         }
     }
-
-
-
-
 }
+
+
+
+
+
+

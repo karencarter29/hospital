@@ -2,6 +2,7 @@ package com.example.alexthbot.fab.services.api;
 
 import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.database.user.service.TokenService;
+import com.example.alexthbot.fab.exeptions.ApiGatewayException;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class TimeServiceApi implements TimeForBook {
             log.info(timeEntity.getBody().toString());
             return timeEntity.getBody();
         } else {
-            throw new RuntimeException();//создадим свой кастомный
+            throw ApiGatewayException.times();
         }
     }
 }
