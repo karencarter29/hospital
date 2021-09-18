@@ -20,10 +20,10 @@ import java.util.List;
 @Service
 public class TimeServiceApi implements TimeForBook {
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
     @Autowired
-    ServiceID serviceID;
-    @Value("${gateway.host}/patient/doctors")
+    private ServiceID serviceID;
+    @Value("${gateway.get.time}")
     private String urlTime;
 
     @Override

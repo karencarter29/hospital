@@ -13,17 +13,17 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class PatientServiceApi implements PatientService {
     @Autowired
-    BotUserService botUserService;
+    private BotUserService botUserService;
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
 
-    @Value("${gateway.host}/user/")
+    @Value("gateway.post.user")
     private String urlPostUser;
 
-    @Value("${gateway.host}/user/checkLogin")
+    @Value("${gateway.api.check-login}")
     private String urlChekLogin;
 
-    @Value("${gateway.host}/user/get")
+    @Value("${gateway.api.user.get}")
     private String urlGet;
 
 

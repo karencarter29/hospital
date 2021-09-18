@@ -13,11 +13,7 @@ import org.telegram.telegrambots.meta.api.objects.Update;
 @Component
 public class ActionLastName extends Action {
     @Autowired
-    private DoctorService doctorService;
-    @Autowired
     private BotUserService botUserService;
-    @Autowired
-    private PatientService patientService;
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {

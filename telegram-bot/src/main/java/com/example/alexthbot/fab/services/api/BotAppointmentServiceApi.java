@@ -20,11 +20,7 @@ public class BotAppointmentServiceApi implements BotAppointmentService {
     @Autowired
     private TokenService tokenService;
 
-    @Value("${gateway.host}/patient/appointment")
-    private String urlPostApp;
-
-
-    @Value("${gateway.host}/patient/appointments")
+    @Value("${gateway.api.get-appoinments}")
     private String urlGetApps;
 
     @Override

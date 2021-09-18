@@ -4,7 +4,7 @@ public class ApiGatewayException extends RuntimeException {
     private ApiGatewayException(String message) {
         super(message);
     }
-
+    //констнанті для локализации
     public static ApiGatewayException doctors() {
         return new ApiGatewayException("Ошибка получения докторов");
     }
@@ -17,6 +17,11 @@ public class ApiGatewayException extends RuntimeException {
         return new ApiGatewayException("Ошибка получения свободных дней");
     }
 
-    public static ApiGatewayException procedures() {return new ApiGatewayException("Нет доступных процедур");}
-    public static ApiGatewayException times () { return new ApiGatewayException("Нет доступного времени для этой даты");}
-        }
+    public static ApiGatewayException procedures() {
+        return new ApiGatewayException("Нет доступных процедур");
+    }
+
+    public static ApiGatewayException times() {
+        return new ApiGatewayException("Нет доступного времени для этой даты");
+    }
+}

@@ -21,9 +21,9 @@ import java.util.List;
 @Service
 public class ProcedureServiceApi implements ProcedureService {
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
     @Autowired
-    ServiceID serviceID;
+    private ServiceID serviceID;
 
     @Override
     public List<Shift> getProceduresById(String id) {

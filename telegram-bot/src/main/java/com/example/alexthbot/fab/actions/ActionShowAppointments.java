@@ -20,7 +20,6 @@ import java.util.List;
 
 @Component
 public class ActionShowAppointments extends Action {
-
     @Autowired
     private BotAppointmentService botAppointmentService;
     @Autowired
@@ -36,9 +35,9 @@ public class ActionShowAppointments extends Action {
             Appointment[] appointments1 = gson.fromJson(String.valueOf(appointments), Appointment[].class);
             for (int i = 0; i < appointments1.length; i++) {
                 BotAppointment botAppointment2 = new BotAppointment();
-//                botAppointment2.setProcedure(appointments1[i].getShift().getProcedure().getProcedureName());
-//                botAppointment2.setDate(appointments1[i].getShift().getDate());
-//                botAppointment2.setTime(appointments1[i].getShift().getStartTime());
+                botAppointment2.setProcedure(appointments1[i].getShift().getProcedureName());
+                botAppointment2.setDate(appointments1[i].getShift().getDate());
+                botAppointment2.setTime(appointments1[i].getShift().getStartTime());
                 botAppointment2.setDoctor(serviceID.getDoctor());
                 botAppointments.add(botAppointment2);
             }

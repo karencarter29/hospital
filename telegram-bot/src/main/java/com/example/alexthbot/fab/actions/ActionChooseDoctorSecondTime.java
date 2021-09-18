@@ -26,8 +26,6 @@ public class ActionChooseDoctorSecondTime extends Action {
     private DoctorService doctorService;
     @Autowired
     private BotUserService botUserService;
-    @Autowired
-    private PatientService patientService;
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
@@ -40,7 +38,7 @@ public class ActionChooseDoctorSecondTime extends Action {
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
         Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

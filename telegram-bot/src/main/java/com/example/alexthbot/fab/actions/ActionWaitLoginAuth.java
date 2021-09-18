@@ -16,7 +16,7 @@ public class ActionWaitLoginAuth extends Action {
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
-        checkLogPass.setLogin(text);
+        checkLogPass.setUsername(text);
         botUserService.setCommand(id, ActionEnum.PASSWORD_AUTH);
         sendMessage.setText("Введите пароль:");
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));

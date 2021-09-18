@@ -15,7 +15,7 @@ import org.springframework.web.client.RestTemplate;
 public class AuthServiceApi {
     @Autowired
     private TokenService tokenService;
-    @Value("${gateway.host}/user/get")
+    @Value("${gateway.api.user.get}")
     private String url;
 
     public HttpStatus checkLoginAndPassword(CheckLogPass checkLogPass) {

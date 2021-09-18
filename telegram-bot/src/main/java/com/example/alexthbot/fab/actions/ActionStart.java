@@ -15,8 +15,8 @@ import java.util.List;
 
 @Component
 public class ActionStart extends Action {
-@Autowired
-    ServiceID serviceID;
+    @Autowired
+    private ServiceID serviceID;
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         serviceID.setIdChat(id);
