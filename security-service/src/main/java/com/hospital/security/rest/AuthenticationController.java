@@ -43,11 +43,6 @@ public class AuthenticationController {
         this.secretConfig = secretConfig;
     }
 
-    @RequestMapping("/show")
-    public String secret() {
-        return this.secre;
-    }
-
     @PostMapping("/login")
     public ResponseEntity<String> login(@RequestBody AuthenticationRequestDto requestDto) {
         try {
