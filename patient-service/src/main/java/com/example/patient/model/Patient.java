@@ -1,8 +1,10 @@
 package com.example.patient.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -16,7 +18,6 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Patient {
     @Id
-//    @GeneratedValue
     private UUID id;
     private String firstName;
     private String lastName;
@@ -25,6 +26,7 @@ public class Patient {
     private LocalDate dateOfBirth;
     @OneToMany(mappedBy = "patient", fetch = FetchType.LAZY)
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private List<Appointment> appointments = new ArrayList<>();
 
     public void addAppointment(Appointment appointment) {

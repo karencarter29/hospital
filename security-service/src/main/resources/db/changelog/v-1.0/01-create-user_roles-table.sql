@@ -1,6 +1,6 @@
 create table user_roles (
-                            user_id VARCHAR(255) ,
-                            role_id VARCHAR(255) ,
+                            user_id varchar(255) ,
+                            role_id varchar(255) ,
                             CONSTRAINT FK_user_roles_user FOREIGN KEY (user_id)
                                 REFERENCES users(id)
                                 ON DELETE CASCADE,

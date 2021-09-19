@@ -33,7 +33,7 @@ public class AppointmentService {
 
     public List<AppointmentForDoctor> getAppointments() {
         List<Appointment> appointments = (List<Appointment>)appointmentRepository.findAll();
-        List<AppointmentForDoctor> appointmentForDoctorList = new LinkedList<>();
+       List<AppointmentForDoctor> appointmentForDoctorList = new LinkedList<>();
         AppointmentForDoctor appointmentForDoctor;
         for(Appointment a: appointments) {
             appointmentForDoctor = new AppointmentForDoctor(a.getPatient().getFirstName(), a.getPatient().getLastName(),

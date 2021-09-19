@@ -18,15 +18,15 @@ public class AfterLoginFailedService {
 
     public void afterLogin(SendMessage sendMessage, String id) {
         botUserService.setCommand(id, ActionEnum.START);
-        sendMessage.setText("Такого логина или пароля не существует, \n " +
-                "выберите логин или регистрацию");
+        sendMessage.setText("There is no such login or password, \n " +
+                "choose a login or registration");
         sendMessage.setReplyMarkup(getKeyboard());
     }
 
     public ReplyKeyboardMarkup getKeyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Логин");
-        keyboardRow.add("Регистрация");
+        keyboardRow.add("Login");
+        keyboardRow.add("registration");
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

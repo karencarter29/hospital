@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import java.util.UUID;
@@ -17,13 +18,15 @@ public interface ShiftRepository extends JpaRepository<Shift, UUID> {
     @Modifying
     List<Shift> getShift(@Param("doctor.id") UUID doctorId);
 
-    @Query(value="SELECT * FROM Shift where start_time between :start.time and :end.time", nativeQuery = true)
+    @Query(value="SELECT * FROM Shift where start_time between :start.time and :end.time and date=:date", nativeQuery = true)
     @Transactional
     @Modifying
-    List<Shift> forStartTime(@Param("start.time")LocalTime startTime, @Param("end.time")LocalTime endTime);
+    List<Shift> forStartTime(@Param("start.time")LocalTime startTime, @Param("end.time")LocalTime endTime,
+                             @Param("date")LocalDate date);
 
-    @Query(value="SELECT * FROM Shift where end_time between :start.time and :end.time", nativeQuery = true)
+    @Query(value="SELECT * FROM Shift where end_time between :start.time and :end.time and date=:date", nativeQuery = true)
     @Transactional
     @Modifying
-    List<Shift> forEndTime(@Param("start.time")LocalTime startTime, @Param("end.time")LocalTime endTime);
+    List<Shift> forEndTime(@Param("start.time")LocalTime startTime, @Param("end.time")LocalTime endTime,
+                           @Param("date")LocalDate date);
 }

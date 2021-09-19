@@ -20,10 +20,10 @@ import java.util.List;
 @Service
 public class TimeServiceApi implements TimeForBook {
     @Autowired
-    TokenService tokenService;
+    private TokenService tokenService;
     @Autowired
-    ServiceID serviceID;
-    @Value("${gateway.host}/patient/doctors")
+    private ServiceID serviceID;
+    @Value("${gateway.get.time}")
     private String urlTime;
 
     @Override
@@ -31,7 +31,7 @@ public class TimeServiceApi implements TimeForBook {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
         ResponseEntity<List<String>> timeEntity = new RestTemplate().exchange(urlTime, HttpMethod.GET, httpEntity, CollectionParams.get());
         if (timeEntity.getStatusCode() == HttpStatus.OK) {
-            log.info(timeEntity.getBody().toString());
+            log.info("Method getTime: {}",timeEntity.getBody());
             return timeEntity.getBody();
         } else {
             throw ApiGatewayException.times();

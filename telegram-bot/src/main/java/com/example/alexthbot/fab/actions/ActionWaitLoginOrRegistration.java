@@ -2,8 +2,6 @@ package com.example.alexthbot.fab.actions;
 
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
-import com.example.alexthbot.fab.database.user.model.CheckLogPass;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
@@ -11,23 +9,21 @@ import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardRem
 
 @Component
 public class ActionWaitLoginOrRegistration extends Action {
-    @Autowired
-    private CheckLogPass checkLogPass;
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
-        if (text.equals("Логин")) {
+        if (text.equals("Login")) {
             botUserService.setCommand(id, ActionEnum.LOGIN_AUTH);
-            sendMessage.setText("Введите логин:");
+            sendMessage.setText("Type login:");
             sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
-        } else if (text.equals("Регистрация")) {
+        } else if (text.equals("Registration")) {
             botUserService.setCommand(id, ActionEnum.CHOOSE_FIRST_NAME);
             String firstName = update.getMessage().getFrom().getFirstName();
             botUserService.setLogin(id, firstName + "_Hospital");
-            sendMessage.setText("Ваш логин будет автоматически сгенерирован, введите имя:");
+            sendMessage.setText("Your login will be automatically generated, enter your name:");
             sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
         } else {
-            sendMessage.setText("Нажмите на кнопку Логин или Регистрация");
+            sendMessage.setText("Click the Login or Register button!");
 
         }
     }

@@ -19,14 +19,14 @@ public class ShiftService {
 
     @Transactional
     public Shift addShift(ShiftDTO shift) {
-        List<Shift> startTime = shiftRepository.forStartTime(shift.getStartTime(), shift.getEndTime());
-        List<Shift> endTime = shiftRepository.forEndTime(shift.getStartTime(), shift.getEndTime());
+        List<Shift> startTime = shiftRepository.forStartTime(shift.getStartTime(), shift.getEndTime(), shift.getDate());
+        List<Shift> endTime = shiftRepository.forEndTime(shift.getStartTime(), shift.getEndTime(), shift.getDate());
         if (shift.getStartTime().isBefore(shift.getEndTime())) {
             if (startTime.isEmpty() && endTime.isEmpty()) {
                 return shiftRepository.save(convertToEntity(shift));
             }
         }
-        return null;
+        return convertToEntity(shift);
     }
 
     @Transactional(readOnly = true)
@@ -60,5 +60,6 @@ public class ShiftService {
     private Shift convertToEntity(ShiftDTO shiftDTO) {
         return modelMapper.map(shiftDTO, Shift.class);
     }
+
 
 }

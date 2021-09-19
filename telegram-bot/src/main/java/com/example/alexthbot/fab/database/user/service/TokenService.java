@@ -11,10 +11,9 @@ import java.util.Map;
 @Service
 public class TokenService {
 
-
     protected Map<String, HttpHeaders> cacheT = new HashMap<>();
     @Autowired
-    ServiceID serviceID;
+    private ServiceID serviceID;
 
     public void setToken(HttpHeaders token) {
         cacheT.put(serviceID.getIdChat(), token);

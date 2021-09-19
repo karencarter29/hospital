@@ -29,18 +29,19 @@ public class ActionBooked extends Action {
         botUserService.setCommand(id, ActionEnum.SHOW_APPOINTMENTS);
         //постим аппоинтмент
         botAppointmentService.postAppointment(botAppointment);
-        sendMessage.setText("Ваша запись:" + "\n"
-                + "Доктор: " + botAppointment.getDoctor() + "\n"
-                + "Процедура: " + botAppointment.getProcedure() + "\n"
-                + "День: " + botAppointment.getDate() + "\n"
-                + "Время: " + botAppointment.getTime() + "\n"
+        sendMessage.setText("Your appointment:" + "\n"
+                + "Doctor: " + botAppointment.getDoctor() + "\n"
+                + "Procedure: " + botAppointment.getProcedure() + "\n"
+                + "Day: " + botAppointment.getDate() + "\n"
+                + "Time: " + botAppointment.getTime() + "\n"
         );
         sendMessage.setReplyMarkup(keyboard());
     }
 
+    @Autowired
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Мои записи");
+        keyboardRow.add("Mine appointments");
 
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

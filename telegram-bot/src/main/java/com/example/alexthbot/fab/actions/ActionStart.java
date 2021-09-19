@@ -15,20 +15,20 @@ import java.util.List;
 
 @Component
 public class ActionStart extends Action {
-@Autowired
-    ServiceID serviceID;
+    @Autowired
+    private ServiceID serviceID;
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         serviceID.setIdChat(id);
-        sendMessage.setText("Приветствую вас в нашем боте\nВыберите действие, регистрацию или логин.");
+        sendMessage.setText("Welcome to our bot\nSelect an action, registration or login.");
         sendMessage.setReplyMarkup(getKeyboard());
         botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
     }
 
     public ReplyKeyboardMarkup getKeyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        keyboardRow.add("Логин");
-        keyboardRow.add("Регистрация");
+        keyboardRow.add("Login");
+        keyboardRow.add("Registration");
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();

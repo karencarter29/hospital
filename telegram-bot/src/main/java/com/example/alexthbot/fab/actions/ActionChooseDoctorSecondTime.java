@@ -4,7 +4,6 @@ import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
 import com.example.alexthbot.fab.services.api.DoctorService;
-import com.example.alexthbot.fab.services.api.PatientService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,13 +25,11 @@ public class ActionChooseDoctorSecondTime extends Action {
     private DoctorService doctorService;
     @Autowired
     private BotUserService botUserService;
-    @Autowired
-    private PatientService patientService;
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
-        sendMessage.setText("Выберите нужного доктора: ");
+        sendMessage.setText("Choose needed doctor: ");
         sendMessage.setReplyMarkup(keyboard());
     }
 
@@ -40,7 +37,7 @@ public class ActionChooseDoctorSecondTime extends Action {
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
         Gson gson = new Gson();
-        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.get()), Doctor[].class);
+        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
         Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);

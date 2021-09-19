@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import java.util.List;
 
 @RestController
@@ -15,7 +16,7 @@ import java.util.List;
 public class AppointmentController {
     private AppointmentService appointmentService;
 
-    @GetMapping
+    @GetMapping("/doctor")
     public List<AppointmentForDoctor> getAppointments() {
         return appointmentService.getAppointments();
     }

@@ -1,20 +1,23 @@
 package com.example.clinic.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 
+
 import javax.persistence.*;
 import java.io.Serializable;
+
 
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @IdClass(RelationShipPK.class)
 @Table(indexes = {
-        @Index(name="room_hospitalId_idx", columnList = "hospitalId"),
-        @Index(name="room_doctorId_idx", columnList = "doctorId")
+        @Index(name = "room_hospitalId_idx", columnList = "hospitalId"),
+        @Index(name = "room_doctorId_idx", columnList = "doctorId")
 })
 public class Room implements Serializable {
 
@@ -22,16 +25,18 @@ public class Room implements Serializable {
     @ManyToOne(targetEntity = Hospital.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "hospitalId")
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Hospital hospital;
+
 
     @Id
     @OneToOne(targetEntity = Doctor.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "doctorId")
     @JsonIgnore
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Doctor doctor;
 
     private String roomNumber;
-
 
     public Hospital getHospital() {
         return hospital;
