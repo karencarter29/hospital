@@ -8,6 +8,7 @@ import com.example.alexthbot.fab.services.api.entities.Shift;
 import com.example.alexthbot.fab.utils.CollectionParams;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -24,13 +25,15 @@ public class ProcedureServiceApi implements ProcedureService {
     private TokenService tokenService;
     @Autowired
     private ServiceID serviceID;
+    @Value("${gateway.host}")
+    private String urlProcedure;
 
     @Override
     public List<Shift> getProceduresById(String id) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
-        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange("http://localhost:8762/patient/doctor/" + id + "/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
+        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange(urlProcedure+"/patient/doctor/" + id + "/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
         if (proceduresEntity.getStatusCode() == HttpStatus.OK) {
-            log.info("getProceduresById, procedures: {}",proceduresEntity.getBody());
+            //log.info("getProceduresById, procedures: {}",proceduresEntity.getBody());
             return proceduresEntity.getBody();
         } else {
             throw ApiGatewayException.procedures();

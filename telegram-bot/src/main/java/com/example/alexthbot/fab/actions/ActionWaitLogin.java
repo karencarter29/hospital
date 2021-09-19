@@ -13,7 +13,7 @@ public class ActionWaitLogin extends Action {
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botUserService.setCommand(id, ActionEnum.REGISTRATION_WAITING_PASSWORD);
-        sendMessage.setText("Type password:");
+        sendMessage.setText("Type password:⌨");
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
     }
 

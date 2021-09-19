@@ -25,7 +25,7 @@ import org.telegram.telegrambots.starter.SpringWebhookBot;
 @Component
 @Setter
 @Getter
-public class MainTelegramBot extends SpringWebhookBot {
+public class MainTelegramBot extends TelegramLongPollingBot {
 
     @Value("${telegram.bot.name}")
     private String name;
@@ -39,10 +39,6 @@ public class MainTelegramBot extends SpringWebhookBot {
     @Autowired
     private Cache<String, BotUser> cache;
 
-    public MainTelegramBot(SetWebhook setWebhook) {
-        super(setWebhook);
-    }
-
 
     @Override
     public String getBotUsername() {
@@ -54,37 +50,8 @@ public class MainTelegramBot extends SpringWebhookBot {
         return token;
     }
 
-//    @Override
-//    public void onUpdateReceived(Update update) {
-//        if (update.hasMessage()){
-//            final Message message = update.getMessage();
-//            if (message.hasText()){
-//
-//                String chatId = message.getChatId().toString();
-//
-//                BotUser user = cache.getIfPresent(chatId);
-//                if (user == null){
-//                    user = new BotUser();
-//                    cache.put(chatId, user);
-//                }
-//
-//                String command = user.getCommand();
-//                if (command == null){
-//                    command = message.getText();
-//                }
-//                log.info("Команда: " + command);
-//
-//
-//                final ActionEnum action = ActionEnum.interpret(command);
-//                router.get(action).action(update,this);
-//            }
-//        }
-//        if (update.hasCallbackQuery()){
-//        }
-//    }
-
     @Override
-    public BotApiMethod<?> onWebhookUpdateReceived(Update update) {
+    public void onUpdateReceived(Update update) {
         if (update.hasMessage()){
             final Message message = update.getMessage();
             if (message.hasText()){
@@ -108,13 +75,11 @@ public class MainTelegramBot extends SpringWebhookBot {
                 router.get(action).action(update,this);
             }
         }
-        return null;
+        if (update.hasCallbackQuery()){
+        }
     }
 
-    @Override
-    public String getBotPath() {
-        return "hospital";
-    }
+
 }
 
 

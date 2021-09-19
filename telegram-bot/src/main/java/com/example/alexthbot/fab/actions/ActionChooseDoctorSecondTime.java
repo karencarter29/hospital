@@ -28,9 +28,10 @@ public class ActionChooseDoctorSecondTime extends Action {
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
-        sendMessage.setText("Choose needed doctor: ");
+       botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
+        sendMessage.setText("Choose needed doctor:\uD83C\uDFE5");
         sendMessage.setReplyMarkup(keyboard());
+
     }
 
     @Override

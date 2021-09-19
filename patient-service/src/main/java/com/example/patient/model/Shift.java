@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(indexes = {
         @Index(name="shift_doctorId_idx", columnList = "doctorId")
 })
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Shift {
     @Id
     @GeneratedValue

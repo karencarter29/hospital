@@ -28,7 +28,7 @@ public class DateServiceApi implements DateService {
     @Override
     public List<Shift> getData(Long id) {
         HttpEntity<Void> httpEntity = new HttpEntity<>(tokenService.getToken(serviceID.getIdChat()));
-        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange("http://localhost:8762/patient/doctor/" + id + "/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
+        ResponseEntity<List<Shift>> proceduresEntity = new RestTemplate().exchange("http://${gateway.host}/patient/doctor/" + id + "/shifts", HttpMethod.GET, httpEntity, CollectionParams.get());
         if (proceduresEntity.getStatusCode() == HttpStatus.OK) {
             log.info("Answer from method getData {}",proceduresEntity.getBody());
             return proceduresEntity.getBody();

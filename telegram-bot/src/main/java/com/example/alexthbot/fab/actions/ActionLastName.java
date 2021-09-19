@@ -17,7 +17,7 @@ public class ActionLastName extends Action {
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botUserService.setSecondName(id, text);
         botUserService.setCommand(id, ActionEnum.REGISTRATION_WAITING_PASSWORD);
-        sendMessage.setText("Type password:");
+        sendMessage.setText("Type password:\uD83D\uDC47");
     }
 
     @Override

@@ -13,7 +13,7 @@ public class ActionFirstName extends Action {
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         botUserService.setFirstName(id, text);
         botUserService.setCommand(id, ActionEnum.CHOOSE_LAST_NAME);
-        sendMessage.setText("Type your surname:");
+        sendMessage.setText("Type your surname:\uD83D\uDC47");
     }
 
     @Override
