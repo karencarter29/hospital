@@ -13,22 +13,28 @@ import java.io.IOException;
 @Slf4j
 public class RestTemplateExceptionHandler implements ResponseErrorHandler {
 
+    private static final String LOG_INFO = "Handled error : ";
+    private static final String REASON = "reason : ";
+
     @Override
     public boolean hasError(ClientHttpResponse clientHttpResponse) throws IOException {
-        if (clientHttpResponse.getStatusCode() == HttpStatus.CONFLICT) {
-            return true;
-        }
-        return false;
+        return clientHttpResponse.getStatusCode() == HttpStatus.CONFLICT ||
+                clientHttpResponse.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR ||
+                clientHttpResponse.getStatusCode() == HttpStatus.UNAUTHORIZED;
     }
 
     @Override
     public void handleError(@NonNull ClientHttpResponse response) throws IOException {
         if (response.getStatusCode().series() == HttpStatus.Series.CLIENT_ERROR) {
             if (response.getStatusCode() == HttpStatus.CONFLICT) {
-                log.info("Error handling : " + HttpStatus.CONFLICT);
+                log.info(LOG_INFO + HttpStatus.CONFLICT + ", " + REASON + response.getBody());
+            }
+            if (response.getStatusCode() == HttpStatus.UNAUTHORIZED) {
+                log.info(LOG_INFO + HttpStatus.UNAUTHORIZED + ", " + REASON + response.getBody());
             }
         }
         if (response.getStatusCode().series() == HttpStatus.Series.SERVER_ERROR) {
+            log.info(LOG_INFO + response.getStatusCode());
         }
     }
 }

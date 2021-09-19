@@ -15,14 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 @Slf4j
 public class SecurityService {
 
-    private static final String ADDRESS_SECURITY_SERVICE = "http://localhost:8077";
-    private static final String ADDRESS_PATIENT_SERVICE = "http://localhost:8082";
+    private static final String ADDRESS_SECURITY_SERVICE = "http://10.186.0.4:8077";
+    private static final String ADDRESS_PATIENT_SERVICE = "http://10.186.0.4:8082";
 
     private final RestTemplate restTemplate;
     private final TokenConfig tokenConfig;
@@ -40,7 +39,7 @@ public class SecurityService {
             return response;
         }
         HttpHeaders headers = response.getHeaders();
-        Patient patient = getPatientInformation(Objects.requireNonNull(headers.getFirst("Authorization")));
+        Patient patient = getPatientInformation(headers.getFirst("Authorization"));
         String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
         restTemplate.postForEntity(url1, patient, String.class);
         return response;
@@ -54,6 +53,9 @@ public class SecurityService {
 
     private Patient getPatientInformation(String header) {
         Patient patient = new Patient();
+        if (header == null) {
+            return patient;
+        }
         String token = header.replace(tokenConfig.getPrefix(), "");
         Claims claims = Jwts.parser()
                 .setSigningKey(tokenConfig.getSecret().getBytes())

@@ -1,8 +1,6 @@
 package com.gatewayapi.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -12,12 +10,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private TokenConfig tokenConfig;
+    private final TokenConfig tokenConfig;
 
-    @Bean
-    public TokenConfig getTokenConfig() {
-        return new TokenConfig();
+    @Autowired
+    public SecurityConfig(TokenConfig tokenConfig) {
+        this.tokenConfig = tokenConfig;
     }
 
     @Override

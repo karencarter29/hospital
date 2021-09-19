@@ -67,6 +67,7 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -80,9 +81,5 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <build>
-        <finalName>gateway-api-docker</finalName>
-    </build>
 
 </project>

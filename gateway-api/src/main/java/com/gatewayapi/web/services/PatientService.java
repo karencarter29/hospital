@@ -11,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class PatientService {
+public class
+PatientService {
 
-    private static final String PATIENT_SERVICE_ADDRESS = "http://localhost:8082";
-    private static final String CLINIC_SERVICE_ADDRESS = "http://localhost:8083";
+    private static final String PATIENT_SERVICE_ADDRESS = "http://10.186.0.4:8082";
+    private static final String CLINIC_SERVICE_ADDRESS = "http://10.186.0.4:8083";
 
     private final RestTemplate restTemplate;
 
