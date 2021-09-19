@@ -1,0 +1,2 @@
+service: telegram-bot # Id of the service
+runtime: java11

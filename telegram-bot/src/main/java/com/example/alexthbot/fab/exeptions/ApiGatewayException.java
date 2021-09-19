@@ -15,7 +15,7 @@ public class ApiGatewayException extends RuntimeException {
     }
 
     public static ApiGatewayException dates() {
-        return new ApiGatewayException("Ошибка получения свободных дней");
+        return new ApiGatewayException("Error getting free days");
     }
 
     public static ApiGatewayException procedures() {

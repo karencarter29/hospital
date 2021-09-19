@@ -25,7 +25,7 @@ public class AuthServiceApi {
         ResponseEntity<HttpStatus> httpStatusResponseEntity = restTemplate.postForEntity(url, checkLogPass, HttpStatus.class);
         if (httpStatusResponseEntity.getStatusCode() == HttpStatus.OK) {
             tokenService.setToken(httpStatusResponseEntity.getHeaders());
-            log.info("Answer from method checkLoginAndPassword {}",httpStatusResponseEntity);
+            log.info("Answer from method checkLoginAndPassword {}", httpStatusResponseEntity);
             return httpStatusResponseEntity.getStatusCode();
         } else {
             throw ApiGatewayException.login();

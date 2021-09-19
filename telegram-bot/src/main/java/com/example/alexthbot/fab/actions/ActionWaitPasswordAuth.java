@@ -30,17 +30,20 @@ public class ActionWaitPasswordAuth extends Action {
     private DoctorService doctorService;
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
-        checkLogPass.setPassword(text);
-        botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
-        HttpStatus httpStatus = authServiceApi.checkLoginAndPassword(checkLogPass);
-        if (httpStatus.is2xxSuccessful()) {
-            sendMessage.setText("Choose a doctor");
-            botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
-            sendMessage.setReplyMarkup(keyboard());
-        } else {
-            botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
-            sendMessage.setText("There is no such login or password");
+        try {
+            checkLogPass.setPassword(text);
+            botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_AFTER_LOGIN);
+            HttpStatus httpStatus = authServiceApi.checkLoginAndPassword(checkLogPass);
+            if (httpStatus.is2xxSuccessful()) {
+                sendMessage.setText("Choose a doctor\uD83D\uDC47");
+                botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR);
+                sendMessage.setReplyMarkup(keyboard());
+            }
+        }
+        catch (RuntimeException e) {
+            sendMessage.setText("There is no such login or password\uD83D\uDC47");
             sendMessage.setReplyMarkup(getKeyboard());
+            botUserService.setCommand(id, ActionEnum.START);
         }
     }
 

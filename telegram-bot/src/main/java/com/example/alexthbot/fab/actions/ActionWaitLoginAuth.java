@@ -18,7 +18,7 @@ public class ActionWaitLoginAuth extends Action {
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         checkLogPass.setUsername(text);
         botUserService.setCommand(id, ActionEnum.PASSWORD_AUTH);
-        sendMessage.setText("Type password:");
+        sendMessage.setText("Type password:⌨");
         sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
     }
 
