@@ -7,6 +7,8 @@ import com.hospital.security.model.User;
 import com.hospital.security.security.jwt.JwtTokenProvider;
 import com.hospital.security.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,16 +27,25 @@ import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/hospital/auth")
+@RefreshScope
 public class AuthenticationController {
 
     private final UserService userService;
 
     private final SecretConfig secretConfig;
 
+    @Value("${jwt.token.secret}")
+    private String secre;
+
     @Autowired
     public AuthenticationController(UserService userService, SecretConfig secretConfig) {
         this.userService = userService;
         this.secretConfig = secretConfig;
+    }
+
+    @RequestMapping("/show")
+    public String secret() {
+        return this.secre;
     }
 
     @PostMapping("/login")
