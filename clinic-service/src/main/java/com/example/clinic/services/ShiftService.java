@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@FeignClient(name = "feignShiftService", url = "http://localhost:8082/shift")
+@FeignClient(name = "feignShiftService", url = "http://10.186.0.4:8082/shift")
 public interface ShiftService {
     @PostMapping
     public Shift saveShift(@RequestBody ShiftDTO shift);

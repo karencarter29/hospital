@@ -3,7 +3,6 @@ package com.gatewayapi.web.services;
 import com.gatewayapi.web.exceptions.handlers.RestTemplateExceptionHandler;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -16,10 +15,8 @@ import org.springframework.web.client.RestTemplate;
 @Slf4j
 public class PatientService {
 
-    @Value("${patient-service}")
-    private static String patientServiceAddress;
-    @Value("${clinic-service}")
-    private static String clinicServiceAddress;
+    private static final String PATIENT_SERVICE_ADDRESS = "http://10.186.0.4:8082";
+    private static final String CLINIC_SERVICE_ADDRESS = "http://10.186.0.4:8083";
 
     private final RestTemplate restTemplate;
 
@@ -30,19 +27,19 @@ public class PatientService {
 
     public ResponseEntity<String> getShiftsByDoctor(String doctorId) {
         log.info("PatientService#getShiftsByDoctor(doctorId: {})", doctorId);
-        String url = clinicServiceAddress + "/shift/" + doctorId;
+        String url = CLINIC_SERVICE_ADDRESS + "/shift/" + doctorId;
         return restTemplate.getForEntity(url, String.class);
     }
 
     public ResponseEntity<String> getDoctors() {
         log.info("PatientService#getDoctors()");
-        String url = clinicServiceAddress + "/doctor";
+        String url = CLINIC_SERVICE_ADDRESS + "/doctor";
         return restTemplate.getForEntity(url, String.class);
     }
 
     public ResponseEntity<String> createAppointment(String shiftId, String patientId) {
         log.info("PatientService#createAppointment(shiftId: {}, patientId: {})", shiftId, patientId);
-        String url = patientServiceAddress + "/appointment/" + shiftId + "/" + patientId;
+        String url = PATIENT_SERVICE_ADDRESS + "/appointment/" + shiftId + "/" + patientId;
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<String> httpEntity = new HttpEntity<>(headers);
@@ -51,7 +48,7 @@ public class PatientService {
 
     public ResponseEntity<String> getAppointments(String patientId) {
         log.info("PatientService#getAppointments(patientId: {})", patientId);
-        String url = patientServiceAddress + "/appointment/" + patientId;
+        String url = PATIENT_SERVICE_ADDRESS + "/appointment/" + patientId;
         return restTemplate.getForEntity(url, String.class);
     }
 }

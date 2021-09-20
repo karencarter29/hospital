@@ -7,7 +7,6 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -21,10 +20,9 @@ import java.util.Map;
 @Slf4j
 public class SecurityService {
 
-    @Value("${security-service}")
-    private static String securityServiceAddress;
-    @Value("${patient-service}")
-    private static String patientServiceAddress;
+
+    private static final String ADDRESS_SECURITY_SERVICE = "http://10.186.0.4:8077";
+    private static final String ADDRESS_PATIENT_SERVICE = "http://10.186.0.4:8082";
 
     private final RestTemplate restTemplate;
     private final TokenConfig tokenConfig;
@@ -37,7 +35,7 @@ public class SecurityService {
 
     public ResponseEntity<String> register(Map<String, Object> userInformation) {
         log.info("SecurityService#register(userInformation: {})", userInformation);
-        String url = securityServiceAddress + "/hospital/auth/register";
+        String url = ADDRESS_SECURITY_SERVICE + "/hospital/auth/register";
         ResponseEntity<String> userRegisterResponse = restTemplate.postForEntity(url, userInformation, String.class);
         if (userRegisterResponse.getStatusCode() != HttpStatus.OK) {
             log.info("Registration is failed");
@@ -47,7 +45,7 @@ public class SecurityService {
         HttpHeaders headers = userRegisterResponse.getHeaders();
         Patient patient = getPatientInformation(headers.getFirst("Authorization"));
         log.info("Patient: {}", patient);
-        String url1 = patientServiceAddress + "/patient";
+        String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
         ResponseEntity<String> patientRegisterResponse = restTemplate.postForEntity(url1, patient, String.class);
         if (patientRegisterResponse.getStatusCode() != HttpStatus.OK) {
             log.info("Patient registration is failed");
@@ -59,7 +57,7 @@ public class SecurityService {
 
     public ResponseEntity<String> auth(Map<String, Object> userInformation) {
         log.info("SecurityService#auth(userInformation: {})", userInformation);
-        String url = securityServiceAddress + "/hospital/auth/login";
+        String url = ADDRESS_SECURITY_SERVICE + "/hospital/auth/login";
         return restTemplate.postForEntity(url, userInformation, String.class);
     }
 
