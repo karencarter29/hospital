@@ -20,6 +20,7 @@ import java.util.Map;
 @Slf4j
 public class SecurityService {
 
+
     private static final String ADDRESS_SECURITY_SERVICE = "http://10.186.0.4:8077";
     private static final String ADDRESS_PATIENT_SERVICE = "http://10.186.0.4:8082";
 
@@ -33,25 +34,35 @@ public class SecurityService {
     }
 
     public ResponseEntity<String> register(Map<String, Object> userInformation) {
+        log.info("SecurityService#register(userInformation: {})", userInformation);
         String url = ADDRESS_SECURITY_SERVICE + "/hospital/auth/register";
-        ResponseEntity<String> response = restTemplate.postForEntity(url, userInformation, String.class);
-        if (response.getStatusCode() != HttpStatus.OK) {
-            return response;
+        ResponseEntity<String> userRegisterResponse = restTemplate.postForEntity(url, userInformation, String.class);
+        if (userRegisterResponse.getStatusCode() != HttpStatus.OK) {
+            log.info("Registration is failed");
+            return userRegisterResponse;
         }
-        HttpHeaders headers = response.getHeaders();
+        log.info("Registration is successful");
+        HttpHeaders headers = userRegisterResponse.getHeaders();
         Patient patient = getPatientInformation(headers.getFirst("Authorization"));
+        log.info("Patient: {}", patient);
         String url1 = ADDRESS_PATIENT_SERVICE + "/patient";
-        restTemplate.postForEntity(url1, patient, String.class);
-        return response;
+        ResponseEntity<String> patientRegisterResponse = restTemplate.postForEntity(url1, patient, String.class);
+        if (patientRegisterResponse.getStatusCode() != HttpStatus.OK) {
+            log.info("Patient registration is failed");
+            return patientRegisterResponse;
+        }
+        log.info("Patient registration is successful");
+        return userRegisterResponse;
     }
 
     public ResponseEntity<String> auth(Map<String, Object> userInformation) {
+        log.info("SecurityService#auth(userInformation: {})", userInformation);
         String url = ADDRESS_SECURITY_SERVICE + "/hospital/auth/login";
-        log.info("Login: {}", userInformation);
         return restTemplate.postForEntity(url, userInformation, String.class);
     }
 
     private Patient getPatientInformation(String header) {
+        log.info("SecurityService#getPatientInformation()");
         Patient patient = new Patient();
         if (header == null) {
             return patient;
@@ -64,7 +75,6 @@ public class SecurityService {
         patient.setId(claims.get("id", String.class));
         patient.setFirstName(claims.get("firstName", String.class));
         patient.setLastName(claims.get("secondName", String.class));
-        log.info("Patient: { " + patient.getId() + ", " + patient.getFirstName() + ", " + patient.getLastName() + " }");
         return patient;
     }
 }
