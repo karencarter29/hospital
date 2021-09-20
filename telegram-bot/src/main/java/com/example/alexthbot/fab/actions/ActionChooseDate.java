@@ -34,6 +34,13 @@ public class ActionChooseDate extends Action {
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
        try {
+           if (text.equals("Main menu") ) {
+               sendMessage.setChatId(id);
+               sendMessage.setText("You going to main menu");
+               botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
+               sendMessage.setReplyMarkup(getKeyboard());
+           }
+           else{
            botAppointment.setProcedure(text);
            botUserService.setCommand(id, ActionEnum.CHOOSE_TIME);
            Gson gson = new Gson();
@@ -49,6 +56,7 @@ public class ActionChooseDate extends Action {
            }
            sendMessage.setText("Choose data:\uD83D\uDCC5");
            sendMessage.setReplyMarkup(keyboard());
+           }
        }
        catch (RuntimeException e) {
            sendMessage.setText("There is no such dates \uD83D\uDC47");
@@ -63,6 +71,7 @@ public class ActionChooseDate extends Action {
         List<Shift> shiftList = mapper.convertValue(shifts,new TypeReference<List<Shift>>() {     }
         );
         shiftList.forEach(shift ->   keyboardRow.add(shift.getDate()));
+        keyboardRow.add("Main menu");
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -70,7 +79,16 @@ public class ActionChooseDate extends Action {
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
     }
-
+    public ReplyKeyboardMarkup getKeyboard() {
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add("Go!");
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        keyboardRows.add(keyboardRow);
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
     @Override
     public ActionEnum getKey() {
         return ActionEnum.CHOOSE_DATE;
