@@ -33,10 +33,18 @@ public class ActionChooseTime extends Action {
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
        try {
-           botAppointment.setDate(text);
-           botUserService.setCommand(id, ActionEnum.MIDDLE_BOOKED);
-           sendMessage.setText("Choose time:⌛");
-           sendMessage.setReplyMarkup(keyboard());
+           if (text.equals("Main menu") ) {
+               sendMessage.setChatId(id);
+               sendMessage.setText("You going to main menu");
+               botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
+               sendMessage.setReplyMarkup(getKeyboard());
+           }
+           else {
+               botAppointment.setDate(text);
+               botUserService.setCommand(id, ActionEnum.MIDDLE_BOOKED);
+               sendMessage.setText("Choose time:⌛");
+               sendMessage.setReplyMarkup(keyboard());
+           }
        }
        catch (RuntimeException e) {
            sendMessage.setText("There is no such time \uD83D\uDC47");
@@ -52,6 +60,7 @@ public class ActionChooseTime extends Action {
     List<Shift> shiftList = mapper.convertValue(shifts,new TypeReference<List<Shift>>() {     }
     );
     shiftList.forEach(shift ->   keyboardRow.add(shift.getStartTime()));
+    keyboardRow.add("Main menu");
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 
@@ -60,7 +69,16 @@ public class ActionChooseTime extends Action {
         replyKeyboardMarkup.setResizeKeyboard(true);
         return replyKeyboardMarkup;
     }
-
+    public ReplyKeyboardMarkup getKeyboard() {
+        KeyboardRow keyboardRow = new KeyboardRow();
+        keyboardRow.add("Go!");
+        List<KeyboardRow> keyboardRows = new ArrayList<>();
+        keyboardRows.add(keyboardRow);
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setKeyboard(keyboardRows);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        return replyKeyboardMarkup;
+    }
     @Override
     public ActionEnum getKey() {
         return ActionEnum.CHOOSE_TIME;

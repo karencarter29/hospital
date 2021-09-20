@@ -27,10 +27,8 @@ public class AfterLoginFailedService {
         KeyboardRow keyboardRow = new KeyboardRow();
         keyboardRow.add("Login");
         keyboardRow.add("registration");
-
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
-
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setKeyboard(keyboardRows);
         replyKeyboardMarkup.setResizeKeyboard(true);

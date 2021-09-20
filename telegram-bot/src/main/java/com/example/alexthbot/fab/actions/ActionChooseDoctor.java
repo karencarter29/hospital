@@ -45,7 +45,7 @@ public class ActionChooseDoctor extends Action {
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
-      // try {
+       try {
            serviceID.setDoctor(text);
            Gson gson = new Gson();
            Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
@@ -58,11 +58,11 @@ public class ActionChooseDoctor extends Action {
            botUserService.setCommand(id, ActionEnum.CHOOSE_DATE);
            sendMessage.setReplyMarkup(keyboardTooth());
            sendMessage.setText("Choose a procedure:\uD83C\uDFE5 \n(For the first time we advise you to choose a consultation)");
-      // }
-//       catch (RuntimeException e) {
-//           sendMessage.setText("There is no such procedure \uD83D\uDC47");
-//           botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
-//       }
+       }
+       catch (RuntimeException e) {
+           sendMessage.setText("There is no such procedure \uD83D\uDC47");
+           botUserService.setCommand(id, ActionEnum.CHOOSE_DOCTOR_SECOND_TIME);
+       }
 
     }
 
@@ -75,6 +75,7 @@ public class ActionChooseDoctor extends Action {
         List<Shift> shiftList = mapper.convertValue(shifts,new TypeReference<List<Shift>>() {     }
         );
         shiftList.forEach(shift ->   keyboardRow.add(shift.getProcedureName()));
+        keyboardRow.add("Main menu");
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
         ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
