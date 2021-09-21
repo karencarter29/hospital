@@ -5,6 +5,9 @@ import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.service.BotUserService;
 import com.example.alexthbot.fab.services.api.DoctorService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -37,9 +40,13 @@ public class ActionChooseDoctorSecondTime extends Action {
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        Gson gson = new Gson();
-        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
-        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
+        List<Doctor> doctors = doctorService.getDoctors();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        List<Doctor> doctorList = mapper.convertValue(doctors,new TypeReference<List<Doctor>>() {     }
+        );
+        doctorList.forEach(doctor1 ->   keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

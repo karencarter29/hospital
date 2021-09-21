@@ -29,15 +29,12 @@ public class ActionShowAppointments extends Action {
     @Autowired
     private BotAppointmentService botAppointmentService;
     @Autowired
-    private ServiceID serviceID;
-    @Autowired
     ProcedureService procedureService;
 
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         sendMessage.setChatId(id);
         try {
-            Gson gson = new Gson();
             List<Appointment> botAppointments = new ArrayList<>();
         List<Appointment> appointments = botAppointmentService.getAppointments();
         ObjectMapper objectMapper = new ObjectMapper();
