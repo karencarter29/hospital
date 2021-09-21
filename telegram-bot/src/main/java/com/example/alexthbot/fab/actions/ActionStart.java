@@ -23,8 +23,6 @@ public class ActionStart extends Action {
         sendMessage.setText("\uD83D\uDE4C Welcome to our bot \uD83D\uDE4B" + "\nSelect an action, registration or login.\uD83C\uDD94");
         sendMessage.setReplyMarkup(getKeyboard());
         botUserService.setCommand(id, ActionEnum.CHOOSE_LOGIN_OR_REGISTRATION);
-
-
     }
 
     public ReplyKeyboardMarkup getKeyboard() {

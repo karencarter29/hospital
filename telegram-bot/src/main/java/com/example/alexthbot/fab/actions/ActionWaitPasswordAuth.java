@@ -3,9 +3,14 @@ package com.example.alexthbot.fab.actions;
 import com.example.alexthbot.fab.actions.parent.Action;
 import com.example.alexthbot.fab.actions.router.ActionEnum;
 import com.example.alexthbot.fab.database.user.model.CheckLogPass;
+import com.example.alexthbot.fab.database.user.model.ServiceID;
 import com.example.alexthbot.fab.services.api.AuthServiceApi;
 import com.example.alexthbot.fab.services.api.DoctorService;
 import com.example.alexthbot.fab.services.api.entities.Doctor;
+import com.example.alexthbot.fab.services.api.entities.Shift;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +32,10 @@ public class ActionWaitPasswordAuth extends Action {
     @Autowired
     private AuthServiceApi authServiceApi;
     @Autowired
-    private DoctorService doctorService;
+    DoctorService doctorService;
+    @Autowired
+    ServiceID serviceID;
+
     @Override
     public void action(Update update, SendMessage sendMessage, String text, String id) {
         try {
@@ -50,9 +58,13 @@ public class ActionWaitPasswordAuth extends Action {
     @Override
     public ReplyKeyboard keyboard() {
         KeyboardRow keyboardRow = new KeyboardRow();
-        Gson gson = new Gson();
-        Doctor[] doctors = gson.fromJson(String.valueOf(doctorService.getDoctors()), Doctor[].class);
-        Arrays.stream(doctors).forEach(doctor1 -> keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
+        List<Doctor> doctors = doctorService.getDoctors();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.findAndRegisterModules();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        List<Doctor> doctorList = mapper.convertValue(doctors,new TypeReference<List<Doctor>>() {     }
+        );
+        doctorList.forEach(doctor1 ->   keyboardRow.add(doctor1.getSpeciality().getSpecialityName()));
         List<KeyboardRow> keyboardRows = new ArrayList<>();
         keyboardRows.add(keyboardRow);
 

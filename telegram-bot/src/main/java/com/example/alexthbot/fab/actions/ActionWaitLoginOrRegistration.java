@@ -24,10 +24,8 @@ public class ActionWaitLoginOrRegistration extends Action {
             sendMessage.setReplyMarkup(new ReplyKeyboardRemove(true));
         } else {
             sendMessage.setText("Click the Login or Register button!\uD83D\uDDB0");
-
         }
     }
-
 
     @Override
     public ActionEnum getKey() {

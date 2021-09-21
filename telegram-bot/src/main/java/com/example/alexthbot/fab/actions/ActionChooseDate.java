@@ -43,7 +43,6 @@ public class ActionChooseDate extends Action {
            else{
            botAppointment.setProcedure(text);
            botUserService.setCommand(id, ActionEnum.CHOOSE_TIME);
-           Gson gson = new Gson();
            List<Shift> shifts = procedureService.getProceduresById(serviceID.getDoctorId());
            ObjectMapper mapper = new ObjectMapper();
            List<Shift> shiftList = mapper.convertValue(shifts, new TypeReference<List<Shift>>() {
